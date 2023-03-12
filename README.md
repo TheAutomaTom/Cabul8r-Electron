@@ -1,4 +1,6 @@
-[![Stand With Ukraine](https://raw.githubusercontent.com/vshymanskyy/StandWithUkraine/main/banner-direct-single.svg)](https://stand-with-ukraine.pp.ua)
+This repo fodked from:
+
+https://github.com/cawa-93/vite-electron-builder
 
 ---
 
