@@ -33,27 +33,30 @@ app.on("window-all-closed", () => {
 app.on("activate", restoreOrCreateWindow);
 
 /**
- * Create the application window when the background process is ready.
- */
-app
-  .whenReady()
-  .then(restoreOrCreateWindow)
-  .catch(e => console.error("Failed create window:", e));
+ * Install Vue.js dev tools or any other extension in development mode only.
+*/
+  if (import.meta.env.DEV) {
+    const { app, session } = require("electron");
+    const path = require("path");
+    const os = require("os");
+    const vueDevToolsPath = path.join(
+      os.homedir(),
+      "AppData\\Local\\Google\\Chrome\\User Data\\Default\\Extensions\\nhdogjmejiglipccpnnnanhbledajbpd\\6.5.0_0",
+    );  
 
-/**
- * Install Vue.js or any other extension in development mode only.
- * Note: You must install `electron-devtools-installer` manually
- */
-// if (import.meta.env.DEV) {
-//   app.whenReady()
-//     .then(() => import('electron-devtools-installer'))
-//     .then(({default: installExtension, VUEJS3_DEVTOOLS}) => installExtension(VUEJS3_DEVTOOLS, {
-//       loadExtensionOptions: {
-//         allowFileAccess: true,
-//       },
-//     }))
-//     .catch(e => console.error('Failed install extension:', e));
-// }
+    app.whenReady().then(async () => {
+      await session.defaultSession.loadExtension(vueDevToolsPath);
+    })    
+    .catch(e => console.error("Failed to install dev tools:", e));
+  }
+  
+  /**
+   * Create the application window when the background process is ready.
+   */
+  app
+    .whenReady()
+    .then(restoreOrCreateWindow)
+    .catch(e => console.error("Failed create window:", e));
 
 /**
  * Check for app updates, install it in background and notify user that new version was installed.
