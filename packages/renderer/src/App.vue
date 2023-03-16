@@ -3,6 +3,22 @@ import ReactiveCounter from "/@/components/ReactiveCounter.vue";
 import ReactiveHash from "/@/components/ReactiveHash.vue";
 import ElectronVersions from "/@/components/ElectronVersions.vue";
 
+import { useAppState } from "./states/AppState";
+import { onMounted, onUnmounted } from "vue";
+
+const _app = useAppState();
+function handleScroll() {
+  _app.IsScrolled = window.scrollY > 0;
+  console.log(window.scrollY);
+}
+onMounted(() => {
+  window.addEventListener("scroll", handleScroll);
+});
+onUnmounted(() => {
+  window.removeEventListener("scroll", handleScroll);
+});
+
+
 const APP_VERSION = import.meta.env.VITE_APP_VERSION;
 </script>
 
