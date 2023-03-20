@@ -39,10 +39,14 @@ app.on("activate", restoreOrCreateWindow);
     const { app, session } = require("electron");
     const path = require("path");
     const os = require("os");
-    const vueDevToolsPath = path.join(
-      os.homedir(),
-      "AppData\\Local\\Google\\Chrome\\User Data\\Default\\Extensions\\nhdogjmejiglipccpnnnanhbledajbpd\\6.5.0_0",
-    );  
+
+    // To get extension id go to `chrome://extensions/` and select dev tools extension, then look in address bar.
+    // Next, check your version following the root path, into the extension.
+
+    const basePath = "AppData\\Local\\Google\\Chrome\\User Data\\Default\\Extensions";
+    const extensionId = "\\nhdogjmejiglipccpnnnanhbledajbpd";
+    const extensionVersion = "\\6.5.0_0";
+    const vueDevToolsPath = path.join( os.homedir(), basePath, extensionId, extensionVersion );
 
     app.whenReady().then(async () => {
       await session.defaultSession.loadExtension(vueDevToolsPath);
