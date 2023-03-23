@@ -1,7 +1,7 @@
-import {app} from 'electron';
-import './security-restrictions';
-import {restoreOrCreateWindow} from '/@/mainWindow';
-import {platform} from 'node:process';
+import {app} from "electron";
+import "./security-restrictions";
+import {restoreOrCreateWindow} from "/@/mainWindow";
+import {platform} from "node:process";
 
 /**
  * Prevent electron from running multiple instances.
@@ -11,7 +11,7 @@ if (!isSingleInstance) {
   app.quit();
   process.exit(0);
 }
-app.on('second-instance', restoreOrCreateWindow);
+app.on("second-instance", restoreOrCreateWindow);
 
 /**
  * Disable Hardware Acceleration to save more system resources.
@@ -21,8 +21,8 @@ app.disableHardwareAcceleration();
 /**
  * Shout down background process if all windows was closed
  */
-app.on('window-all-closed', () => {
-  if (platform !== 'darwin') {
+app.on("window-all-closed", () => {
+  if (platform !== "darwin") {
     app.quit();
   }
 });
@@ -30,30 +30,37 @@ app.on('window-all-closed', () => {
 /**
  * @see https://www.electronjs.org/docs/latest/api/app#event-activate-macos Event: 'activate'.
  */
-app.on('activate', restoreOrCreateWindow);
+app.on("activate", restoreOrCreateWindow);
 
 /**
- * Create the application window when the background process is ready.
- */
-app
-  .whenReady()
-  .then(restoreOrCreateWindow)
-  .catch(e => console.error('Failed create window:', e));
+ * Install Vue.js dev tools or any other extension in development mode only.
+*/
+  if (import.meta.env.DEV) {
+    const { app, session } = require("electron");
+    const path = require("path");
+    const os = require("os");
 
-/**
- * Install Vue.js or any other extension in development mode only.
- * Note: You must install `electron-devtools-installer` manually
- */
-// if (import.meta.env.DEV) {
-//   app.whenReady()
-//     .then(() => import('electron-devtools-installer'))
-//     .then(({default: installExtension, VUEJS3_DEVTOOLS}) => installExtension(VUEJS3_DEVTOOLS, {
-//       loadExtensionOptions: {
-//         allowFileAccess: true,
-//       },
-//     }))
-//     .catch(e => console.error('Failed install extension:', e));
-// }
+    // To get extension id go to `chrome://extensions/` and select dev tools extension, then look in address bar.
+    // Next, check your version following the root path, into the extension.
+
+    const basePath = "AppData\\Local\\Google\\Chrome\\User Data\\Default\\Extensions";
+    const extensionId = "\\nhdogjmejiglipccpnnnanhbledajbpd";
+    const extensionVersion = "\\6.5.0_0";
+    const vueDevToolsPath = path.join( os.homedir(), basePath, extensionId, extensionVersion );
+
+    app.whenReady().then(async () => {
+      await session.defaultSession.loadExtension(vueDevToolsPath);
+    })    
+    .catch(e => console.error("Failed to install dev tools:", e));
+  }
+  
+  /**
+   * Create the application window when the background process is ready.
+   */
+  app
+    .whenReady()
+    .then(restoreOrCreateWindow)
+    .catch(e => console.error("Failed create window:", e));
 
 /**
  * Check for app updates, install it in background and notify user that new version was installed.
@@ -67,13 +74,13 @@ app
 if (import.meta.env.PROD) {
   app
     .whenReady()
-    .then(() => import('electron-updater'))
+    .then(() => import("electron-updater"))
     .then(module => {
       const autoUpdater =
         module.autoUpdater ||
         // @ts-expect-error Hotfix for https://github.com/electron-userland/electron-builder/issues/7338
-        (module.default.autoUpdater as (typeof module)['autoUpdater']);
+        (module.default.autoUpdater as (typeof module)["autoUpdater"]);
       return autoUpdater.checkForUpdatesAndNotify();
     })
-    .catch(e => console.error('Failed check and install updates:', e));
+    .catch(e => console.error("Failed check and install updates:", e));
 }
