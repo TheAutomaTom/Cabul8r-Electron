@@ -4,15 +4,26 @@ import ReactiveHash from "/@/components/ReactiveHash.vue";
 import ElectronVersions from "/@/components/ElectronVersions.vue";
 
 import { useAppState } from "./states/AppState";
-import { onMounted, onUnmounted } from "vue";
+import { onMounted, onUnmounted, ref } from "vue";
+
+import { getUserData } from "#preload";
+import type {UserData} from "../../ipc-models/UserData";
 
 const _app = useAppState();
 function handleScroll() {
   _app.IsScrolled = window.scrollY > 0;
   console.log(window.scrollY);
 }
-onMounted(() => {
+
+const userData = ref<UserData>();
+
+onMounted( async () => {
   window.addEventListener("scroll", handleScroll);
+
+
+  // ipc notes...unwrap promises here...
+  userData.value = (await getUserData());
+
 });
 onUnmounted(() => {
   window.removeEventListener("scroll", handleScroll);
@@ -22,7 +33,8 @@ onUnmounted(() => {
 const APP_VERSION = import.meta.env.VITE_APP_VERSION;
 </script>
 
-<template>
+<template>  
+  <p>{{ userData?.user.name.first }} {{ userData?.user.name.last }}</p>
   <img
     alt="Vue logo"
     src="../assets/logo.svg"
