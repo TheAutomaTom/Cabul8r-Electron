@@ -2,6 +2,7 @@ import {app} from "electron";
 import "./security-restrictions";
 import {restoreOrCreateWindow} from "/@/mainWindow";
 import {platform} from "node:process";
+import * as electron from "electron";
 
 /**
  * Prevent electron from running multiple instances.
@@ -32,6 +33,22 @@ app.on("window-all-closed", () => {
  */
 app.on("activate", restoreOrCreateWindow);
 
+const menu = electron.Menu;
+const appMenuBuilder = menu.buildFromTemplate( [
+  {
+    label: "FileX",
+    submenu:[{
+      label: "Open File...",
+
+    click: function() {
+      electron.dialog.showOpenDialog({properties: ["openFile"] })
+      .then(function (response) {
+        return response.canceled ? "" : response.filePaths[0];
+      });
+    }}]}
+] );
+menu.setApplicationMenu(appMenuBuilder);
+
 /**
  * Install Vue.js dev tools or any other extension in development mode only.
 */
@@ -50,10 +67,10 @@ app.on("activate", restoreOrCreateWindow);
 
     app.whenReady().then(async () => {
       await session.defaultSession.loadExtension(vueDevToolsPath);
-    })    
+    })
     .catch(e => console.error("Failed to install dev tools:", e));
   }
-  
+
   /**
    * Create the application window when the background process is ready.
    */
