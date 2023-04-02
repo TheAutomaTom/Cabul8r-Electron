@@ -1,8 +1,15 @@
 {
-  "user":{
-    "name":{
-      "first":  "Tom",
-      "last":   "Grossi"
-    }
-  }
+	"projectName": "My Test Project",
+	"projectClient": "My Test Client",
+	"takeoff": {
+		"takeoffName": "Some Takeoff v1",
+		"reference": "Some Test Ref",
+		"lineItems": [{
+			"name": "Some cabinets",
+			"reference": "ID-401/3",
+			"quantity": 12,
+			"costs": 513.31,
+			"uom": "LF"
+		}]
+	}
 }
