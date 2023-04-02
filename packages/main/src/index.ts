@@ -3,6 +3,7 @@ import "./security-restrictions";
 import {restoreOrCreateWindow} from "/@/mainWindow";
 import {platform} from "node:process";
 import * as electron from "electron";
+import { appMenuTemplate } from "./AppMenu/appMenuTemplate";
 
 /**
  * Prevent electron from running multiple instances.
@@ -34,19 +35,7 @@ app.on("window-all-closed", () => {
 app.on("activate", restoreOrCreateWindow);
 
 const menu = electron.Menu;
-const appMenuBuilder = menu.buildFromTemplate( [
-  {
-    label: "FileX",
-    submenu:[{
-      label: "Open File...",
-
-    click: function() {
-      electron.dialog.showOpenDialog({properties: ["openFile"] })
-      .then(function (response) {
-        return response.canceled ? "" : response.filePaths[0];
-      });
-    }}]}
-] );
+const appMenuBuilder = menu.buildFromTemplate( appMenuTemplate );
 menu.setApplicationMenu(appMenuBuilder);
 
 /**
