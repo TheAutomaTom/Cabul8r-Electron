@@ -1,7 +1,7 @@
+import { browserWindow } from "./../mainWindow";
 import type { Project } from "./../../../ipc-models/Takeoff/Takeoff";
-// import type { MenuItemConstructorOptions } from "electron";
-// import { pickFile } from "./appMenuFunctions";
-// import * as electron from "electron";
+
+
 import { pickFile } from "./appMenuFunctions";
 const fs = require("fs");
 let project = {} as Project;
@@ -12,16 +12,14 @@ const appMenuTemplate = [
     submenu:[{
       label: "Open File...",
       click: async function() {
-          const _filePath = await pickFile();
-          if (_filePath === null) return;
+        const _filePath = await pickFile();
+        if (_filePath === null) return;
 
-          fs.readFile(_filePath, "utf8", (err: unknown, data: unknown) => {
-            console.dir(data);
-            project = JSON.parse(data as string);
-          });
-          console.dir(project);
-
-
+        fs.readFile(_filePath, "utf8", (err: unknown, data: unknown) => {
+          console.dir(data);
+          project = JSON.parse(data as string);
+        });
+        browserWindow!.webContents.send("load-project-file", project);
       }
     }]
   }
