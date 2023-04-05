@@ -17,7 +17,9 @@ function handleScroll() {
 
 onMounted( async () => {
   window.addEventListener("DOMContentLoaded", () => {
-    onLoadProjectFile((_: unknown, value: Project) => { _app.Project = value; });
+    onLoadProjectFile((_: unknown, value: Project) => {
+      _app.LoadProjectFile(value);
+    });
   });
 
   // ipc notes...unwrap promises here...  // userData.value = (await getUserData());
@@ -33,13 +35,20 @@ onUnmounted(() => {
 <template>
   <!-- <router-view></router-view> -->
   <h1>Takeoff</h1>
-  <p>Project: {{ _app.Project.projectName }}</p>
-  <p>Client: {{ _app.Project.projectClient }}</p>
-  <p>Line items count: {{ _app.Project.takeoff?.lineItems?.length }}</p>
+  <p>
+    Client:
+    <input :value="_app.Project.projectClient" />
+  </p>
+  <p>
+    Project:
+    <input :value="_app.Project.projectName" />
+  </p>
+  <p>Scope: {{ _app.Project.takeoff?.lineItems?.length }} line item(s)</p>
   <p
     v-for="li in _app.Project.takeoff?.lineItems"
     :key="li.name"
+    style="margin-left: 10px;"
   >
-    {{ li.name }} - {{ li.quantity }} - {{ li.uom }}
+    {{ li.name }}: {{ li.quantity }} {{ li.uom }}
   </p>
 </template>

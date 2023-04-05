@@ -3,7 +3,7 @@ import type { Project } from "./../../../ipc-models/Takeoff/Takeoff";
 
 
 import { pickFile } from "./appMenuFunctions";
-const fs = require("fs");
+import { readFile } from "node:fs/promises";
 let project = {} as Project;
 
 const appMenuTemplate = [
@@ -15,10 +15,13 @@ const appMenuTemplate = [
         const _filePath = await pickFile();
         if (_filePath === null) return;
 
-        fs.readFile(_filePath, "utf8", (err: unknown, data: unknown) => {
-          console.dir(data);
-          project = JSON.parse(data as string);
-        });
+        try{
+          const data = await readFile(_filePath, "utf8");
+          project = JSON.parse(data);
+        } catch (err) {
+          throw err as Error;
+        }
+
         browserWindow!.webContents.send("load-project-file", project);
       }
     }]
