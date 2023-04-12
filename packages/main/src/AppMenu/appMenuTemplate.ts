@@ -1,9 +1,8 @@
 import { browserWindow } from "./../mainWindow";
 import type { Project } from "./../../../ipc-models/Takeoff/Takeoff";
-
-
-import { pickFile } from "./appMenuFunctions";
+import { pickDirectory, pickFile } from "./appMenuFunctions";
 import { readFile } from "node:fs/promises";
+import { SetSavePath } from "../mainState";
 let project = {} as Project;
 
 const appMenuTemplate = [
@@ -21,10 +20,19 @@ const appMenuTemplate = [
         } catch (err) {
           throw err as Error;
         }
-
-        browserWindow!.webContents.send("load-project-file", project);
+        browserWindow?.webContents.send("on-load-project-file", project);
       }
-    }]
+    },
+    {
+      label: "Save File...",
+      click: async function() {
+        const _filePath = await pickDirectory();
+        if (_filePath === null) return;
+        SetSavePath(_filePath as string);
+        browserWindow?.webContents.send("on-save-project-file", _filePath);
+      }
+    }
+  ]
   }
 ];
 

@@ -1,13 +1,11 @@
-import {app} from "electron";
+import { app } from "electron";
 import "./security-restrictions";
-import {restoreOrCreateWindow} from "/@/mainWindow";
+import { restoreOrCreateWindow} from "/@/mainWindow";
 import {platform} from "node:process";
 import * as electron from "electron";
 import { appMenuTemplate } from "./AppMenu/appMenuTemplate";
 
-/**
- * Prevent electron from running multiple instances.
- */
+/// Prevent electron from running multiple instances.
 const isSingleInstance = app.requestSingleInstanceLock();
 if (!isSingleInstance) {
   app.quit();
@@ -15,32 +13,25 @@ if (!isSingleInstance) {
 }
 app.on("second-instance", restoreOrCreateWindow);
 
-/**
- * Disable Hardware Acceleration to save more system resources.
- */
-app.disableHardwareAcceleration();
+/// Disable Hardware Acceleration to save more system resources.
+ app.disableHardwareAcceleration();
 
-/**
- * Shout down background process if all windows was closed
- */
+
+/// Shout down background process if all windows was closed
 app.on("window-all-closed", () => {
   if (platform !== "darwin") {
     app.quit();
   }
 });
 
-/**
- * @see https://www.electronjs.org/docs/latest/api/app#event-activate-macos Event: 'activate'.
- */
+/// @see https://www.electronjs.org/docs/latest/api/app#event-activate-macos Event: 'activate'.
 app.on("activate", restoreOrCreateWindow);
 
 const menu = electron.Menu;
 const appMenuBuilder = menu.buildFromTemplate( appMenuTemplate );
 menu.setApplicationMenu(appMenuBuilder);
 
-/**
- * Install Vue.js dev tools or any other extension in development mode only.
-*/
+/// Install Vue.js dev tools or any other extension in development mode only.
   if (import.meta.env.DEV) {
     const { app, session } = require("electron");
     const path = require("path");
@@ -60,9 +51,7 @@ menu.setApplicationMenu(appMenuBuilder);
     .catch(e => console.error("Failed to install dev tools:", e));
   }
 
-  /**
-   * Create the application window when the background process is ready.
-   */
+  /// Create the application window when the background process is ready.
   app
     .whenReady()
     .then(restoreOrCreateWindow)
@@ -90,4 +79,5 @@ if (import.meta.env.PROD) {
     })
     .catch(e => console.error("Failed check and install updates:", e));
 }
+
 export { app };

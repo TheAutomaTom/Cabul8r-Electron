@@ -8,4 +8,12 @@ async function pickFile(): Promise<string | null> {
     });
   }
 
-export { pickFile};
+async function pickDirectory(): Promise<string | null | undefined> {
+return await dialog.showSaveDialog({properties: ["showOverwriteConfirmation"]}) //.showOpenDialog({properties: ["openDirectory"] })
+  .then(function (response) {
+    if(response.canceled) return null;
+    return response.filePath;
+  });
+}
+
+export { pickFile, pickDirectory };
