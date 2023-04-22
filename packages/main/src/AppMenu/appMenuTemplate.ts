@@ -1,5 +1,5 @@
 import { browserWindow } from "./../mainWindow";
-import type { Project } from "./../../../ipc-models/Takeoff/Takeoff";
+import type { Project } from "./../../../ipc-models/Takeoff/Project";
 import { pickDirectory, pickFile } from "./appMenuFunctions";
 import { readFile } from "node:fs/promises";
 import { SetSavePath } from "../mainState";
