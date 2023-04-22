@@ -1,5 +1,4 @@
 import { createWebHistory, createRouter } from "vue-router";
-// import Wizard from "../views/Wizard.vue";
 
 export const routes = [
   // {
@@ -10,11 +9,11 @@ export const routes = [
   //   //  and that's why 'component: Wizard' statement looks different from others, below.
   //   component: Wizard,
   // },
-  // {
-  //   path: "/StyleGuide",
-  //   name: "StyleGuide",
-  //   component: () => import("../views/StyleGuide.vue"),
-  // },
+  {
+    path: "/",
+    name: "TakeoffView",
+    component: () => import("../views/TakeoffView.vue")
+  },
   // {
   //   path: "/FilePickers",
   //   name: "FilePickers",
@@ -28,14 +27,14 @@ export const routes = [
   {
     path: "/:pathMatch(.*)*",
     name: "404",
-    component: () => import("../views/NotFound.vue"),
-  },
+    component: () => import("../views/NotFound.vue")
+  }
 ];
 
 const router = createRouter({
   //
   history: createWebHistory(/*import.meta.env.BASE_URL*/),
-  routes,
+  routes
 });
 
 export default router;

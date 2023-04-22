@@ -1,7 +1,7 @@
 // import { ModalSpecification, ModalType } from "./../models/modals";
 import { ref } from "vue";
 import { defineStore } from "pinia";
-import type { Project } from "../../../ipc-models/Takeoff/Takeoff";
+import type { Project } from "../../../ipc-models/Takeoff/Project";
 
 export const useAppState = defineStore("AppState", () => {
 
