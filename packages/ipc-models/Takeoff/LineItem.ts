@@ -6,46 +6,46 @@ export type LineItem = {
   quantity: number;
   costs?: number; //Costs;
   uom?: UnitOfMeasurement;
-  lineItems?: LineItem[];
+  // lineItems?: LineItem[];
 };
-export type Costs =
-{
-  perSpec: number; //Cost;
-  // veOption: Cost;
-  uom: UnitOfMeasurement;
-  // equipmentRental: Cost;
-}
 
-export type Cost =
-{
-  fabrication: FabricationLabor;
-  installation: InstallationLabor;
-}
+// export type Costs =
+// {
+//   perSpec: number; //Cost;
+//   // veOption: Cost;
+//   uom: UnitOfMeasurement;
+//   // equipmentRental: Cost;
+// }
 
-export type FabricationLabor =
-{
-  measurement: number;
-  vendor: number;
-  waste: number;
-  finishing: number;
-  shopTime: number;
-  receiving: number;
-  delivery: number;
-}
+// export type Cost =
+// {
+//   fabrication: FabricationLabor;
+//   installation: InstallationLabor;
+// }
 
-export type InstallationLabor =
-{
-  name: string;
-  cost: number;
-}
+// export type FabricationLabor =
+// {
+//   measurement: number;
+//   vendor: number;
+//   waste: number;
+//   finishing: number;
+//   shopTime: number;
+//   receiving: number;
+//   delivery: number;
+// }
 
+// export type InstallationLabor =
+// {
+//   name: string;
+//   cost: number;
+// }
 
-export type EquipmentRental =
-{
-  title: number;
-  perDay: number;
-  perJob: number;
-}
+// export type EquipmentRental =
+// {
+//   title: number;
+//   perDay: number;
+//   perJob: number;
+// }
 
 export enum UnitOfMeasurement
 {

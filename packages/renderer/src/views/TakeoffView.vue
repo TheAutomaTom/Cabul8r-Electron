@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import { useAppState } from "../states/AppState";
+import LineItems from "./TakeoffView/LineItems.vue";
+
 const _app = useAppState();
 </script>
 <template>
-  <h1>Takeoff</h1>
+  <h1>{{ _app.Project.projectName }}</h1>
   <table>
     <tr class="table-header">
       <th>ITEM</th>
@@ -12,26 +14,12 @@ const _app = useAppState();
       <th>COST</th>
       <th></th>
     </tr>
-    <tr
-      v-for="li in _app.Project.takeoff?.lineItems"
-      :key="li.name"
-    >
-      <td><input :value="li.name"></td>
-      <td>
-        <input
-          class="t-col-right"
-          :value="li.quantity"
-        >
-      </td>
-      <td><input :value="li.uom"></td>
-      <td>
-        <input
-          class="t-col-right"
-          :value="`$${li.costs}`"
-        >
-      </td>
-      <td></td>
-    </tr>
+
+    <line-items
+      v-if="_app.Project.takeoff"
+      :takeoff="_app.Project.takeoff"
+      :parent="_app.Project.id"
+    />
     <tr class="table-header">
       <td><input></td>
       <td><input class="t-col-right"></td>

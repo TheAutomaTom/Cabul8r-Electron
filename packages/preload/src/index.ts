@@ -24,8 +24,17 @@ const onSaveProjectFile = (callback: any) => {
 const handleSaveProjectFile = ( filePath: string, project: string ) => {
   writeFile( filePath, project, {encoding:"utf8"} );
 };
+const setContext = (element: string) =>
+  ipcRenderer.send("handle-set-context", element as any);
+const handleRightClick = ( elementId: any ) => {
+  console.log("--------------------\n");
+  console.log("preload: handleRightClick");
+  // console.log(typeof(element));
+  console.dir(elementId);
+  setContext(elementId);
+};
 
-export { onLoadProjectFile, onSaveProjectFile, handleSaveProjectFile };
+export { onLoadProjectFile, onSaveProjectFile, handleSaveProjectFile, handleRightClick };
 
 export {sha256sum} from "./nodeCrypto";
 export {versions} from "./versions";

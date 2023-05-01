@@ -1,4 +1,5 @@
 import { createWebHistory, createRouter } from "vue-router";
+import HomeView from "../views/HomeView.vue";
 
 export const routes = [
   // {
@@ -9,6 +10,11 @@ export const routes = [
   //   //  and that's why 'component: Wizard' statement looks different from others, below.
   //   component: Wizard,
   // },
+  {
+    path: "/",
+    name: "Home",
+    component: HomeView
+  },
   {
     path: "/",
     name: "TakeoffView",
