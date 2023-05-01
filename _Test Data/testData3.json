@@ -1,0 +1,48 @@
+{
+	"projectName": "My Test Project",
+	"projectClient": "My Test Client",
+	"id": "Project-One",
+	"takeoff": {
+		"id": "Takeoff-One",
+		"takeoffName": "Some Takeoff v1",
+		"reference": "Some Test Ref",
+		"lineItems": [
+		{
+			"id": "one",
+			"name": "Some cabinets",
+			"reference": "ID-401/1",
+			"quantity": 1,
+			"costs": 113,
+			"uom": "LF"
+		},{
+			"id": "two",
+			"name": "Some blabinets",
+			"reference": "ID-401/2",
+			"quantity": 2,
+			"costs": 213.31,
+			"uom": "LF"
+		},{
+			"id": "three",
+			"name": "Some wabinets",
+			"reference": "ID-401/3",
+			"quantity": 3,
+			"costs": 313.31,
+			"uom": "LF"
+		},{
+			"id": "four",
+			"name": "Some crabinets",
+			"reference": "ID-401/4",
+			"quantity": 4,
+			"costs": 413.31,
+			"uom": "LF"
+		},{
+			"id": "five",
+			"name": "Some jabinets",
+			"reference": "ID-401/5",
+			"quantity": 5,
+			"costs": 513.31,
+			"uom": "LF"
+		}
+		]
+	}
+}
