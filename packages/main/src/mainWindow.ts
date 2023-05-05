@@ -3,8 +3,6 @@ import {join} from "node:path";
 import {URL} from "node:url";
 import { contextMenuItems } from "./ContextMenu/contextMenuTemplate";
 
-let contextFocus = "";
-
 let browserWindow: BrowserWindow | undefined;
 async function createWindow() {
   browserWindow = new BrowserWindow({
@@ -28,10 +26,7 @@ async function createWindow() {
    */
   browserWindow.on("ready-to-show", () => {
     browserWindow?.show();
-
-    if (import.meta.env.DEV) {
-      browserWindow?.webContents.openDevTools();
-    }
+    if (import.meta.env.DEV) { browserWindow?.webContents.openDevTools(); }
   });
 
   /**
@@ -45,80 +40,79 @@ async function createWindow() {
       : new URL("../renderer/dist/index.html", "file://" + __dirname).toString();
 
   await browserWindow.loadURL(pageUrl);
-
   return browserWindow;
 }
 
-/**
- * Restore an existing BrowserWindow or Create a new BrowserWindow.
- */
+function handleSetContext (event: any, contextId: string) {
+  if(contextId == "") return;
+  contextMenu.items.forEach( (item) => {
+    if (item.id == "context-focus-item") {
+      item.visible = item.enabled = true;
+    }
+  });
+  contextMenu.popup();
+}
+const contextMenu = new Menu();
 export async function restoreOrCreateWindow() {
   let window = BrowserWindow.getAllWindows().find(w => !w.isDestroyed());
-
-  if (window === undefined) {
-    window = await createWindow();
-  }
+  if (window === undefined) { window = await createWindow(); }
 
   /// Context Menu...
   // eslint-disable-next-line prefer-const
-  let contextMenu = new Menu();
-  contextMenuItems.forEach( (item) => {
-    contextMenu.append(item);
-  });
+
+  ipcMain.on("handle-set-context", handleSetContext);
+
+  // window.webContents.on("context-menu", function(_, _params){
+  //   console.log("context-menu.contextFocus... ", contextFocus);
+  //   contextMenu.popup();
+  // });
+  contextMenuItems.forEach( (item) => contextMenu.append(item) );
+
   contextMenu.append(
     new MenuItem({
       id: "context-focus-item",
-      enabled: false,
-      label: `Handle ${contextFocus.toString()}`,
+      visible: true,
+      enabled: true,
+      label: "...",
       submenu:[
         {
           label: "Copy",
           click: function(){
+            console.log("Copy!");
+            browserWindow?.webContents.send("on-copy-row", "...");
             contextMenu.items.forEach( (item) => {
               if (item.id == "context-focus-item") {
-                item.enabled = false;
-                item.label = "-";
+                item.visible = item.enabled = false;
               }
             });
           }
         },
         {
-          label: "Paste",
-          click: function(){/*handlePaste(param)*/}
-        },
-        {
-          label: "Delete",
-          click: function(){/*handleDelete(param)*/}
+          label: "Paste as sibling",
+          click: function(){
+            console.log("Paste Sibling!");
+            browserWindow?.webContents.send("on-paste-row-sibling", "...");
+            contextMenu.items.forEach( (item) => {
+              if (item.id == "context-focus-item") {
+                item.visible = item.enabled = false;
+              }
+            });
+          }
         }
       ]
     })
   );
-  ipcMain.on("handle-set-context", function(_: any, param: string){
-    contextFocus = param;
-    contextMenu.items.forEach( (item) => {
-      if (item.id == "context-focus-item") {
-        item.label = `Handle ${contextFocus.toString()}`;
-        item.enabled = true;
-      }
-    });
-  });
 
-  window.webContents.on("context-menu", function(_, _params){
-    contextMenu.popup();
-  });
 /// ...context menu.
 
-  ipcMain.on("set-title", (event, title) => {
-    const webContents = event.sender;
-    const win = BrowserWindow.fromWebContents(webContents);
-    win?.setTitle(title);
-  });
+  // ipcMain.on("set-title", (event, title) => {
+  //   const webContents = event.sender;
+  //   const win = BrowserWindow.fromWebContents(webContents);
+  //   win?.setTitle(title);
+  // });
 
 
-  if (window.isMinimized()) {
-    window.restore();
-  }
-
+  if (window.isMinimized()) { window.restore(); }
   window.focus();
 }
 export {browserWindow};

@@ -16,7 +16,7 @@ export const routes = [
     component: HomeView
   },
   {
-    path: "/",
+    path: "/takeoff",
     name: "TakeoffView",
     component: () => import("../views/TakeoffView.vue")
   },

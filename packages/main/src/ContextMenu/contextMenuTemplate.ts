@@ -4,18 +4,16 @@ const contextMenuItems = [
   new MenuItem({
     label: "Hello",
     click: function(){
-      console.log("Context menu clicked!");
+      console.log("Context menu says 'Hello!'");
     }
   }),
   new MenuItem({
     label: "Goodbye",
     click: function(){
-      console.log("Context menu clicked, again!");
+      console.log("Context menu says 'Goodbye!'");
 
     }
   })
-
-
 ];
 
 export { contextMenuItems };

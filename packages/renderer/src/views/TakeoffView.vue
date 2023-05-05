@@ -1,8 +1,15 @@
 <script setup lang="ts">
 import { useAppState } from "../states/AppState";
 import LineItems from "./TakeoffView/LineItems.vue";
+import type { LineItem as LineItemModel } from "../../../ipc-models/Takeoff/LineItem";
+import { HandleRightClick } from "#preload";
 
 const _app = useAppState();
+
+const handleRightClick = (li: LineItemModel): void => {
+  _app.setRightClickFocus(li);
+  HandleRightClick(li.id);
+};
 </script>
 <template>
   <h1>{{ _app.Project.projectName }}</h1>
@@ -18,7 +25,8 @@ const _app = useAppState();
     <line-items
       v-if="_app.Project.takeoff"
       :takeoff="_app.Project.takeoff"
-      :parent="_app.Project.id"
+      :parent-id="_app.Project.id"
+      @line-items-row-right-clicked="handleRightClick"
     />
     <tr class="table-header">
       <td><input></td>

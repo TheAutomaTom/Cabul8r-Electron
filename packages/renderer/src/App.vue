@@ -1,10 +1,10 @@
 <script lang="ts" setup>
 import { useAppState } from "./states/AppState";
 import { onMounted, onUnmounted } from "vue";
-//import TakeoffView from "./views/TakeoffView.vue";
 import type { Project } from "../../ipc-models/Takeoff/Project";
 
-import { onLoadProjectFile, onSaveProjectFile, handleSaveProjectFile } from "#preload";
+import { OnLoadProjectFile, OnSaveProjectFile, HandleSaveProjectFile, OnCopyRow, OnPasteRowSibling } from "#preload";
+import router from "./infra/router";
 
 const _app = useAppState();
 
@@ -16,23 +16,29 @@ onMounted( async () => {
 
   ///App Menu commands...
   // Load project...
-  window.addEventListener("DOMContentLoaded", () => {
-    onLoadProjectFile((_: unknown, value: Project) => {
+  window.addEventListener("DOMContentLoaded", () => { OnLoadProjectFile((_: unknown, value: Project) => {
       _app.LoadProjectFile(value);
+      router.push("/takeoff");
     });
   });
   // Save project
-  window.addEventListener("DOMContentLoaded", async () => {
-    onSaveProjectFile((_: unknown, filePath: string) => {
-      handleSaveProjectFile(filePath, JSON.stringify(_app.Project));
+  window.addEventListener("DOMContentLoaded", async () => { OnSaveProjectFile((_: unknown, filePath: string) => {
+      HandleSaveProjectFile(filePath, JSON.stringify(_app.Project));
+    });
+  });
+  //Context commands
+  window.addEventListener("DOMContentLoaded", () => { OnCopyRow((_: unknown, _any: unknown) => {
+      _app.OnCopyRow();
+    });
+  });
+  window.addEventListener("DOMContentLoaded", () => { OnPasteRowSibling((_: unknown, _any: unknown) => {
+      _app.OnPasteRowSibling();
     });
   });
 
 });
 
-onUnmounted(() => {
-  window.removeEventListener("scroll", handleScroll);
-});
+onUnmounted(() => { window.removeEventListener("scroll", handleScroll); });
 </script>
 
 <template>
