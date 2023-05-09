@@ -3,7 +3,7 @@ import { useAppState } from "./states/AppState";
 import { onMounted, onUnmounted } from "vue";
 import type { Project } from "../../ipc-models/Takeoff/Project";
 
-import { OnLoadProjectFile, OnSaveProjectFile, HandleSaveProjectFile, OnCopyRow, OnPasteRowSibling } from "#preload";
+import { OnLoadProjectFile, OnSaveProjectFile, HandleSaveProjectFile, OnCopyRow, OnPasteRowChild, OnNavigateTo } from "#preload";
 import router from "./infra/router";
 
 const _app = useAppState();
@@ -31,12 +31,23 @@ onMounted( async () => {
       _app.OnCopyRow();
     });
   });
-  window.addEventListener("DOMContentLoaded", () => { OnPasteRowSibling((_: unknown, _any: unknown) => {
-      _app.OnPasteRowSibling();
+  // window.addEventListener("DOMContentLoaded", () => { OnPasteRowSibling((_: unknown, _any: unknown) => {
+  //     _app.OnPasteRowSibling();
+  //   });
+  // });
+  window.addEventListener("DOMContentLoaded", () => { OnPasteRowChild((_: unknown, _any: unknown) => {
+      _app.OnPasteRowChild  ();
+    });
+  });
+  window.addEventListener("DOMContentLoaded", () => { OnNavigateTo((_: unknown, route: string) => {
+      console.log(`/${route}`);
+      router.push(`/${route}`);
     });
   });
 
 });
+
+//"on-navigate-to", "proto-one"
 
 onUnmounted(() => { window.removeEventListener("scroll", handleScroll); });
 </script>

@@ -1,38 +1,37 @@
 <script setup lang="ts">
-import type { PropType } from "vue";
-import type { Takeoff } from "../../../../ipc-models/Takeoff/Takeoff";
-import type { LineItem as LineItemModel}  from "../../../../ipc-models/Takeoff/LineItem";
+import type { PropType } from "vue";import type { LineItem as LineItemModel}  from "../../../../ipc-models/Takeoff/LineItem";
 import LineItem from "./LineItem.vue";
+import { useAppState } from "/@/states/AppState";
+import { HandleRightClick } from "#preload";
 
 const props = defineProps({
   parentId: { type: String, default: "" },
-  takeoff: {
-    type: Object as PropType<Takeoff>,
-    default: {} as Takeoff
+  lineItems: {
+    type: Object as PropType<LineItemModel[]>,
+    default: {} as LineItemModel[]
   }
 });
-const emits = defineEmits(["line-items-row-right-clicked"]);
+const _app = useAppState();
+// const emits = defineEmits(["line-items-row-right-clicked"]);
 const handleRightClick = (li: LineItemModel): void => {
-  const toEmit = {
-    id: li.id,
-    parent: props.parentId,
-    name: li.name,
-    reference: li.reference,
-    quantity: li.quantity,
-    costs: li.costs,
-    uom: li.uom
-  };
-  emits("line-items-row-right-clicked", toEmit );
+
+  console.log("line-items-row-right-clicked:", `${li.id}_${li.name}`);
+  _app.setRightClickFocus(li);
+  HandleRightClick(li.id);
+
+  // emits("line-items-row-right-clicked", li );
 };
+
 </script>
 <template>
-  <p>{{ props.takeoff.lineItems?.length }}</p>
-  <line-item
-    v-for="li in props.takeoff.lineItems"
-    :key="li.id"
-    :li="li"
-    :parent-id="`${parentId}.${props.takeoff.id}`"
-    @row-right-clicked="handleRightClick"
-  >
-  </line-item>
+  <p style="font-size:x-small">Count: {{ lineItems.length }}</p>
+  <p style="padding-left:2em">
+    <line-item
+      v-for="li in props.lineItems"
+      :key="li.id"
+      :li="li"
+      @row-right-clicked="handleRightClick"
+    >
+    </line-item>
+  </p>
 </template>

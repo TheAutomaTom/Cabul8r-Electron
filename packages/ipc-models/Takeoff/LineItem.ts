@@ -1,13 +1,11 @@
 export type LineItem = {
   id: string;
-
-  parent: string;
   name: string;
   reference: string;
   quantity: number;
-  costs?: number; //Costs;
   uom?: UnitOfMeasurement;
-  // lineItems?: LineItem[];
+  costs?: number; //Costs;
+  lineItems?: LineItem[];
 };
 
 // export type Costs =

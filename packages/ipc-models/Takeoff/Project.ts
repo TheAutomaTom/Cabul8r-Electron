@@ -4,7 +4,7 @@ export type Project = {
   id: string;
   projectName: string;
   projectClient: string;
-  takeoff?: Takeoff;
+  takeoff: Takeoff;
 
 }
 
