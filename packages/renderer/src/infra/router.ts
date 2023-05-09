@@ -1,6 +1,7 @@
 import { createWebHistory, createRouter } from "vue-router";
 import HomeView from "../views/HomeView.vue";
 import AGGrid from "../views/AGGrid.vue";
+import Handsontable from "../views/HandsontableView.vue";
 
 export const routes = [
   // {
@@ -29,7 +30,7 @@ export const routes = [
   {
     path: "/proto-two",
     name: "proto-two",
-    component: () => import("../views/TakeoffView.vue")
+    component: Handsontable
   },
   {
     path: "/proto-three",
