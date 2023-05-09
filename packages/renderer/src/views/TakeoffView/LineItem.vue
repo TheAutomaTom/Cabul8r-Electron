@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { PropType } from "vue";
 import type { LineItem } from "../../../../ipc-models/Takeoff/LineItem";
-
+import LineItems from "./LineItems.vue";
 const props = defineProps({
   li: {
     type: Object as PropType<LineItem>,
@@ -12,23 +12,14 @@ const props = defineProps({
 });
 const emits = defineEmits(["row-right-clicked"]);
 const handleRightClick = () => {
-  const toEmit = {
-    id: props.parentId ? `${props.parentId}.${props.li.id}` : `${props.li.id}`,
-    parent: props.parentId,
-    name: props.li.name,
-    reference: props.li.reference,
-    quantity: props.li.quantity,
-    costs: props.li.costs,
-    uom: props.li.uom
-  };
-  emits("row-right-clicked", toEmit);
+  console.log("row-right-clicked          : ", `${props.li.id}_${props.li.name}`);
+  emits("row-right-clicked", props.li);
 };
 
 </script>
 <template>
   <tr
-    :id="props.li.id"
-    :parent="props.parentId || props.li.parent"
+    :id="`${props.li.id}_${props.li.name}`"
     :name="props.li.name"
     :reference="props.li.reference"
     :quantity="props.li.quantity"
@@ -36,7 +27,8 @@ const handleRightClick = () => {
     :uom="props.li.uom"
     @contextmenu="handleRightClick()"
   >
-    <td><input :value="props.li.name"></td>
+    <td style="width:50%"><input :value="props.li.name"></td>
+    <td style="width:50%"><input :value="props.li.id"></td>
     <td>
       <input
         class="t-col-right"
@@ -52,4 +44,11 @@ const handleRightClick = () => {
     </td>
     <td></td>
   </tr>
+  <p style="padding-left:2em">
+    <line-items
+      v-if="props.li.lineItems"
+      :line-items="props.li.lineItems"
+    ></line-items>
+    <!-- @line-items-row-right-clicked="handleRightClick" -->
+  </p>
 </template>

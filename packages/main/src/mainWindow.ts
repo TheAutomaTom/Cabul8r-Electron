@@ -48,6 +48,7 @@ function handleSetContext (event: any, contextId: string) {
   contextMenu.items.forEach( (item) => {
     if (item.id == "context-focus-item") {
       item.visible = item.enabled = true;
+      // item.label = contextId; //Wht doesn't this work?
     }
   });
   contextMenu.popup();
@@ -92,6 +93,18 @@ export async function restoreOrCreateWindow() {
           click: function(){
             console.log("Paste Sibling!");
             browserWindow?.webContents.send("on-paste-row-sibling", "...");
+            contextMenu.items.forEach( (item) => {
+              if (item.id == "context-focus-item") {
+                item.visible = item.enabled = false;
+              }
+            });
+          }
+        },
+        {
+          label: "Paste as child",
+          click: function(){
+            console.log("Paste Child!");
+            browserWindow?.webContents.send("on-paste-row-child", "...");
             contextMenu.items.forEach( (item) => {
               if (item.id == "context-focus-item") {
                 item.visible = item.enabled = false;
