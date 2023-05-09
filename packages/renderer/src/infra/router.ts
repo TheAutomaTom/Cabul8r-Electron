@@ -1,5 +1,6 @@
 import { createWebHistory, createRouter } from "vue-router";
 import HomeView from "../views/HomeView.vue";
+import AGGrid from "../views/AGGrid.vue";
 
 export const routes = [
   // {
@@ -18,6 +19,21 @@ export const routes = [
   {
     path: "/takeoff",
     name: "TakeoffView",
+    component: () => import("../views/TakeoffView.vue")
+  },
+  {
+    path: "/proto-one",
+    name: "proto-one",
+    component: AGGrid
+  },
+  {
+    path: "/proto-two",
+    name: "proto-two",
+    component: () => import("../views/TakeoffView.vue")
+  },
+  {
+    path: "/proto-three",
+    name: "proto-three",
     component: () => import("../views/TakeoffView.vue")
   },
   // {

@@ -33,6 +33,40 @@ const appMenuTemplate = [
       }
     }
   ]
+  },
+  {
+    label: "Window",
+    submenu:[{
+      label: "Home",
+      click: async function() {
+        browserWindow?.webContents.send("on-navigate-to", "");
+      }
+    },
+    {
+      label: "Native",
+      click: async function() {
+        browserWindow?.webContents.send("on-navigate-to", "takeoff");
+      }
+    },
+    {
+      label: "proto-one",
+      click: async function() {
+        browserWindow?.webContents.send("on-navigate-to", "proto-one");
+      }
+    },
+    {
+      label: "proto-two",
+      click: async function() {
+        browserWindow?.webContents.send("on-navigate-to", "proto-two");
+      }
+    },
+    {
+      label: "proto-three",
+      click: async function() {
+        browserWindow?.webContents.send("on-navigate-to", "proto-three");
+      }
+    }
+  ]
   }
 ];
 
