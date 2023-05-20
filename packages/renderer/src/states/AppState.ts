@@ -23,29 +23,28 @@ export const useAppState = defineStore("AppState", () => {
 
   const OnCopyRow = () => clipboardRow.value = focussedRow.value;
 
-  const OnPasteRowSibling = (element: LineItem) => {
-    // if(focussedRow.value.lineItems == null){
-    //   focussedRow.value.lineItems = [];
-    // }
-    // focussedRow.value.lineItems.push(element);
-    console.log("OnPasteRowSibling... ", element);
+  const OnPasteRowSibling = ( lineItems: LineItem[] = Project.value.takeoff?.lineItems ) => {
+    for(const item of lineItems){
+
+      if(item.id == focussedRow.value.id){
+        const newRow = createNewIds(clipboardRow.value);
+        lineItems.push(newRow);
+        break;
+      } else if (item.lineItems != null){
+        OnPasteRowSibling(item.lineItems);
+      }
+    }
   };
 
-  const OnPasteRowChild = (lineItems: LineItem[] = Project.value.takeoff?.lineItems ) => {
-    console.log("OnPasteRowChild... ");
-
+  const OnPasteRowChild = ( lineItems: LineItem[] = Project.value.takeoff?.lineItems ) => {
     for(const item of lineItems){
-      console.log(`lineItems.forEach... ${item.id}.${item.name}}`);
 
       if(item.id == focussedRow.value.id){
         if(item.lineItems == null){
           item.lineItems = [];
         }
         const newRow = createNewIds(clipboardRow.value);
-        console.log(`lineItems.push...   ${newRow.id}.${newRow.name}` );
         item.lineItems.push(newRow);
-        console.log("Updated Model..." );
-        console.dir(Project.value);
         break;
       } else if (item.lineItems != null){
         OnPasteRowChild(item.lineItems);

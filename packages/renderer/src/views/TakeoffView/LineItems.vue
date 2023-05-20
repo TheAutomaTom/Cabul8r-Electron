@@ -12,26 +12,28 @@ const props = defineProps({
   }
 });
 const _app = useAppState();
-// const emits = defineEmits(["line-items-row-right-clicked"]);
 const handleRightClick = (li: LineItemModel): void => {
 
   console.log("line-items-row-right-clicked:", `${li.id}_${li.name}`);
   _app.setRightClickFocus(li);
   HandleRightClick(li.id);
 
-  // emits("line-items-row-right-clicked", li );
 };
 
 </script>
 <template>
-  <p style="font-size:x-small">Count: {{ lineItems.length }}</p>
-  <p style="padding-left:2em">
-    <line-item
-      v-for="li in props.lineItems"
-      :key="li.id"
-      :li="li"
-      @row-right-clicked="handleRightClick"
-    >
-    </line-item>
+  <p
+    v-if="props.lineItems.length > 0"
+    style="font-size:x-small"
+  >
+    Count: {{ lineItems.length }}
   </p>
+  <line-item
+    v-for="(li, i ) in props.lineItems"
+    :key="li.id"
+    :li="li"
+    :bg-color="i % 2 === 0 ? 'grey' : 'white'"
+    @row-right-clicked="handleRightClick"
+  >
+  </line-item>
 </template>

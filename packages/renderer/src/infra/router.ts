@@ -1,7 +1,7 @@
 import { createWebHistory, createRouter } from "vue-router";
 import HomeView from "../views/HomeView.vue";
 import AGGrid from "../views/AGGrid.vue";
-import Handsontable from "../views/HandsontableView.vue";
+import HandsontableView from "../views/HandsontableView.vue";
 
 export const routes = [
   // {
@@ -24,18 +24,18 @@ export const routes = [
   },
   {
     path: "/proto-one",
-    name: "proto-one",
-    component: AGGrid
+    name: "TakeoffGridView",
+    component: () => import("../views/TakeoffGridView.vue")
   },
   {
     path: "/proto-two",
     name: "proto-two",
-    component: Handsontable
+    component: AGGrid
   },
   {
     path: "/proto-three",
     name: "proto-three",
-    component: () => import("../views/TakeoffView.vue")
+    component: HandsontableView
   },
   // {
   //   path: "/FilePickers",

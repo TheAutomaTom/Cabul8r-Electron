@@ -7,6 +7,7 @@ const props = defineProps({
     type: Object as PropType<LineItem>,
     default: {} as LineItem
   },
+  bgColor: { type: String, default: "white" },
   parentId: { type: String, default: "" }
 
 });
@@ -20,15 +21,21 @@ const handleRightClick = () => {
 <template>
   <tr
     :id="`${props.li.id}_${props.li.name}`"
-    :name="props.li.name"
+    :name="props.bgColor"
     :reference="props.li.reference"
     :quantity="props.li.quantity"
     :costs="props.li.costs"
     :uom="props.li.uom"
+    style="background-color:props.bgColor.toString()"
     @contextmenu="handleRightClick()"
   >
-    <td style="width:50%"><input :value="props.li.name"></td>
-    <td style="width:50%"><input :value="props.li.id"></td>
+    <td style="width:50%">
+      <input
+        :value="props.bgColor"
+        style="background-color:{{props.bgColor}}"
+      >
+    </td>
+    <!-- <td style="width:50%"><input :value="props.li.id"></td> -->
     <td>
       <input
         class="t-col-right"

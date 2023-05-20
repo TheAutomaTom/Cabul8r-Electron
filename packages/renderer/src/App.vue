@@ -3,7 +3,7 @@ import { useAppState } from "./states/AppState";
 import { onMounted, onUnmounted } from "vue";
 import type { Project } from "../../ipc-models/Takeoff/Project";
 
-import { OnLoadProjectFile, OnSaveProjectFile, HandleSaveProjectFile, OnCopyRow, OnPasteRowChild, OnNavigateTo } from "#preload";
+import { OnLoadProjectFile, OnSaveProjectFile, HandleSaveProjectFile, OnCopyRow, OnPasteRowSibling, OnPasteRowChild, OnNavigateTo } from "#preload";
 import router from "./infra/router";
 
 const _app = useAppState();
@@ -31,10 +31,10 @@ onMounted( async () => {
       _app.OnCopyRow();
     });
   });
-  // window.addEventListener("DOMContentLoaded", () => { OnPasteRowSibling((_: unknown, _any: unknown) => {
-  //     _app.OnPasteRowSibling();
-  //   });
-  // });
+  window.addEventListener("DOMContentLoaded", () => { OnPasteRowSibling((_: unknown, _any: unknown) => {
+      _app.OnPasteRowSibling();
+    });
+  });
   window.addEventListener("DOMContentLoaded", () => { OnPasteRowChild((_: unknown, _any: unknown) => {
       _app.OnPasteRowChild  ();
     });
