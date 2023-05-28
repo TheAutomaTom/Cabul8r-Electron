@@ -9,7 +9,8 @@ const props = defineProps({
   lineItems: {
     type: Object as PropType<LineItemModel[]>,
     default: {} as LineItemModel[]
-  }
+  },
+  indx: { type: Number, default: 0 }
 });
 const _app = useAppState();
 const handleRightClick = (li: LineItemModel): void => {
@@ -22,17 +23,11 @@ const handleRightClick = (li: LineItemModel): void => {
 
 </script>
 <template>
-  <p
-    v-if="props.lineItems.length > 0"
-    style="font-size:x-small"
-  >
-    Count: {{ lineItems.length }}
-  </p>
   <line-item
-    v-for="(li, i ) in props.lineItems"
+    v-for="(li, index ) in props.lineItems"
     :key="li.id"
     :li="li"
-    :bg-color="i % 2 === 0 ? 'grey' : 'white'"
+    :indx="indx ? indx + index: index"
     @row-right-clicked="handleRightClick"
   >
   </line-item>

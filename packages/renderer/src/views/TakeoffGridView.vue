@@ -42,10 +42,10 @@ table {
   height: auto;
   border: 2px solid grey;
 }
-tr:nth-child(even),
+/* tr:nth-child(even),
 tr:nth-child(even) input{
   background-color: #f2f2f2;
-}
+} */
 th, td{
   padding: 4px 8px;
 }
