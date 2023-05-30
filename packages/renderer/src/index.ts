@@ -9,4 +9,12 @@ _app.use(createPinia());
 import router from "./infra/router";
 _app.use(router);
 
+// Prime Faces...
+import PrimeVue from "primevue/config";
+import primes from "./infra/components/prime-components";
+_app.use(PrimeVue);
+primes.forEach((element) => {
+  _app.component(element.name, element.component);
+});
+
 _app.mount("#app");
