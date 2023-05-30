@@ -1,10 +1,10 @@
-import type { Takeoff } from "./Takeoff";
+import type { LineItem } from "./LineItem";
 
 export type Project = {
   id: string;
-  projectName: string;
+  name: string;
   projectClient: string;
-  takeoff: Takeoff;
+  lineItems: LineItem[];
 
 }
 

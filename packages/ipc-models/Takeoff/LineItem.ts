@@ -1,10 +1,10 @@
 export type LineItem = {
   id: string;
   name: string;
-  reference: string;
-  quantity: number;
-  uom?: UnitOfMeasurement;
-  costs?: number; //Costs;
+  // reference: string;
+  // quantity: number;
+  // uom?: UnitOfMeasurement;
+  // costs?: number; //Costs;
   lineItems?: LineItem[];
 };
 
@@ -46,11 +46,11 @@ export type LineItem = {
 //   perJob: number;
 // }
 
-export enum UnitOfMeasurement
-{
-  EA,
-  LF,
-  SF,
-  BF
-}
+// export enum UnitOfMeasurement
+// {
+//   EA,
+//   LF,
+//   SF,
+//   BF
+// }
 

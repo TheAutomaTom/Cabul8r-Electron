@@ -9,7 +9,7 @@ export const useAppState = defineStore("AppState", () => {
   const IsScrolled = ref(false);
 
   const Project = ref({
-    projectName: "No project loaded", projectClient: "No project loaded"
+    name: "No project loaded", projectClient: "No project loaded"
   } as Project);
   const LoadProjectFile = (project: Project) => Project.value = project;
 
@@ -22,7 +22,7 @@ export const useAppState = defineStore("AppState", () => {
   };
 
   const OnCopyRow = () => clipboardRow.value = focussedRow.value;
-  const OnPasteRowSibling = ( lineItems: LineItem[] = Project.value.takeoff?.lineItems ) => {
+  const OnPasteRowSibling = ( lineItems: LineItem[] = Project.value.lineItems ) => {
     for(const item of lineItems){
       if(item.id == focussedRow.value.id){
         const newRow = createNewIds(clipboardRow.value);
@@ -34,7 +34,7 @@ export const useAppState = defineStore("AppState", () => {
     }
   };
 
-  const OnPasteRowChild = ( lineItems: LineItem[] = Project.value.takeoff?.lineItems ) => {
+  const OnPasteRowChild = ( lineItems: LineItem[] = Project.value.lineItems ) => {
     for(const item of lineItems){
       if(item.id == focussedRow.value.id){
         if(item.lineItems == null){
