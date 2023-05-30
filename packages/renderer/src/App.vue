@@ -16,31 +16,37 @@ onMounted( async () => {
 
   ///App Menu commands...
   // Load project...
-  window.addEventListener("DOMContentLoaded", () => { OnLoadProjectFile((_: unknown, value: Project) => {
+  window.addEventListener("DOMContentLoaded", () => {
+    OnLoadProjectFile((_: unknown, value: Project) => {
       _app.LoadProjectFile(value);
       router.push("/takeoff");
     });
   });
   // Save project
-  window.addEventListener("DOMContentLoaded", async () => { OnSaveProjectFile((_: unknown, filePath: string) => {
+  window.addEventListener("DOMContentLoaded", async () => {
+    OnSaveProjectFile((_: unknown, filePath: string) => {
       HandleSaveProjectFile(filePath, JSON.stringify(_app.Project));
     });
   });
   //Context commands
-  window.addEventListener("DOMContentLoaded", () => { OnCopyRow((_: unknown, _any: unknown) => {
+  window.addEventListener("DOMContentLoaded", () => {
+    OnCopyRow((_: unknown, _any: unknown) => {
       _app.OnCopyRow();
     });
   });
-  window.addEventListener("DOMContentLoaded", () => { OnPasteRowSibling((_: unknown, _any: unknown) => {
+  window.addEventListener("DOMContentLoaded", () => {
+    OnPasteRowSibling((_: unknown, _any: unknown) => {
       _app.OnPasteRowSibling();
     });
   });
-  window.addEventListener("DOMContentLoaded", () => { OnPasteRowChild((_: unknown, _any: unknown) => {
+  window.addEventListener("DOMContentLoaded", () => {
+    OnPasteRowChild((_: unknown, _any: unknown) => {
       _app.OnPasteRowChild  ();
     });
   });
-  window.addEventListener("DOMContentLoaded", () => { OnNavigateTo((_: unknown, route: string) => {
-      console.log(`/${route}`);
+  window.addEventListener("DOMContentLoaded", () => {
+    OnNavigateTo((_: unknown, route: string) => {
+      console.log(`Router path: /${route}`);
       router.push(`/${route}`);
     });
   });

@@ -22,10 +22,8 @@ export const useAppState = defineStore("AppState", () => {
   };
 
   const OnCopyRow = () => clipboardRow.value = focussedRow.value;
-
   const OnPasteRowSibling = ( lineItems: LineItem[] = Project.value.takeoff?.lineItems ) => {
     for(const item of lineItems){
-
       if(item.id == focussedRow.value.id){
         const newRow = createNewIds(clipboardRow.value);
         lineItems.push(newRow);
@@ -38,7 +36,6 @@ export const useAppState = defineStore("AppState", () => {
 
   const OnPasteRowChild = ( lineItems: LineItem[] = Project.value.takeoff?.lineItems ) => {
     for(const item of lineItems){
-
       if(item.id == focussedRow.value.id){
         if(item.lineItems == null){
           item.lineItems = [];

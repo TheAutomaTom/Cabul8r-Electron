@@ -1,13 +1,14 @@
 <script setup lang="ts">
 import { useAppState } from "../states/AppState";
+import type { LineItem as LineItemModel}  from "../../../ipc-models/Takeoff/LineItem";
 import LineItems from "./TakeoffView/LineItems.vue";
 
 const _app = useAppState();
 
-// const handleRightClick = (li: LineItemModel): void => {
-//   _app.setRightClickFocus(li);
-//   HandleRightClick(li.id);
-// };
+
+const updateLineItems = (lineItems: LineItemModel[]): void => {
+  Object.assign(_app.Project.takeoff.lineItems, lineItems);
+};
 </script>
 <template>
   <h1>{{ _app.Project.projectName }}</h1>
@@ -18,21 +19,13 @@ const _app = useAppState();
       <th>UOM</th>
       <th>COST</th>
       <th></th>
-      <!-- <th>ID</th> -->
     </tr>
 
     <line-items
       v-if="_app.Project.takeoff"
       :line-items="_app.Project.takeoff.lineItems"
+      @update-model="updateLineItems"
     />
-    <!-- @line-items-row-right-clicked="handleRightClick" -->
-    <!-- <tr class="table-header">
-      <td><input></td>
-      <td><input class="t-col-right"></td>
-      <td><input></td>
-      <td><input class="t-col-right"></td>
-      <td><button>+</button></td>
-    </tr> -->
   </table>
 </template>
 <style>
