@@ -16,14 +16,14 @@ export const routes = [
     component: HomeView
   },
   {
-    path: "/takeoff",
-    name: "TakeoffView",
-    component: () => import("../views/TakeoffView.vue")
+    path: "/takeoff/native-1",
+    name: "TakeoffViewNative1",
+    component: () => import("../views/TakeoffViewNative1.vue")
   },
   {
-    path: "/proto-one",
-    name: "TakeoffGridView",
-    component: () => import("../views/TakeoffGridView.vue")
+    path: "/takeoff/prime",
+    name: "TakeoffViewPrime",
+    component: () => import("../views/TakeoffViewPrime.vue")
   },
   // {
   //   path: "/proto-two",

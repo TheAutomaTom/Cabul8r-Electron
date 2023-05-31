@@ -1,4 +1,4 @@
-// import Button from "primevue/button";
+import Button from "primevue/button";
 // import Calendar from "primevue/calendar";
 // import Card from "primevue/card";
 // import CheckBox from "primevue/checkbox";
@@ -29,11 +29,11 @@ export default [
   { component: DataTable, name: "p-data-table" },
   { component: Column, name: "p-column" },
   { component: ColumnGroup, name: "p-column-group" },
-  { component: Row, name: "p-row" }
+  { component: Row, name: "p-row" },
 
 
 
-  // { component: Button, name: "p-button" },
+  { component: Button, name: "p-button" }
   // { component: Calendar, name: "p-calendar" },
   // { component: Card, name: "p-card" },
   // { component: CheckBox, name: "p-check-box" },
