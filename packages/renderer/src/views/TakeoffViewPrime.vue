@@ -2,7 +2,6 @@
 import { ref } from "vue";
 import { useAppState } from "../states/AppState";
 import type { LineItem } from "../../../ipc-models/Takeoff/LineItem";
-// import LineItem from "./TakeoffView/LineItem.vue";
 
 const _app = useAppState();
 

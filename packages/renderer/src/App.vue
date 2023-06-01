@@ -19,7 +19,7 @@ onMounted( async () => {
   window.addEventListener("DOMContentLoaded", () => {
     OnLoadProjectFile((_: unknown, value: Project) => {
       _app.LoadProjectFile(value);
-      router.push("/takeoff");
+      router.push("/takeoff/native-1");
     });
   });
   // Save project

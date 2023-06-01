@@ -1,12 +1,26 @@
-export type LineItem = {
+// export type LineItem = {
+//   id: string;
+//   name: string;
+//   // reference: string;
+//   // quantity: number;
+//   // uom?: UnitOfMeasurement;
+//   // costs?: number; //Costs;
+//   lineItems?: LineItem[];
+// };
+export class LineItem {
+  constructor(name: string, qty = 1) {
+    this.name = name;
+    this.quantity = qty;
+    this.id = crypto.randomUUID();
+  }
   id: string;
   name: string;
   // reference: string;
-  // quantity: number;
+  quantity: number;
   // uom?: UnitOfMeasurement;
   // costs?: number; //Costs;
   lineItems?: LineItem[];
-};
+}
 
 // export type Costs =
 // {
