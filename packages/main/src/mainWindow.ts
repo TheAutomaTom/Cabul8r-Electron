@@ -1,4 +1,4 @@
-import {app, BrowserWindow, ipcMain, Menu, MenuItem } from "electron";
+import {app, BrowserWindow, ipcMain, Menu } from "electron";
 import {join} from "node:path";
 import {URL} from "node:url";
 import { contextMenuItems } from "./ContextMenu/contextMenuTemplate";
@@ -69,55 +69,6 @@ export async function restoreOrCreateWindow() {
   // });
   contextMenuItems.forEach( (item) => contextMenu.append(item) );
 
-  contextMenu.append(
-    new MenuItem({
-      id: "context-focus-item",
-      visible: true,
-      enabled: true,
-      label: "...",
-      submenu:[
-        {
-          label: "Copy",
-          click: function(){
-            console.log("Copy!");
-            browserWindow?.webContents.send("on-copy-row", "...");
-            contextMenu.items.forEach( (item) => {
-              if (item.id == "context-focus-item") {
-                item.visible = item.enabled = false;
-              }
-            });
-          }
-        },
-        {
-          label: "Paste as sibling",
-          click: function(){
-            console.log("Paste Sibling!");
-            browserWindow?.webContents.send("on-paste-row-sibling", "...");
-            contextMenu.items.forEach( (item) => {
-              if (item.id == "context-focus-item") {
-                item.visible = item.enabled = false;
-              }
-            });
-          }
-        },
-        {
-          label: "Paste as child",
-          click: function(){
-            console.log("Paste Child!");
-            browserWindow?.webContents.send("on-paste-row-child", "...");
-            contextMenu.items.forEach( (item) => {
-              if (item.id == "context-focus-item") {
-                item.visible = item.enabled = false;
-              }
-            });
-          }
-        }
-      ]
-    })
-  );
-
-/// ...context menu.
-
   // ipcMain.on("set-title", (event, title) => {
   //   const webContents = event.sender;
   //   const win = BrowserWindow.fromWebContents(webContents);
@@ -128,4 +79,4 @@ export async function restoreOrCreateWindow() {
   if (window.isMinimized()) { window.restore(); }
   window.focus();
 }
-export {browserWindow};
+export {browserWindow, contextMenu};

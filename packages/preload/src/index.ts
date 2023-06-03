@@ -9,7 +9,9 @@ import {
 } from "./ipc-functions/fileFunctions";
 import {
   HandleRightClick,
-  OnCopyRow, OnPasteRowSibling, OnPasteRowChild
+  OnCopyRow,
+  OnPasteRowSibling, OnPasteRowChild,
+  OnAddRowSibling, OnAddRowChild
 } from "./ipc-functions/contextFunctions";
 import { ipcRenderer } from "electron";
 
@@ -29,6 +31,9 @@ const OnNavigateTo = (callback: any) =>
 export {
   OnLoadProjectFile,
   OnSaveProjectFile, HandleSaveProjectFile,
-  HandleRightClick, OnCopyRow, OnPasteRowSibling, OnPasteRowChild,
-  OnNavigateTo
+  OnNavigateTo,
+  HandleRightClick,
+    OnCopyRow,
+    OnPasteRowSibling, OnPasteRowChild,
+    OnAddRowSibling, OnAddRowChild
 };
