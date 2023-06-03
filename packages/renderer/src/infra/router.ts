@@ -21,6 +21,11 @@ export const routes = [
     component: () => import("../views/TakeoffViewNative1.vue")
   },
   {
+    path: "/takeoff/native-2",
+    name: "TakeoffViewNative2",
+    component: () => import("../views/TakeoffViewNative2.vue")
+  },
+  {
     path: "/takeoff/prime",
     name: "TakeoffViewPrime",
     component: () => import("../views/TakeoffViewPrime.vue")

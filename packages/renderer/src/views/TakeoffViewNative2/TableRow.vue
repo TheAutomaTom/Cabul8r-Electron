@@ -9,12 +9,11 @@ const _app = useAppState();
 // const emits = defineEmits(["row-right-clicked"]);
 const props = defineProps({
   li: { type: Object as PropType<LineItemModel>, default: {} as LineItemModel },
-  level: { type: Number, default: 20 }
+  level: { type: Number, default: 0 }
 });
 const li = ref(props.li);
 const isFocussed = ref(false);
-const maxWidth = ref(200);
-const widthPerLevel = `${maxWidth.value - props.level}`;
+const maxWidth=20 - props.level;
 
 const handleRightClick = (li: LineItemModel): void => {
   isFocussed.value = true;
@@ -25,7 +24,7 @@ const handleRightClick = (li: LineItemModel): void => {
 
 </script>
 <template>
-  <div
+  <tr
     :id="`${props.li.id}_${props.li.name}`"
     :name="props.li.name"
     :quantity="props.li.quantity"
@@ -33,34 +32,32 @@ const handleRightClick = (li: LineItemModel): void => {
     class="line-item-row"
     @contextmenu="handleRightClick(li)"
   >
-    <div>
-      <span>
-        <input
-          v-model="li.name"
-          :style="`width: ${widthPerLevel}px;`"
-        />
-        <input
-          v-model="li.quantity"
-          style="width: 3em;"
-        />
-      </span>
-      <div>
-        <line-item-row
-          v-for="i in li.lineItems"
-          :key="i.id"
-          :li="i"
-          :level="props.level + 20"
-          :style="`padding-left: ${20}px;`"
-        />
-      </div>
+    <td>
+      <input
+        v-model="li.name"
+        :style="`width:${maxWidth}em;margin-left: ${props.level * 1}em;`"
+      />
+      <input
+        v-model="li.quantity"
+        style="width: 3em;"
+      />
+    </td>
+  </tr>
+  <table>
+    <div v-if="li.lineItems">
+      <table-row
+        v-for="l in li.lineItems"
+        :key="l.id"
+        :li="l"
+        :level="props.level + 1"
+      />
     </div>
-  </div>
+  </table>
 </template>
 <style lang="scss" scoped>
 .line-item-row{
   width:100%;
   // background-color: green;
-
 }
 .focussed{
   background-color: #ddff00;

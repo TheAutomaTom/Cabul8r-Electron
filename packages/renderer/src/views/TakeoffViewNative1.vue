@@ -1,20 +1,12 @@
 <script setup lang="ts">
-import { useAppState } from "../states/AppState";
-import type { LineItem as LineItemModel } from "../../../ipc-models/Takeoff/LineItem";
 import LineItemRow from "./TakeoffViewNative1/LineItemRow.vue";
-import { HandleRightClick } from "#preload";
-
+import { useAppState } from "../states/AppState";
 const _app = useAppState();
 
-const handleRightClick = (li: LineItemModel): void => {
-
-console.log("line-items-row-right-clicked:", `${li.id}_${li.name}`);
-_app.setRightClickFocus(li);
-HandleRightClick(li.id);
-
-};
 </script>
+<h1>As Line-Item-Row...</h1>
 <template>
+  <h1>Table</h1>
   <div>
     <input
       :value="_app.Project.name"
@@ -25,7 +17,6 @@ HandleRightClick(li.id);
       v-for="b in _app.Project.lineItems"
       :key="b.id"
       :li="b"
-      @row-right-clicked="handleRightClick"
     />
   </div>
 
