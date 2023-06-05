@@ -3,6 +3,7 @@ import { HandleRightClick } from "#preload";
 import { ref } from "vue";
 import type { PropType } from "vue";
 import type { LineItem as LineItemModel} from "../../../../ipc-models/Takeoff/LineItem";
+import { UnitOfMeasurement} from "../../../../ipc-models/Takeoff/UnitOfMeasurement";
 import { useAppState } from "../../states/AppState";
 const _app = useAppState();
 
@@ -39,8 +40,22 @@ const handleRightClick = (li: LineItemModel): void => {
       />
       <input
         v-model="li.quantity"
-        style="width: 3em;"
+        style="width: 2em;"
       />
+      <select
+        id="uoms"
+        v-model="li.uom"
+        name="uoms"
+        class="flex-0 w-[70px]"
+        style="display: inline-block"
+      >
+        <option
+          v-for="key in UnitOfMeasurement"
+          :key="key"
+        >
+          {{ key }}
+        </option>
+      </select>
     </td>
   </tr>
   <table>
@@ -61,5 +76,11 @@ const handleRightClick = (li: LineItemModel): void => {
 }
 .focussed{
   background-color: #ddff00;
+}
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  text-indent: 1px;
+  text-overflow: '';
 }
 </style>
