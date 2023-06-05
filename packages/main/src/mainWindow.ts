@@ -1,6 +1,6 @@
-import {app, BrowserWindow, ipcMain, Menu } from "electron";
-import {join} from "node:path";
-import {URL} from "node:url";
+import { app, BrowserWindow, ipcMain, Menu } from "electron";
+import { join } from "node:path";
+import { URL } from "node:url";
 import { contextMenuItems } from "./ContextMenu/contextMenuTemplate";
 
 let browserWindow: BrowserWindow | undefined;
