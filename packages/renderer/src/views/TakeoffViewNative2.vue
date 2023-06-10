@@ -1,48 +1,46 @@
 <script setup lang="ts">
+import TableRow from "./TakeoffViewNative2/TableRow.vue";
 import { useAppState } from "../states/AppState";
-import LineItems from "./TakeoffView/LineItems.vue";
-
 const _app = useAppState();
 
-// const handleRightClick = (li: LineItemModel): void => {
-//   _app.setRightClickFocus(li);
-//   HandleRightClick(li.id);
-// };
 </script>
 <template>
-  <h1>{{ _app.Project.projectName }}</h1>
+  <h1>As Table-Row...</h1>
+  <input
+    :value="_app.Project.name"
+    style="font-size: 1.25em;"
+  />
   <table>
-    <tr class="table-header">
-      <th style="width:100%">ITEM</th>
-      <th class="t-col-right">QTY</th>
-      <th>UOM</th>
-      <th>COST</th>
-      <th></th>
-      <!-- <th>ID</th> -->
-    </tr>
-
-    <line-items
-      v-if="_app.Project.takeoff"
-      :line-items="_app.Project.takeoff.lineItems"
-    />
+    <div
+      v-if="_app.Project.lineItems"
+      style="width: 100%;"
+    >
+      <div
+        v-for="li in _app.Project.lineItems"
+        :key="li.id"
+        style="padding-top: 0.25em;"
+      >
+        <table-row
+          :key="li.id"
+          :li="li"
+        />
+      </div>
+    </div>
     <!-- @line-items-row-right-clicked="handleRightClick" -->
-    <tr class="table-header">
+    <!-- <tr class="table-header">
       <td><input></td>
       <td><input class="t-col-right"></td>
       <td><input></td>
       <td><input class="t-col-right"></td>
       <td><button>+</button></td>
-    </tr>
+    </tr> -->
   </table>
 </template>
 <style>
 table {
-  width: auto;
   width: 100%;
-  height: auto;
-  border: 2px solid grey;
 }
-tr:nth-child(even),
+/* tr:nth-child(even),
 tr:nth-child(even) input{
   background-color: #f2f2f2;
 }
@@ -78,5 +76,5 @@ td input {
 input{
   padding:0;
   margin:0;
-}
+} */
 </style>

@@ -1,18 +1,64 @@
 import { MenuItem } from "electron";
+import { browserWindow, contextMenu } from "../mainWindow";
+
 
 const contextMenuItems = [
+
   new MenuItem({
-    label: "Hello",
+    label: "Copy",
     click: function(){
-      console.log("Context menu says 'Hello!'");
+      console.log("Copy!");
+      browserWindow?.webContents.send("on-copy-row", "...");
+      contextMenu.items.forEach( (item) => {
+        if (item.id == "context-focus-item") {
+          item.visible = item.enabled = false;
+        }
+      });
     }
   }),
   new MenuItem({
-    label: "Goodbye",
-    click: function(){
-      console.log("Context menu says 'Goodbye!'");
-
-    }
+    id: "paste-item",
+    visible: true,
+    enabled: true,
+    label: "Paste...",
+    submenu:[
+      {
+        label: "Paste as sibling",
+        click: function(){
+          console.log("Paste Sibling!");
+          browserWindow?.webContents.send("on-paste-row-sibling", "...");
+        }
+      },
+      {
+        label: "Paste as child",
+        click: function(){
+          console.log("Paste Child!");
+          browserWindow?.webContents.send("on-paste-row-child", "...");
+        }
+      }
+    ]
+  }),
+  new MenuItem({
+    id: "add-item",
+    visible: true,
+    enabled: true,
+    label: "New...",
+    submenu:[
+      {
+        label: "Add new sibling",
+        click: function(){
+          console.log("Main/ New Sibling!");
+          browserWindow?.webContents.send("on-new-row-sibling", "...");
+        }
+      },
+      {
+        label: "Add new child",
+        click: function(){
+          console.log("Main/ New Child!");
+          browserWindow?.webContents.send("on-new-row-child", "...");
+        }
+      }
+    ]
   })
 ];
 

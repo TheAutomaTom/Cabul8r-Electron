@@ -7,7 +7,16 @@ import {
   OnLoadProjectFile,
   OnSaveProjectFile, HandleSaveProjectFile
 } from "./ipc-functions/fileFunctions";
-import { HandleRightClick, OnCopyRow, OnPasteRowSibling } from "./ipc-functions/contextFunctions";
+import {
+  HandleRightClick,
+  OnCopyRow,
+  OnPasteRowSibling, OnPasteRowChild,
+  OnAddRowSibling, OnAddRowChild
+} from "./ipc-functions/contextFunctions";
+import { ipcRenderer } from "electron";
+
+const OnNavigateTo = (callback: any) =>
+  ipcRenderer.on("on-navigate-to", callback);
 
 // 2. encapsulate types...
 // import type { UserData } from "../../ipc-models/UserData";
@@ -22,5 +31,9 @@ import { HandleRightClick, OnCopyRow, OnPasteRowSibling } from "./ipc-functions/
 export {
   OnLoadProjectFile,
   OnSaveProjectFile, HandleSaveProjectFile,
-  HandleRightClick, OnCopyRow, OnPasteRowSibling
+  OnNavigateTo,
+  HandleRightClick,
+    OnCopyRow,
+    OnPasteRowSibling, OnPasteRowChild,
+    OnAddRowSibling, OnAddRowChild
 };

@@ -1,5 +1,5 @@
 <template>
-  <h3>Page not found...&nbsp;</h3>
+  <h1>Page not found...&nbsp;</h1>
   <h3>
     <a href="/"> return Home</a>
   </h3>

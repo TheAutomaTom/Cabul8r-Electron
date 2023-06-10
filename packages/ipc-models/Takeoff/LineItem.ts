@@ -1,12 +1,21 @@
-export type LineItem = {
+import { UnitOfMeasurement } from "./UnitOfMeasurement";
+
+export class LineItem {
+  constructor(name: string, qty = 1, uom = UnitOfMeasurement.EA) {
+    this.name = name;
+    this.quantity = qty;
+    this.uom = uom;
+    this.id = crypto.randomUUID();
+
+  }
   id: string;
   name: string;
-  reference: string;
+  // reference: string;
   quantity: number;
   uom?: UnitOfMeasurement;
-  costs?: number; //Costs;
+  // costs?: number; //Costs;
   lineItems?: LineItem[];
-};
+}
 
 // export type Costs =
 // {
@@ -46,11 +55,4 @@ export type LineItem = {
 //   perJob: number;
 // }
 
-export enum UnitOfMeasurement
-{
-  EA,
-  LF,
-  SF,
-  BF
-}
 

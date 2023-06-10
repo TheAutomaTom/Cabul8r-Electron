@@ -1,7 +1,7 @@
 import { ref } from "vue";
 import { defineStore } from "pinia";
 import type { Project } from "../../../ipc-models/Takeoff/Project";
-import type { LineItem } from "../../../ipc-models/Takeoff/LineItem";
+import { LineItem } from "../../../ipc-models/Takeoff/LineItem";
 
 export const useAppState = defineStore("AppState", () => {
 
@@ -9,7 +9,7 @@ export const useAppState = defineStore("AppState", () => {
   const IsScrolled = ref(false);
 
   const Project = ref({
-    projectName: "No project loaded", projectClient: "No project loaded"
+    name: "No project loaded", projectClient: "No project loaded"
   } as Project);
   const LoadProjectFile = (project: Project) => Project.value = project;
 
@@ -21,31 +21,59 @@ export const useAppState = defineStore("AppState", () => {
     focussedRow.value = element;
   };
 
-  const OnCopyRow = () => clipboardRow.value = focussedRow.value;
-
-  const OnPasteRowSibling = (element: LineItem) => {
-    // if(focussedRow.value.lineItems == null){
-    //   focussedRow.value.lineItems = [];
-    // }
-    // focussedRow.value.lineItems.push(element);
-    console.log("OnPasteRowSibling... ", element);
-  };
-
-  const OnPasteRowChild = (lineItems: LineItem[] = Project.value.takeoff?.lineItems ) => {
-    console.log("OnPasteRowChild... ");
-
+  const OnAddRowSibling = ( lineItems: LineItem[] = Project.value.lineItems ) => {
     for(const item of lineItems){
-      console.log(`lineItems.forEach... ${item.id}.${item.name}}`);
-
+      if(item.id == focussedRow.value.id){
+        const newRow = createLineItem();
+        lineItems.push(newRow);
+        console.warn("newRow...");
+        console.dir(newRow);
+        break;
+      } else if (item.lineItems != null){
+        console.warn("Recursive call...");
+        OnAddRowSibling(item.lineItems);
+      }
+    }
+  };
+  const OnAddRowChild = ( lineItems: LineItem[] = Project.value.lineItems ) => {
+    for(const item of lineItems){
       if(item.id == focussedRow.value.id){
         if(item.lineItems == null){
           item.lineItems = [];
         }
-        const newRow = createNewIds(clipboardRow.value);
-        console.log(`lineItems.push...   ${newRow.id}.${newRow.name}` );
+        const newRow = createLineItem();
+        console.warn("newRow...");
+        console.dir(newRow);
         item.lineItems.push(newRow);
-        console.log("Updated Model..." );
-        console.dir(Project.value);
+        break;
+      } else if (item.lineItems != null){
+        console.warn("Recursive call...");
+        OnAddRowChild(item.lineItems);
+      }
+    }
+  };
+
+  const OnCopyRow = () => clipboardRow.value = focussedRow.value;
+  const OnPasteRowSibling = ( lineItems: LineItem[] = Project.value.lineItems ) => {
+    for(const item of lineItems){
+      if(item.id == focussedRow.value.id){
+        const newRow = createLineItem(clipboardRow.value);
+        lineItems.push(newRow);
+        break;
+      } else if (item.lineItems != null){
+        OnPasteRowSibling(item.lineItems);
+      }
+    }
+  };
+
+  const OnPasteRowChild = ( lineItems: LineItem[] = Project.value.lineItems ) => {
+    for(const item of lineItems){
+      if(item.id == focussedRow.value.id){
+        if(item.lineItems == null){
+          item.lineItems = [];
+        }
+        const newRow = createLineItem(clipboardRow.value);
+        item.lineItems.push(newRow);
         break;
       } else if (item.lineItems != null){
         OnPasteRowChild(item.lineItems);
@@ -54,7 +82,7 @@ export const useAppState = defineStore("AppState", () => {
   };
 
 
-  const createNewIds = (lineItem: LineItem): LineItem => {
+  const createLineItem = (lineItem= new LineItem("...") ): LineItem => {
     const li = JSON.parse(JSON.stringify(lineItem)) as LineItem;
     li.id= crypto.randomUUID();
 
@@ -64,7 +92,7 @@ export const useAppState = defineStore("AppState", () => {
         i.id = crypto.randomUUID();
         if( i.lineItems){
           console.log(`Recalling createNewIds...count... ${i.lineItems.length}`);
-          createNewIds(i);
+          createLineItem(i);
         }
       });
     }
@@ -79,6 +107,8 @@ export const useAppState = defineStore("AppState", () => {
     setRightClickFocus,
     OnCopyRow,
     OnPasteRowSibling,
-    OnPasteRowChild
+    OnPasteRowChild,
+    OnAddRowSibling,
+    OnAddRowChild
   };
 });

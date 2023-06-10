@@ -16,10 +16,30 @@ export const routes = [
     component: HomeView
   },
   {
-    path: "/takeoff",
-    name: "TakeoffView",
-    component: () => import("../views/TakeoffView.vue")
+    path: "/takeoff/native-1",
+    name: "TakeoffViewNative1",
+    component: () => import("../views/TakeoffViewNative1.vue")
   },
+  {
+    path: "/takeoff/native-2",
+    name: "TakeoffViewNative2",
+    component: () => import("../views/TakeoffViewNative2.vue")
+  },
+  {
+    path: "/takeoff/prime",
+    name: "TakeoffViewPrime",
+    component: () => import("../views/TakeoffViewPrime.vue")
+  },
+  // {
+  //   path: "/proto-two",
+  //   name: "proto-two",
+  //   component: AGGrid
+  // },
+  // {
+  //   path: "/proto-three",
+  //   name: "proto-three",
+  //   component: HandsontableView
+  // },
   // {
   //   path: "/FilePickers",
   //   name: "FilePickers",
