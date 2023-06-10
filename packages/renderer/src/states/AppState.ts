@@ -18,7 +18,6 @@ export const useAppState = defineStore("AppState", () => {
   const LoadProjectFile = (project: Project) => Project.value = project;
 
   const SetRightClickFocus = (element: LineItem) => {
-    console.log("_app.SetRightClickFocus    : ", `${element.id}_${element.name}`);
     focussedRow.value = element;
   };
 
@@ -27,11 +26,8 @@ export const useAppState = defineStore("AppState", () => {
       if(item.id == focussedRow.value.id){
         const newRow = createLineItem();
         lineItems.push(newRow);
-        console.warn("newRow...");
-        console.dir(newRow);
         break;
       } else if (item.lineItems != null){
-        console.warn("Recursive call...");
         OnAddRowSibling(item.lineItems);
       }
     }
@@ -44,99 +40,54 @@ export const useAppState = defineStore("AppState", () => {
           item.lineItems = [];
         }
         const newRow = createLineItem();
-        console.warn("newRow...");
-        console.dir(newRow);
         item.lineItems.push(newRow);
         break;
       } else if (item.lineItems != null){
-        console.warn("Recursive call...");
         OnAddRowChild(item.lineItems);
       }
     }
   };
 
   const OnCopyRow = () => { clipboardRow.value = focussedRow.value; isCutMode.value = false; };
-  const OnCutRow = ()  => { clipboardRow.value = focussedRow.value; isCutMode.value = true; };
-
-  // const OnDeleteRow = ( lineItems: LineItem[] = Project.value.lineItems  ) => {
-  //   console.log("Begin OnDeleteRow...");
-  //   for(const item of lineItems){
-  //     console.log("OnDeleteRow...item.id ==", item.id);
-
-  //     if(item.id == focussedRow.value.id){
-  //       console.warn("OnDeleteRow...item.id == focussedRow.value.id ? ", item.id == focussedRow.value.id);
-  //       const index = lineItems.indexOf(focussedRow.value);
-  //       console.error("OnDeleteRow...index == ", index);
-  //       if (index > -1) { // only splice array when item is found
-  //         console.error("Splicing...");
-  //         lineItems.splice(index, 1); // 2nd parameter means remove one item only
-  //       }
-
-  //       console.log("OnDeleteRow...break");
-  //       break;
-
-  //     } else if (item.lineItems != null){
-  //       console.error("Recursive call...OnDeleteRow(...)");
-  //       OnDeleteRow(item.lineItems);
-  //     }
-  //   }
-  // };
+  const OnSelectCutRow = ()  => { clipboardRow.value = focussedRow.value; isCutMode.value = true; };
 
   const OnDeleteRow = ( lineItems: LineItem[] = Project.value.lineItems  ) => {
-    console.log("Begin OnDeleteRow...");
     for(const item of lineItems){
-      console.log("OnDeleteRow...item.id ==", item.id);
-
       if(item.id == focussedRow.value.id){
-        console.warn("OnDeleteRow...item.id == focussedRow.value.id ? ", item.id == focussedRow.value.id);
         const index = lineItems.indexOf(focussedRow.value);
-        console.error("OnDeleteRow...index == ", index);
         if (index > -1) { // only splice array when item is found
-          console.error("Splicing...");
           lineItems.splice(index, 1); // 2nd parameter means remove one item only
         }
-
-        console.log("OnDeleteRow...break");
         break;
-
       } else if (item.lineItems != null){
-        console.error("Recursive call...OnDeleteRow(...)");
         OnDeleteRow(item.lineItems);
       }
     }
   };
 
-  // const onDeleteCutRow = (lineItems: LineItem[] = Project.value.lineItems  ): LineItem => {
-  //   console.log("Begin onDeleteCutRow...");
-  //   for(const item of lineItems){
-  //     console.log("onDeleteCutRow...item.id ==", item.id);
+  const OnDeleteCutRow = ( lineItems: LineItem[] = Project.value.lineItems  ) => {
+    for(const item of lineItems){
 
-  //     if(item.id == clipboardRow.value.id){
-  //       console.warn("onDeleteCutRow...item.id == focussedRow.value.id ? ", item.id == clipboardRow.value.id);
-  //       const index = lineItems.indexOf(clipboardRow.value);
-  //       console.warn("onDeleteCutRow...index == ", index);
-  //       if (index > -1) { // only splice array when item is found
-  //         console.error("onDeleteCutRow Splicing...");
-  //         lineItems.splice(index, 1); // 2nd parameter means remove one item only
-  //         console.log("onDeleteCutRow...return");
-  //         isCutMode.value = false;
-  //         return item;
-  //       }
+      if(item.id == clipboardRow.value.id){
+        const index = lineItems.indexOf(clipboardRow.value);
+        if (index > -1) { // only splice array when item is found
+          lineItems.splice(index, 1); // 2nd parameter means remove one item only
+        }
 
+        break;
 
-  //     } else if (item.lineItems != null){
-  //       console.error("Recursive call...onDeleteCutRow(...)");
-  //       onDeleteCutRow(item.lineItems);
-  //     }
-  //   }
-  // };
+      } else if (item.lineItems != null){
+        OnDeleteCutRow(item.lineItems);
+      }
+    }
+  };
 
   const OnPasteRowSibling = ( lineItems: LineItem[] = Project.value.lineItems ) => {
     for(const item of lineItems){
       if(item.id == focussedRow.value.id){
         const newRow = createLineItem(clipboardRow.value);
         lineItems.push(newRow);
-        //if(isCutMode.value == true){console.warn("Call onDeleteRow1"); OnDeleteRow(isCutMode);}
+        if(isCutMode.value == true) OnDeleteCutRow();
         break;
       } else if (item.lineItems != null){
         OnPasteRowSibling(item.lineItems);
@@ -152,7 +103,7 @@ export const useAppState = defineStore("AppState", () => {
         }
         const newRow = createLineItem(clipboardRow.value);
         item.lineItems.push(newRow);
-        //if(isCutMode.value == true){console.warn("Call onDeleteRow2"); OnDeleteRow(isCutMode);}
+        if(isCutMode.value == true)OnDeleteCutRow();
         break;
       } else if (item.lineItems != null){
         OnPasteRowChild(item.lineItems);
@@ -166,10 +117,8 @@ export const useAppState = defineStore("AppState", () => {
 
     if( li.lineItems != null ){
       li.lineItems.forEach((i) => {
-        console.log(`createNewIds.lineItems... ${i.id}..${i.name}}`);
         i.id = crypto.randomUUID();
         if( i.lineItems){
-          console.log(`Recalling createNewIds...count... ${i.lineItems.length}`);
           createLineItem(i);
         }
       });
@@ -188,7 +137,7 @@ export const useAppState = defineStore("AppState", () => {
     LoadProjectFile,
     SetRightClickFocus,
     OnCopyRow,
-    OnCutRow,
+    OnCutRow: OnSelectCutRow,
     OnDeleteRow,
     OnPasteRowSibling,
     OnPasteRowChild,

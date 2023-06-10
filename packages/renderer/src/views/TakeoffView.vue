@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import TableRow from "./TakeoffViewNative2/TableRow.vue";
+import TableRow from "./TakeoffView/TableRow.vue";
 import { useAppState } from "../states/AppState";
 const _app = useAppState();
 
@@ -18,7 +18,7 @@ const _app = useAppState();
       style="width: 100%;"
     >
       <div
-        v-for="(li, index) in _app.Project.lineItems"
+        v-for="li in _app.Project.lineItems"
         :key="li.id"
         style="padding-top: 0.25em;"
         class="line-item-row-div"
@@ -26,7 +26,6 @@ const _app = useAppState();
         <table-row
           :key="li.id"
           :li="li"
-          :indx="index"
         />
       </div>
     </div>

@@ -5,6 +5,7 @@ import type { Project } from "../../ipc-models/Takeoff/Project";
 
 import { OnLoadProjectFile, OnSaveProjectFile, HandleSaveProjectFile, OnCopyRow, OnCutRow, OnDeleteRow, OnPasteRowSibling, OnPasteRowChild, OnNavigateTo, OnAddRowChild, OnAddRowSibling } from "#preload";
 import router from "./infra/router";
+import { defaults } from "./infra/deafults";
 
 const _app = useAppState();
 
@@ -15,7 +16,7 @@ onMounted( async () => {
   window.addEventListener("scroll", handleScroll);
 
   ///App Menu commands..
-  window.addEventListener("DOMContentLoaded", () => { OnLoadProjectFile((_: unknown, value: Project) => { _app.LoadProjectFile(value); router.push("/takeoff/native-2"); }); });
+  window.addEventListener("DOMContentLoaded", () => { OnLoadProjectFile((_: unknown, value: Project) => { _app.LoadProjectFile(value); router.push(defaults.routeOnProjectLoad); }); });
   window.addEventListener("DOMContentLoaded", async () => { OnSaveProjectFile((_: unknown, filePath: string) => { HandleSaveProjectFile(filePath, JSON.stringify(_app.Project, null, 2)); }); });
 
   //Context commands
