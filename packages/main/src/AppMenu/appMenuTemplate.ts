@@ -31,6 +31,7 @@ const appMenuTemplate = [
       label: "Save as...",
       click: async function() {
         const _filePath = await pickDirectory();
+        sessionData.recentFilePath = _filePath as string;
         if (_filePath === null) return;
         SetSavePath(_filePath as string);
         browserWindow?.webContents.send("on-save-project-file", _filePath);
@@ -41,6 +42,7 @@ const appMenuTemplate = [
       // enabled: sessionData.recentFilePath != "",
       click: async function() {
         const _filePath = sessionData.recentFilePath;
+        sessionData.recentFilePath = _filePath as string;
         SetSavePath(_filePath as string);
         browserWindow?.webContents.send("on-save-project-file", _filePath);
       }
@@ -83,75 +85,6 @@ const appMenuTemplate = [
   }
 ];
 
-
-// const appMenuTemplate = [
-//   {
-//     label: "FileX",
-//     submenu:{
-//       label: "Open File...",
-//       click: function(){console.warn("word");} //pickFile()
-//     }
-//     // submenu: [
-//     //   {
-//     //     label: "Sub-Menu 1",
-//     //     click: function(){
-//     //       console.log(`Clicked Sub-menu 1!`)
-//     //     }
-//     //   },
-//     //   {type: `separator`},
-//     //   {
-//     //     label: "sub-menu 2",
-//     //   },
-//     //   {
-//     //     label: "sub-menu 3",
-//     //   }
-//     // ]
-
-//   },
-//   {
-//     label: "EditX",
-//     submenu: [
-//       {role:"undo"},
-//       {role:"redo"},
-//       {role:"separator"},
-//       {role:"cut"},
-//       {role:"copy"},
-//       {role:"paste"},
-//       {role:"pasteAndMatchStyle"},
-//       {role:"delete"},
-//       {role:"selectAll"}
-//     ]
-//   },
-//   {
-//     label: "Example",
-//     submenu: [
-//       {
-//         label: "Sub-Menu 1",
-//         click: function(){
-//           console.log("Clicked Sub-menu 1!");
-//         }
-//       },
-//       {type: "separator"},
-//       {
-//         label: "sub-menu 2"
-//       },
-//       {
-//         label: "sub-menu 3"
-//       }
-//     ]
-
-//   },
-//   {
-//     label: "word",
-//     submenu:[
-//     {
-//       label: "About the author",
-//       click: function(){
-//         electron.shell.openExternal("http://www.SurrealityCheck.org");
-//       }
-//     }
-//   ] }
-// ] as MenuItemConstructorOptions[];
 export { appMenuTemplate };
 
 
