@@ -8,14 +8,18 @@ export const useAppState = defineStore("AppState", () => {
   const IsLoading = ref(true);
   const IsScrolled = ref(false);
 
-  const focussedRow = ref({} as LineItem);
-  const clipboardRow = ref({} as LineItem);
-  const isCutMode = ref(false);
 
   const Project = ref({
     name: "No project loaded", projectClient: "No project loaded"
   } as Project);
-  const LoadProjectFile = (project: Project) => Project.value = project;
+  const LoadProjectFile = (project: Project) => {
+
+    Object.assign(Project.value, project);
+  };
+
+  const focussedRow = ref({} as LineItem);
+  const clipboardRow = ref({} as LineItem);
+  const isCutMode = ref(false);
 
   const SetRightClickFocus = (element: LineItem) => {
     focussedRow.value = element;

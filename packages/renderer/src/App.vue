@@ -5,7 +5,7 @@ import type { Project } from "../../ipc-models/Takeoff/Project";
 
 import { OnLoadProjectFile, OnSaveProjectFile, HandleSaveProjectFile, OnCopyRow, OnCutRow, OnDeleteRow, OnPasteRowSibling, OnPasteRowChild, OnNavigateTo, OnAddRowChild, OnAddRowSibling } from "#preload";
 import router from "./infra/router";
-import { defaults } from "./infra/deafults";
+import { defaults } from "./infra/defaultPaths";
 
 const _app = useAppState();
 

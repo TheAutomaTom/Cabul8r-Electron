@@ -8,7 +8,7 @@ const _app = useAppState();
   <!-- Title -->
   <h1>As Table-Row...</h1>
   <input
-    :value="_app.Project.name"
+    v-model="_app.Project.name"
     style="font-size: 1.25em;"
   />
   <!-- Line Items -->
