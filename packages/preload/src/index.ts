@@ -9,7 +9,7 @@ import {
 } from "./ipc-functions/fileFunctions";
 import {
   HandleRightClick,
-  OnCopyRow,
+  OnCopyRow, OnCutRow, OnDeleteRow,
   OnPasteRowSibling, OnPasteRowChild,
   OnAddRowSibling, OnAddRowChild
 } from "./ipc-functions/contextFunctions";
@@ -33,7 +33,7 @@ export {
   OnSaveProjectFile, HandleSaveProjectFile,
   OnNavigateTo,
   HandleRightClick,
-    OnCopyRow,
+    OnCopyRow, OnCutRow, OnDeleteRow,
     OnPasteRowSibling, OnPasteRowChild,
     OnAddRowSibling, OnAddRowChild
 };

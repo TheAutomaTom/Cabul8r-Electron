@@ -5,41 +5,43 @@ const _app = useAppState();
 
 </script>
 <template>
+  <!-- Title -->
   <h1>As Table-Row...</h1>
   <input
     :value="_app.Project.name"
     style="font-size: 1.25em;"
   />
+  <!-- Line Items -->
   <table>
     <div
       v-if="_app.Project.lineItems"
       style="width: 100%;"
     >
       <div
-        v-for="li in _app.Project.lineItems"
+        v-for="(li, index) in _app.Project.lineItems"
         :key="li.id"
         style="padding-top: 0.25em;"
+        class="line-item-row-div"
       >
         <table-row
           :key="li.id"
           :li="li"
+          :indx="index"
         />
       </div>
     </div>
-    <!-- @line-items-row-right-clicked="handleRightClick" -->
-    <!-- <tr class="table-header">
-      <td><input></td>
-      <td><input class="t-col-right"></td>
-      <td><input></td>
-      <td><input class="t-col-right"></td>
-      <td><button>+</button></td>
-    </tr> -->
   </table>
 </template>
 <style>
 table {
   width: 100%;
 }
+/* https://stackoverflow.com/questions/9867471/zebra-striping-nested-lists-with-css
+  line-item-row-div:nth-child(odd) {background:blue}
+  line-item-row-div:nth-child(odd) line-item-row-div:nth-child(even) {background:blue}
+  line-item-row-div:nth-child(even) line-item-row-div:nth-child(odd) {background:blue}
+*/
+
 /* tr:nth-child(even),
 tr:nth-child(even) input{
   background-color: #f2f2f2;

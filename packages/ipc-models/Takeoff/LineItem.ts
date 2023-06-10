@@ -15,6 +15,12 @@ export class LineItem {
   uom?: UnitOfMeasurement;
   // costs?: number; //Costs;
   lineItems?: LineItem[];
+
+  // [JsonIgnore] decorator?
+  // https://stackoverflow.com/questions/41685082/how-to-ignore-properties-sent-via-http/41685627#41685627
+  // Maybe I can make the ignore list part of the class...
+  isPathToDelete?: boolean;
+
 }
 
 // export type Costs =

@@ -17,6 +17,18 @@ const contextMenuItems = [
     }
   }),
   new MenuItem({
+    label: "Cut",
+    click: function(){
+      console.log("Cut!");
+      browserWindow?.webContents.send("on-cut-row", "...");
+      contextMenu.items.forEach( (item) => {
+        if (item.id == "context-focus-item") {
+          item.visible = item.enabled = false;
+        }
+      });
+    }
+  }),
+  new MenuItem({
     id: "paste-item",
     visible: true,
     enabled: true,
@@ -59,6 +71,18 @@ const contextMenuItems = [
         }
       }
     ]
+  }),
+  new MenuItem({
+    label: "Delete",
+    click: function(){
+      console.log("Delete!");
+      browserWindow?.webContents.send("on-delete-row", "...");
+      contextMenu.items.forEach( (item) => {
+        if (item.id == "context-focus-item") {
+          item.visible = item.enabled = false;
+        }
+      });
+    }
   })
 ];
 

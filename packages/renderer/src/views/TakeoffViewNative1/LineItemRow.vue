@@ -19,7 +19,7 @@ const widthPerLevel = `${maxWidth.value - props.level}`;
 const handleRightClick = (li: LineItemModel): void => {
   isFocussed.value = true;
   console.log("line-items-row-right-clicked:", `${li.id}_${li.name}`);
-  _app.setRightClickFocus(li);
+  _app.SetRightClickFocus(li);
   HandleRightClick(li.id);
 };
 
