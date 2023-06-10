@@ -8,12 +8,11 @@ export const useAppState = defineStore("AppState", () => {
   const IsLoading = ref(true);
   const IsScrolled = ref(false);
 
-
   const Project = ref({
-    name: "No project loaded", projectClient: "No project loaded"
+    name: "No project loaded", projectClient: "No client defined"
   } as Project);
   const LoadProjectFile = (project: Project) => {
-
+    reassignIds(project.lineItems);
     Object.assign(Project.value, project);
   };
 
@@ -128,6 +127,17 @@ export const useAppState = defineStore("AppState", () => {
       });
     }
     return li;
+  };
+
+  const reassignIds = ( lineItems: LineItem[] = Project.value.lineItems ) => {
+    Project.value.id = crypto.randomUUID();
+    for(const li of lineItems){
+      li.id = crypto.randomUUID();
+      if(li.lineItems){
+        reassignIds(li.lineItems);
+      }
+    }
+
   };
 
   const HighlightedRow = ref({} as LineItem);
