@@ -1,16 +1,19 @@
 <script setup lang="ts">
 import TakeoffRow from "./TakeoffView/TakeoffRow.vue";
-import { useAppState } from "../states/AppState";
+import { useAppState } from "../states/App.state";
 const app$ = useAppState();
 const p$ = app$.Project$;
 
 </script>
 <template>
   <!-- Title -->
-  <input
-    v-model="p$.Project.name"
-    style="font-size: 1.25em;"
-  />
+  <p>
+    TAKEOFF
+    <input
+      v-model="p$.Project.name"
+      style="font-size: 1.25em;"
+    />
+  </p>
   <!-- Line Items -->
   <table>
     <div

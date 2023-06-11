@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { useAppState } from "./states/AppState";
+import { useAppState } from "./states/App.state";
 import { onMounted, onUnmounted } from "vue";
 import type { Project } from "../../ipc-models/Takeoff/Project";
 
