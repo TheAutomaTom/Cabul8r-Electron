@@ -1,5 +1,5 @@
-import { LineItemExpense as LineItemCost } from "./LineItem/LineItemCost";
-import { UnitOfMeasurement } from "./LineItem/UnitOfMeasurement";
+import { LineItemExpense as LineItemCost } from "./LineItemCost";
+import { UnitOfMeasurement } from "./UnitOfMeasurement";
 
 export class LineItem {
   constructor(name: string, qty = 1, uom = UnitOfMeasurement.EA) {

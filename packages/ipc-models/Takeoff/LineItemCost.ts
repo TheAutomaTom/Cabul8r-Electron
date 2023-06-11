@@ -1,5 +1,5 @@
-import type { CostOfLabor } from "./Cost/CostOfLabor";
-import type { CostOfMaterial } from "./Cost/CostOfMaterial";
+import type { CostOfLabor } from "./LineItemCost/CostOfLabor";
+import type { CostOfMaterial } from "./LineItemCost/CostOfMaterial";
 
 export class LineItemExpense {
   constructor(description= "...") {
