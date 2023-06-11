@@ -2,14 +2,14 @@ import type { CostOfLabor } from "./LineItemCost/CostOfLabor";
 import type { CostOfMaterial } from "./LineItemCost/CostOfMaterial";
 
 export class LineItemExpense {
-  constructor(description= "...") {
+  constructor(name = "...") {
     this.id= crypto.randomUUID();
-    this.description= description;
+    this.name= name;
     this.material= [];
     this.labor= [];
   }
   id: string;
-  description: string;
+  name: string;
   material: CostOfMaterial[];
   labor: CostOfLabor[];
 
