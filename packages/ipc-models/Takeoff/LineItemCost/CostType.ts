@@ -1,5 +1,5 @@
 export enum CostType
 {
-  Mat = "Material",
-  Lab = "Labor"
+  MAT = "Material",
+  LAB = "Labor"
 }
