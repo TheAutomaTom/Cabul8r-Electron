@@ -1,7 +1,8 @@
 import { Cost } from "./Cost";
+import { CostType } from "./CostType";
 
 export class CostOfMaterial extends Cost {
-  constructor(base: number, description = "...") {
-    super(base, description);
+  constructor(cost: number, description = "...") {
+    super(CostType.Mat, cost, description);
   }
 }
