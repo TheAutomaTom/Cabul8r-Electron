@@ -58,27 +58,15 @@ const appMenuTemplate = [
       }
     },
     {
-      label: "Native",
+      label: "Takeoff",
       click: async function() {
         browserWindow?.webContents.send("on-navigate-to", "takeoff");
       }
     },
     {
-      label: "proto-one",
+      label: "Price Book",
       click: async function() {
-        browserWindow?.webContents.send("on-navigate-to", "proto-one");
-      }
-    },
-    {
-      label: "proto-two",
-      click: async function() {
-        browserWindow?.webContents.send("on-navigate-to", "proto-two");
-      }
-    },
-    {
-      label: "proto-three",
-      click: async function() {
-        browserWindow?.webContents.send("on-navigate-to", "proto-three");
+        browserWindow?.webContents.send("on-navigate-to", "price-book");
       }
     }
   ]

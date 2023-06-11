@@ -3,10 +3,12 @@ import { defineStore } from "pinia";
 // import type { Project } from "../../../ipc-models/Takeoff/Project";
 // import { LineItem } from "../../../ipc-models/Takeoff/LineItem";
 import { useProjectState } from "./Project.state";
+import { usePriceBookState } from "./PriceBook.state";
 
 export const useAppState = defineStore("AppState", () => {
 
   const Project$= useProjectState();
+  const PriceBook$= usePriceBookState();
 
   //= Private Methods ==>
   //...
@@ -23,7 +25,9 @@ export const useAppState = defineStore("AppState", () => {
 
   return {
     Project$,
+    PriceBook$,
     IsLoading,
     IsScrolled
   };
 });
+

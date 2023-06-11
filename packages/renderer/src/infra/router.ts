@@ -20,6 +20,11 @@ export const routes = [
     name: "TakeoffView",
     component: () => import("../views/TakeoffView.vue")
   },
+  {
+    path: "/price-book",
+    name: "PriceBookView",
+    component: () => import("../views/PriceBookView.vue")
+  },
   // {
   //   path: "/proto-two",
   //   name: "proto-two",
