@@ -3,9 +3,10 @@ import { HandleRightClick } from "#preload";
 import { ref } from "vue";
 import type { PropType } from "vue";
 import type { LineItem as LineItemModel} from "../../../../ipc-models/Takeoff/LineItem";
-import { UnitOfMeasurement} from "../../../../ipc-models/Takeoff/UnitOfMeasurement";
-import { useAppState } from "../../states/AppState";
-const _app = useAppState();
+import { UnitOfMeasurement} from "../../../../ipc-models/Takeoff/LineItem/UnitOfMeasurement";
+import { useAppState } from "/@/states/AppState";
+const app$ = useAppState();
+const p$ = app$.Project$;
 
 const props = defineProps({
   li: { type: Object as PropType<LineItemModel>, default: {} as LineItemModel },
@@ -15,8 +16,8 @@ const li = ref(props.li);
 const maxWidth = 20 - props.level;
 
 const handleRightClick = (li: LineItemModel): void => {
-  _app.HighlightedRow = li;
-  _app.SetRightClickFocus(li);
+  p$.HighlightedRow = li;
+  p$.SetRightClickFocus(li);
   HandleRightClick(li.id);
 };
 
@@ -26,22 +27,24 @@ const handleRightClick = (li: LineItemModel): void => {
     :id="`${props.li.id}_${props.li.name}`"
     :name="props.li.name"
     :quantity="props.li.quantity"
-    :class="_app.HighlightedRow == li ? 'focussed' : ''"
+    :class="p$.HighlightedRow == li ? 'focussed' : ''"
     class="line-item-row"
     @contextmenu="handleRightClick(li)"
   >
-    <td>
-      <div style="width: 2em; background-color: dimgray;"></div>
-    </td>
+    <td> <div style="width: 2em; background-color: dimgray;"></div> </td>
     <td>
       <input
         v-model="li.name"
         :style="`width:${maxWidth}em;margin-left: ${props.level * 1}em;`"
       />
+    </td>
+    <td>
       <input
         v-model="li.quantity"
         style="width: 4em; text-align: end;"
       />
+    </td>
+    <td>
       <select
         id="uoms"
         v-model="li.uom"
@@ -54,11 +57,24 @@ const handleRightClick = (li: LineItemModel): void => {
         </option>
       </select>
     </td>
+    <!-- <td>
+      <select
+        id="expense"
+        v-model="li.expense"
+      >
+        <option
+          v-for="key in UnitOfMeasurement"
+          :key="key"
+        >
+          {{ key }}
+        </option>
+      </select>
+    </td> -->
   </tr>
   <!-- ... -->
   <table>
     <div v-if="li.lineItems">
-      <table-row
+      <takeoff-row
         v-for="l in li.lineItems"
         :key="l.id"
         :li="l"

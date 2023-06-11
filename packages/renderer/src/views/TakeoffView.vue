@@ -1,29 +1,29 @@
 <script setup lang="ts">
-import TableRow from "./TakeoffView/TableRow.vue";
+import TakeoffRow from "./TakeoffView/TakeoffRow.vue";
 import { useAppState } from "../states/AppState";
-const _app = useAppState();
+const app$ = useAppState();
+const p$ = app$.Project$;
 
 </script>
 <template>
   <!-- Title -->
-  <h1>As Table-Row...</h1>
   <input
-    v-model="_app.Project.name"
+    v-model="p$.Project.name"
     style="font-size: 1.25em;"
   />
   <!-- Line Items -->
   <table>
     <div
-      v-if="_app.Project.lineItems"
+      v-if="p$.Project.lineItems"
       style="width: 100%;"
     >
       <div
-        v-for="li in _app.Project.lineItems"
+        v-for="li in p$.Project.lineItems"
         :key="li.id"
         style="padding-top: 0.25em;"
         class="line-item-row-div"
       >
-        <table-row
+        <takeoff-row
           :key="li.id"
           :li="li"
         />

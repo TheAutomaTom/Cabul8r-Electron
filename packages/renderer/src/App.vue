@@ -7,27 +7,27 @@ import { OnLoadProjectFile, OnSaveProjectFile, HandleSaveProjectFile, OnCopyRow,
 import router from "./infra/router";
 import { defaults } from "./infra/defaultPaths";
 
-const _app = useAppState();
+const app$ = useAppState();
 
-function handleScroll() { _app.IsScrolled = window.scrollY > 0; }
+function handleScroll() { app$.IsScrolled = window.scrollY > 0; }
 
 onMounted( async () => {
   //Scroll Listener...
   window.addEventListener("scroll", handleScroll);
 
   ///App Menu commands..
-  window.addEventListener("DOMContentLoaded", () => { OnLoadProjectFile((_: unknown, value: Project) => { _app.LoadProjectFile(value); router.push(defaults.routeOnProjectLoad); }); });
-  window.addEventListener("DOMContentLoaded", async () => { OnSaveProjectFile((_: unknown, filePath: string) => { HandleSaveProjectFile(filePath, JSON.stringify(_app.Project, null, 2)); }); });
+  window.addEventListener("DOMContentLoaded", () => { OnLoadProjectFile((_: unknown, value: Project) => { app$.Project$.LoadProjectFile(value); router.push(defaults.routeOnProjectLoad); }); });
+  window.addEventListener("DOMContentLoaded", async () => { OnSaveProjectFile((_: unknown, filePath: string) => { HandleSaveProjectFile(filePath, JSON.stringify(app$.Project$, null, 2)); }); });
 
   //Context commands
-  window.addEventListener("DOMContentLoaded", () => { OnCopyRow((_: unknown, _any: unknown)         => { _app.OnCopyRow();         }); });
-  window.addEventListener("DOMContentLoaded", () => { OnCutRow((_: unknown, _any: unknown)          => { _app.OnCutRow();          }); });
-  window.addEventListener("DOMContentLoaded", () => { OnPasteRowSibling((_: unknown, _any: unknown) => { _app.OnPasteRowSibling(); }); });
-  window.addEventListener("DOMContentLoaded", () => { OnPasteRowChild((_: unknown, _any: unknown)   => { _app.OnPasteRowChild  (); }); });
-  window.addEventListener("DOMContentLoaded", () => { OnAddRowSibling((_: unknown, _any: unknown)   => { _app.OnAddRowSibling();   }); });
-  window.addEventListener("DOMContentLoaded", () => { OnAddRowChild((_: unknown, _any: unknown)     => { _app.OnAddRowChild();     }); });
+  window.addEventListener("DOMContentLoaded", () => { OnCopyRow((_: unknown, _any: unknown)         => { app$.Project$.OnCopyRow();         }); });
+  window.addEventListener("DOMContentLoaded", () => { OnCutRow((_: unknown, _any: unknown)          => { app$.Project$.OnCutRow();          }); });
+  window.addEventListener("DOMContentLoaded", () => { OnPasteRowSibling((_: unknown, _any: unknown) => { app$.Project$.OnPasteRowSibling(); }); });
+  window.addEventListener("DOMContentLoaded", () => { OnPasteRowChild((_: unknown, _any: unknown)   => { app$.Project$.OnPasteRowChild  (); }); });
+  window.addEventListener("DOMContentLoaded", () => { OnAddRowSibling((_: unknown, _any: unknown)   => { app$.Project$.OnAddRowSibling();   }); });
+  window.addEventListener("DOMContentLoaded", () => { OnAddRowChild((_: unknown, _any: unknown)     => { app$.Project$.OnAddRowChild();     }); });
   window.addEventListener("DOMContentLoaded", () => { OnNavigateTo((_: unknown, route: string)      => {  router.push(`/${route}`);}); });
-  window.addEventListener("DOMContentLoaded", () => { OnDeleteRow((_: unknown, _any: unknown)       => { _app.OnDeleteRow();       }); });
+  window.addEventListener("DOMContentLoaded", () => { OnDeleteRow((_: unknown, _any: unknown)       => { app$.Project$.OnDeleteRow();       }); });
 
 });
 
