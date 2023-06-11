@@ -1,15 +1,15 @@
 {
   "name": "#2",
-  "id": "Test2",
+  "projectClient": "No client defined",
   "lineItems": [
     {
-      "id": "Id-Two",
+      "id": "4e749673-8600-4bdf-a365-383a6553eac4",
       "name": "2.1",
       "quantity": 2,
       "uom": "BF"
     },
     {
-      "id": "39cf2108-f68e-4556-a6b6-966e859d8e2e",
+      "id": "f0139b24-815e-4d3e-82ae-96f18899acdb",
       "name": "2.2",
       "quantity": 2,
       "lineItems": [
@@ -17,21 +17,14 @@
           "name": "2.2.1",
           "quantity": 4,
           "uom": "EA",
-          "id": "aa45da42-3a3e-4113-8a12-a509eec02265",
-          "lineItems": [
-            {
-              "name": "2.2.1.1",
-              "quantity": 6,
-              "uom": "EA",
-              "id": "873c07fc-d262-4af3-8414-0ef73e273e0d"
-            }
-          ]
+          "id": "b1022b60-a7b1-43f1-a1aa-b7286ba844da",
+          "lineItems": []
         },
         {
           "name": "2.2.2",
           "quantity": 4,
           "uom": "EA",
-          "id": "5c56a617-cb8c-41ed-8b11-da43c4910739"
+          "id": "93a43da5-bd56-4542-938e-eabb95a0f737"
         }
       ],
       "uom": "EA"
@@ -40,7 +33,28 @@
       "name": "2.3",
       "quantity": 2,
       "uom": "EA",
-      "id": "a06dc49d-8a30-4981-9c55-9a4e30bb7de9"
+      "id": "c1632a7c-1348-4afd-a55c-7c5e96a7eae2"
+    },
+    {
+      "name": "2.2.1.1",
+      "quantity": 6,
+      "uom": "EA",
+      "id": "c6d3e1a4-df02-41da-a512-bfed5e6ee2d8",
+      "lineItems": [
+        {
+          "id": "b3180c64-4624-446e-930e-386d52260a63",
+          "name": "...asdasDASDAS",
+          "quantity": 1,
+          "uom": "EA",
+          "expense": {
+            "id": "aa104b63-ba90-49d0-8091-1f159214cd71",
+            "description": "...",
+            "material": [],
+            "labor": []
+          }
+        }
+      ]
     }
-  ]
+  ],
+  "id": "Test2"
 }
