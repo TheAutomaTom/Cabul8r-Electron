@@ -1,0 +1,16 @@
+{
+	"id":"PriceBook-1-Id",
+	"description":"PriceBook-1-Desc",
+	"material":[
+		"id":"Material-1-Id",
+		"vendor":"Material-1-Vendor",
+		"cost":55.55		
+	],
+	"labor":[
+		"id":"Labor-1-Id",
+		"vendor":"Labor-1-Vendor",
+		"cost":66		
+	
+	],
+  
+}
