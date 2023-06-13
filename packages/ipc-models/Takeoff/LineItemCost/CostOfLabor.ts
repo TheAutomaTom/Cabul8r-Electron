@@ -1,8 +1,8 @@
 import { Cost } from "./Cost";
-import { CostType } from "./CostType";
+import { CostKind } from "./CostKind";
 
 export class CostOfLabor extends Cost{
-  constructor(cost: number, name = "...") {
-    super(CostType.Lab, cost, name);
+  constructor(amount: number, name = "...") {
+    super(CostKind.LAB, amount, name);
   }
 }
