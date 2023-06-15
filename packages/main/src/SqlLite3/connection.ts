@@ -20,7 +20,16 @@ export const TryCreateDefaultTable = () => {
   );
   const response = createTableQuery.run();
 
+  // Seed table as required...
+  let existingRows = getAllCosts();
+  if (existingRows?.length == 0) {
     seedCostTable();
+    existingRows = getAllCosts();
+    console.log("[Sql] Checking db.Cost table is seeded...");
+    console.dir(existingRows);
+    if(existingRows?.length == 0) throw("[Sql] Cost table not prepared.");
+
+  }
   return response;
 };
 
@@ -38,3 +47,22 @@ export const InsertCostRow = (cost: Cost) => {
   `);
   return query.run();
 };
+
+export const getAllCosts = (): Cost[] | undefined => {
+  const query = db.prepare(`SELECT * FROM ${testTableName}`);
+  try{
+    const rows= query.all();
+    const costs = [] as Cost[];
+    for(const row of rows as Cost[]){
+      const cost = row;
+      costs.push( cost );
+    }
+    console.log("[Sql] getAllCosts()...");
+    console.dir(costs);
+    return costs;
+  } catch {
+    return undefined;
+  }
+
+};
+
