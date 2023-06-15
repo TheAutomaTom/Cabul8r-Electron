@@ -17,7 +17,7 @@ onMounted( async () => {
 
   ///App Menu commands..
   window.addEventListener("DOMContentLoaded", () => { OnLoadProjectFile((_: unknown, value: Project) => { app$.Project$.LoadProjectFile(value); router.push(defaults.routeOnProjectLoad); }); });
-  window.addEventListener("DOMContentLoaded", async () => { OnSaveProjectFile((_: unknown, filePath: string) => { HandleSaveProjectFile(filePath, JSON.stringify(app$.Project$, null, 2)); }); });
+  window.addEventListener("DOMContentLoaded", async () => { OnSaveProjectFile((_: unknown, filePath: string) => { HandleSaveProjectFile(filePath, JSON.stringify(app$.Project$.Project, null, 2)); }); });
 
   //Context commands
   window.addEventListener("DOMContentLoaded", () => { OnCopyRow((_: unknown, _any: unknown)         => { app$.Project$.OnCopyRow();         }); });
