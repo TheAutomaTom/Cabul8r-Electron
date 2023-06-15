@@ -12,6 +12,7 @@
     "paths": {
       "/@/*": ["./src/*"]
     },
+    // "allowSyntheticDefaultImports" is related to better-sqlite3 + TS.
     "allowSyntheticDefaultImports":true
   },
   "include": ["src/**/*.ts", "../../types/**/*.d.ts"],
