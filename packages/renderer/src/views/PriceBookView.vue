@@ -1,8 +1,7 @@
 <script setup lang="ts">
-// import TakeoffRow from "./TakeoffView/TakeoffRow.vue";
+import PriceBookRow from "./PriceBookView/PriceBookRow.vue";
 import { useAppState } from "../states/App.state";
 const app$ = useAppState();
-const p$ = app$.Project$;
 
 </script>
 <template>
@@ -10,31 +9,30 @@ const p$ = app$.Project$;
   <p>
     PRICE BOOK
     <input
-      v-model="p$.Project.name"
+      v-model="app$.Project$.Project.name"
       style="font-size: 1.25em;"
     />
   </p>
   <!-- Line Items -->
-  <!--
+
   <table>
     <div
-      v-if="p$.Project.lineItems"
+      v-if="app$.PriceBook$.PriceBook"
       style="width: 100%;"
     >
       <div
-        v-for="li in p$.Project.lineItems"
+        v-for="li in app$.PriceBook$.PriceBook"
         :key="li.id"
         style="padding-top: 0.25em;"
         class="line-item-row-div"
       >
-        <takeoff-row
+        <price-book-row
           :key="li.id"
           :li="li"
         />
       </div>
     </div>
   </table>
-  -->
 </template>
 <style>
 table {

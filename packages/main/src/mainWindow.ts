@@ -2,6 +2,7 @@ import { app, BrowserWindow, ipcMain, Menu } from "electron";
 import { join } from "node:path";
 import { URL } from "node:url";
 import { contextMenuItems } from "./ContextMenu/contextMenuTemplate";
+import { RefreshPriceBook, TryCreateDefaultTable } from "./SqlLite3/connection";
 
 let browserWindow: BrowserWindow | undefined;
 async function createWindow() {
@@ -58,25 +59,19 @@ export async function restoreOrCreateWindow() {
   let window = BrowserWindow.getAllWindows().find(w => !w.isDestroyed());
   if (window === undefined) { window = await createWindow(); }
 
-  /// Context Menu...
-  // eslint-disable-next-line prefer-const
-
+  // Events sent by #Renderer...
+  ipcMain.on("handle-refresh-price-book", RefreshPriceBook);
   ipcMain.on("handle-set-context", handleSetContext);
 
-  // window.webContents.on("context-menu", function(_, _params){
-  //   console.log("context-menu.contextFocus... ", contextFocus);
-  //   contextMenu.popup();
-  // });
+  // ContextMenu...
   contextMenuItems.forEach( (item) => contextMenu.append(item) );
 
-  // ipcMain.on("set-title", (event, title) => {
-  //   const webContents = event.sender;
-  //   const win = BrowserWindow.fromWebContents(webContents);
-  //   win?.setTitle(title);
-  // });
-
+  // Prepare Sql...
+  TryCreateDefaultTable();
+  RefreshPriceBook();
 
   if (window.isMinimized()) { window.restore(); }
   window.focus();
+
 }
 export {browserWindow, contextMenu};
