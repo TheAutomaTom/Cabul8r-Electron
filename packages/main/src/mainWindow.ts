@@ -2,6 +2,7 @@ import { app, BrowserWindow, ipcMain, Menu } from "electron";
 import { join } from "node:path";
 import { URL } from "node:url";
 import { contextMenuItems } from "./ContextMenu/contextMenuTemplate";
+import { TryCreateDefaultTable } from "./SqlLite3/connection";
 
 let browserWindow: BrowserWindow | undefined;
 async function createWindow() {
@@ -75,6 +76,7 @@ export async function restoreOrCreateWindow() {
   //   win?.setTitle(title);
   // });
 
+  TryCreateDefaultTable();
 
   if (window.isMinimized()) { window.restore(); }
   window.focus();
