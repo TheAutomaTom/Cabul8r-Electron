@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import TakeoffRow from "./TakeoffView/TakeoffRow.vue";
+// import TakeoffRow from "./TakeoffView/TakeoffRow.vue";
 import { useAppState } from "../states/App.state";
 const app$ = useAppState();
 const p$ = app$.Project$;
@@ -15,6 +15,7 @@ const p$ = app$.Project$;
     />
   </p>
   <!-- Line Items -->
+  <!--
   <table>
     <div
       v-if="p$.Project.lineItems"
@@ -33,6 +34,7 @@ const p$ = app$.Project$;
       </div>
     </div>
   </table>
+  -->
 </template>
 <style>
 table {

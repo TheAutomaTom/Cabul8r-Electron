@@ -16,14 +16,14 @@ export class LineItemExpense {
   get materialCost() {
     let toReturn = 0;
     for(const item of this.material) {
-      toReturn += item.cost;
+      toReturn += item.amount;
     }
     return toReturn;
   }
   get laborCost() {
     let toReturn = 0;
     for(const item of this.labor) {
-      toReturn += item.cost;
+      toReturn += item.amount;
     }
     return toReturn;
   }

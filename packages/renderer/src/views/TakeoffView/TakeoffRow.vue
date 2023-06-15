@@ -3,7 +3,7 @@ import { HandleRightClick } from "#preload";
 import { ref } from "vue";
 import type { PropType } from "vue";
 import type { LineItem as LineItemModel} from "../../../../ipc-models/Takeoff/LineItem";
-import { UnitOfMeasurement} from "../../../../ipc-models/Takeoff/LineItem/UnitOfMeasurement";
+import { UnitOfMeasurement} from "../../../../ipc-models/Takeoff/UnitOfMeasurement";
 import { useAppState } from "/@/states/App.state";
 const app$ = useAppState();
 const p$ = app$.Project$;
