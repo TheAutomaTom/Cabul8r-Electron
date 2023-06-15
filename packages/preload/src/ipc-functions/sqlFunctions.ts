@@ -1,7 +1,7 @@
 import { ipcRenderer } from "electron";
 
-// #Renderer sends events to #Main
+// #Renderer calls methods on #Preload and then events are sent to #Main
 export const HandleRefreshPriceBook = ( ) => ipcRenderer.send("handle-refresh-price-book" );
 
-// Send #Main events and responses back to #Renderer
+// #Main sends events to #Preload to call methods at #Renderer's App.vue
 export const OnRefreshPriceBook = ( callback: any ) => ipcRenderer.on("on-refresh-price-book", callback );

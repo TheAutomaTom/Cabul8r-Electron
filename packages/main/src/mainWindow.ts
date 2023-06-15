@@ -59,25 +59,14 @@ export async function restoreOrCreateWindow() {
   let window = BrowserWindow.getAllWindows().find(w => !w.isDestroyed());
   if (window === undefined) { window = await createWindow(); }
 
-  /// Sql functions...
+  // Events sent by #Renderer...
   ipcMain.on("handle-refresh-price-book", RefreshPriceBook);
-
-  /// Context Menu...
-  // eslint-disable-next-line prefer-const
   ipcMain.on("handle-set-context", handleSetContext);
 
-  // window.webContents.on("context-menu", function(_, _params){
-  //   console.log("context-menu.contextFocus... ", contextFocus);
-  //   contextMenu.popup();
-  // });
+  // ContextMenu...
   contextMenuItems.forEach( (item) => contextMenu.append(item) );
 
-  // ipcMain.on("set-title", (event, title) => {
-  //   const webContents = event.sender;
-  //   const win = BrowserWindow.fromWebContents(webContents);
-  //   win?.setTitle(title);
-  // });
-
+  // Prepare Sql...
   TryCreateDefaultTable();
   RefreshPriceBook();
 
