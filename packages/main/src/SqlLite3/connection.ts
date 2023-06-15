@@ -1,6 +1,6 @@
 import { CostKind } from "./../../../ipc-models/Takeoff/LineItemCost/CostKind";
 import { Cost } from "../../../ipc-models/Takeoff/LineItemCost/Cost";
-
+import { browserWindow } from "./../mainWindow";
 import Database from "better-sqlite3";
 
 const dbName = "2306112133";
@@ -48,7 +48,7 @@ export const InsertCostRow = (cost: Cost) => {
   return query.run();
 };
 
-export const getAllCosts = (): Cost[] | undefined => {
+const getAllCosts = (): Cost[] | undefined => {
   const query = db.prepare(`SELECT * FROM ${testTableName}`);
   try{
     const rows= query.all();
@@ -64,5 +64,17 @@ export const getAllCosts = (): Cost[] | undefined => {
     return undefined;
   }
 
+};
+
+export const RefreshPriceBook = () => {
+  console.log("[Sql] connection.RefreshPriceBook()...");
+  const query = db.prepare(`SELECT * FROM ${testTableName}`);
+  try{
+    const rows= query.all() as Cost[];
+    console.dir(rows);
+    browserWindow?.webContents.send("on-refresh-price-book", rows);
+  } catch {
+    throw("[Sql] connection.GetAllCostsString() error.");
+  }
 };
 
