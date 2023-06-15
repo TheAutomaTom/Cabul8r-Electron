@@ -1,8 +1,8 @@
 import { Cost } from "./Cost";
-import { CostKind } from "./CostKind";
+// import { CostKind } from "./CostKind";
 
 export class CostOfMaterial extends Cost {
-  constructor(amount: number, name = "...") {
-    super(CostKind.MAT, amount, name);
+  constructor(id:number, kind: string, amount: number, name = "MaterialCost#") {
+    super(id, kind, amount, name = `${name}${id}`);
   }
 }

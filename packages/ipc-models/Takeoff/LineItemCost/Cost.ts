@@ -1,14 +1,14 @@
-import type { CostKind } from "./CostKind";
+// import type { CostKind } from "./CostKind";
 
 export class Cost {
-  constructor(typeOfCost: CostKind, amount: number, name = "...") {
-    this.id = crypto.randomUUID();
-    this.kind = typeOfCost;
+  public constructor(id: number, kind: string, amount: number, name = "...") {
+    this.id = id; //crypto.randomUUID();
+    this.kind = kind;
     this.amount = amount;
     this.name = name;
   }
-  id: string;
-  kind: CostKind;
+  id: number;
+  kind: string;
   amount: number;
   name: string;
   // overrideQuantity= false //Example: 1 freight charge for 300 pieces.
