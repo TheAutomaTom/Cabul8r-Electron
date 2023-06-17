@@ -1,5 +1,8 @@
 #!/usr/bin/env node
 
+// Investigate flag `electron --trace-warnings`
+// https://www.electronjs.org/docs/latest/api/process
+
 import {build, createServer} from "vite";
 import electronPath from "electron";
 import {spawn} from "child_process";
@@ -31,7 +34,7 @@ function setupMainPackageWatcher({resolvedUrls}) {
        * Set to {} to enable rollup watcher
        * @see https://vitejs.dev/config/build-options.html#build-watch
        */
-      watch: {},
+      watch: {}
     },
     plugins: [
       {
@@ -46,14 +49,14 @@ function setupMainPackageWatcher({resolvedUrls}) {
 
           /** Spawn new electron process */
           electronApp = spawn(String(electronPath), ["--inspect", "."], {
-            stdio: "inherit",
+            stdio: "inherit"
           });
 
           /** Stops the watch script when the application has been quit */
           electronApp.addListener("exit", process.exit);
-        },
-      },
-    ],
+        }
+      }
+    ]
   });
 }
 
@@ -73,18 +76,18 @@ function setupPreloadPackageWatcher({ws}) {
        * Set to {} to enable rollup watcher
        * @see https://vitejs.dev/config/build-options.html#build-watch
        */
-      watch: {},
+      watch: {}
     },
     plugins: [
       {
         name: "reload-page-on-preload-package-change",
         writeBundle() {
           ws.send({
-            type: "full-reload",
+            type: "full-reload"
           });
-        },
-      },
-    ],
+        }
+      }
+    ]
   });
 }
 
@@ -97,7 +100,7 @@ function setupPreloadPackageWatcher({ws}) {
 const rendererWatchServer = await createServer({
   mode,
   logLevel,
-  configFile: "packages/renderer/vite.config.js",
+  configFile: "packages/renderer/vite.config.js"
 }).then(s => s.listen());
 
 await setupPreloadPackageWatcher(rendererWatchServer);
