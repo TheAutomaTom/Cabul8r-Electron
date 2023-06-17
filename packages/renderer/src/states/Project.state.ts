@@ -9,11 +9,11 @@ export const useProjectState = defineStore("ProjectState", () => {
 
   const createLineItem = (lineItem= new LineItem("...") ): LineItem => {
     const li = JSON.parse(JSON.stringify(lineItem)) as LineItem;
-    li.id= crypto.randomUUID();
+    li.uuid= crypto.randomUUID();
 
     if( li.lineItems != null ){
       li.lineItems.forEach((i) => {
-        i.id = crypto.randomUUID();
+        i.uuid = crypto.randomUUID();
         if( i.lineItems){
           createLineItem(i);
         }
@@ -23,9 +23,9 @@ export const useProjectState = defineStore("ProjectState", () => {
   };
 
   const reassignIds = ( lineItems: LineItem[] = Project.value.lineItems ) => {
-    Project.value.id = crypto.randomUUID();
+    Project.value.uuid = crypto.randomUUID();
     for(const li of lineItems){
-      li.id = crypto.randomUUID();
+      li.uuid = crypto.randomUUID();
       if(li.lineItems){
         reassignIds(li.lineItems);
       }
@@ -36,7 +36,7 @@ export const useProjectState = defineStore("ProjectState", () => {
   const HighlightedRow = ref({} as LineItem);
   const Project = ref({
     name: "No project loaded",
-    projectClient: "No client defined",
+    client: "No client defined",
     lineItems: [
       createLineItem()
     ] as LineItem[]
@@ -58,7 +58,7 @@ export const useProjectState = defineStore("ProjectState", () => {
 
   const OnAddRowSibling = ( lineItems: LineItem[] = Project.value.lineItems ) => {
     for(const item of lineItems){
-      if(item.id == focussedRow.value.id){
+      if(item.uuid == focussedRow.value.uuid){
         const newRow = createLineItem();
         lineItems.push(newRow);
         break;
@@ -70,7 +70,7 @@ export const useProjectState = defineStore("ProjectState", () => {
 
   const OnAddRowChild = ( lineItems: LineItem[] = Project.value.lineItems ) => {
     for(const item of lineItems){
-      if(item.id == focussedRow.value.id){
+      if(item.uuid == focussedRow.value.uuid){
         if(item.lineItems == null){
           item.lineItems = [];
         }
@@ -88,7 +88,7 @@ export const useProjectState = defineStore("ProjectState", () => {
 
   const OnDeleteRow = ( lineItems: LineItem[] = Project.value.lineItems  ) => {
     for(const item of lineItems){
-      if(item.id == focussedRow.value.id){
+      if(item.uuid == focussedRow.value.uuid){
         const index = lineItems.indexOf(focussedRow.value);
         if (index > -1) { // only splice array when item is found
           lineItems.splice(index, 1); // 2nd parameter means remove one item only
@@ -103,7 +103,7 @@ export const useProjectState = defineStore("ProjectState", () => {
   const OnDeleteCutRow = ( lineItems: LineItem[] = Project.value.lineItems  ) => {
     for(const item of lineItems){
 
-      if(item.id == clipboardRow.value.id){
+      if(item.uuid == clipboardRow.value.uuid){
         const index = lineItems.indexOf(clipboardRow.value);
         if (index > -1) { // only splice array when item is found
           lineItems.splice(index, 1); // 2nd parameter means remove one item only
@@ -117,7 +117,7 @@ export const useProjectState = defineStore("ProjectState", () => {
 
   const OnPasteRowSibling = ( lineItems: LineItem[] = Project.value.lineItems ) => {
     for(const item of lineItems){
-      if(item.id == focussedRow.value.id){
+      if(item.uuid == focussedRow.value.uuid){
         const newRow = createLineItem(clipboardRow.value);
         lineItems.push(newRow);
         if(isCutMode.value == true) OnDeleteCutRow();
@@ -130,7 +130,7 @@ export const useProjectState = defineStore("ProjectState", () => {
 
   const OnPasteRowChild = ( lineItems: LineItem[] = Project.value.lineItems ) => {
     for(const item of lineItems){
-      if(item.id == focussedRow.value.id){
+      if(item.uuid == focussedRow.value.uuid){
         if(item.lineItems == null){
           item.lineItems = [];
         }

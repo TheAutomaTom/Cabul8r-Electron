@@ -22,12 +22,12 @@ const p$ = app$.Project$;
     >
       <div
         v-for="li in p$.Project.lineItems"
-        :key="li.id"
+        :key="li.uuid"
         style="padding-top: 0.25em;"
         class="line-item-row-div"
       >
         <takeoff-row
-          :key="li.id"
+          :key="li.uuid"
           :li="li"
         />
       </div>

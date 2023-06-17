@@ -1,15 +1,30 @@
-// import type { CostKind } from "./CostKind";
+import { UnitOfMeasurement } from "./../UnitOfMeasurement";
+import { CostKind } from "./CostKind";
 
 export class Cost {
-  public constructor(id: number, kind: string, amount: number, name = "...") {
-    this.id = id; //crypto.randomUUID();
+  public constructor(
+    id: number,
+    uuid = "",
+    kind = CostKind.MAT,
+    uom = UnitOfMeasurement.EA,
+    name = "...",
+    amount = 0
+  ) {
+    this.id = id;
+    // this.uuid = uuid == ""
+    //   ? randomUUID()
+    //   : uuid;
+    this.uuid = uuid;
     this.kind = kind;
-    this.amount = amount;
+    this.uom = uom;
     this.name = name;
+    this.amount = amount;
   }
   id: number;
+  uuid: string;
   kind: string;
-  amount: number;
+  uom: UnitOfMeasurement;
   name: string;
+  amount: number;
   // overrideQuantity= false //Example: 1 freight charge for 300 pieces.
 }

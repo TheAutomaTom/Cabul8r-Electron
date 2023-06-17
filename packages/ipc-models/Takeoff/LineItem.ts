@@ -1,19 +1,15 @@
-import { LineItemExpense as LineItemCost } from "./LineItemCost";
-import { UnitOfMeasurement } from "./UnitOfMeasurement";
+import type { LineItemCost } from "./LineItemCost";
 
 export class LineItem {
-  constructor(name: string, qty = 1, uom = UnitOfMeasurement.EA) {
-    this.id = crypto.randomUUID();
+  constructor(name = "...", qty = 1 ) {
+    this.uuid = crypto.randomUUID();
     this.name = name;
     this.quantity = qty;
-    this.uom = uom;
-    this.expense = new LineItemCost();
 
   }
-  id: string;
+  uuid: string;
   name: string;
   quantity: number;
-  uom?: UnitOfMeasurement;
-  expense?: LineItemCost;
+  cost?: LineItemCost;
   lineItems?: LineItem[];
 }

@@ -3,7 +3,7 @@
 import { ref } from "vue";
 import type { PropType } from "vue";
 import type { Cost as CostModel} from "../../../../ipc-models/Takeoff/LineItemCost/Cost";
-// import { UnitOfMeasurement} from "../../../../ipc-models/Takeoff/UnitOfMeasurement";
+import { UnitOfMeasurement} from "../../../../ipc-models/Takeoff/UnitOfMeasurement";
 // import { useAppState } from "/@/states/App.state";
 // const app$ = useAppState();
 // const p$ = app$.Project$;
@@ -40,6 +40,19 @@ const li = ref(props.li);
       <input
         v-model="li.name"
       />
+    </td>
+    <td>
+      <select
+        id="uoms"
+        v-model="li.uom"
+      >
+        <option
+          v-for="key in UnitOfMeasurement"
+          :key="key"
+        >
+          {{ key }}
+        </option>
+      </select>
     </td>
     <td>
       <input

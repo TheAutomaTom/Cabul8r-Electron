@@ -2,8 +2,9 @@ import { CostKind } from "./../../../ipc-models/Takeoff/LineItemCost/CostKind";
 import { Cost } from "../../../ipc-models/Takeoff/LineItemCost/Cost";
 import { browserWindow } from "./../mainWindow";
 import Database from "better-sqlite3";
+import { UnitOfMeasurement } from "../../../ipc-models/Takeoff/UnitOfMeasurement";
 
-const dbName = "2306112133";
+const dbName = "2306171018";
 const testTableName = "Costs";
 
 export const db = new Database(`./${dbName}.db`);
@@ -13,9 +14,11 @@ export const TryCreateDefaultTable = () => {
   const createTableQuery = db.prepare(`
   CREATE TABLE IF NOT EXISTS ${testTableName} (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
-    kind CHAR(3),
-    amount INTEGER,
-    name TEXT
+    uuid TEXT,
+    kind TEXT,
+    uom TEXT,
+    name TEXT,
+    amount INTEGER
     );`
   );
   const response = createTableQuery.run();
@@ -34,16 +37,28 @@ export const TryCreateDefaultTable = () => {
 };
 
 const seedCostTable=()=>{
-  InsertCostRow(new Cost(-1, CostKind.MAT.toString(), 5.99, "Pull, wire, 3-inch"));
-  InsertCostRow(new Cost(-1, CostKind.LAB.toString(), 15.50, "Pull installation"));
-  InsertCostRow(new Cost(-1, CostKind.MAT.toString(), 650, "Cabinets per LF"));
-  InsertCostRow(new Cost(-1, CostKind.LAB.toString(), 800, "Field per Day"));
+  InsertCostRow(new Cost(-1, "", CostKind.MAT, UnitOfMeasurement.EA, "Pull, wire, 3-inch",  5.99   ));
+  InsertCostRow(new Cost(-1, "", CostKind.LAB, UnitOfMeasurement.EA, "Pull installation" ,  15.50  ));
+  InsertCostRow(new Cost(-1, "", CostKind.MAT, UnitOfMeasurement.LF, "Cabinets per LF"   ,  650.00 ));
+  InsertCostRow(new Cost(-1, "", CostKind.LAB, UnitOfMeasurement.EA, "Field per Day"     ,  800.00 ));
 };
 
 export const InsertCostRow = (cost: Cost) => {
   const query = db.prepare(`
-    INSERT OR IGNORE INTO ${testTableName}(Kind, Amount, Name)
-    VALUES ('${cost.kind}', '${cost.amount *100}', '${cost.name}');
+    INSERT OR IGNORE INTO ${testTableName}(
+      uuid,
+      kind,
+      uom,
+      name,
+      amount
+    )
+    VALUES (
+      '${cost.uuid}',
+      '${cost.kind}',
+      '${cost.uom}',
+      '${cost.name}',
+      '${cost.amount *100}'
+    );
   `);
   return query.run();
 };

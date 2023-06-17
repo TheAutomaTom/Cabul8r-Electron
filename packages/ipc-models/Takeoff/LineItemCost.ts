@@ -1,17 +1,15 @@
-import type { CostOfLabor } from "./LineItemCost/CostOfLabor";
-import type { CostOfMaterial } from "./LineItemCost/CostOfMaterial";
-
-export class LineItemExpense {
+import type { Cost } from "./LineItemCost/Cost";
+export class LineItemCost {
   constructor(name = "...") {
-    this.id= crypto.randomUUID();
+    this.uuid= crypto.randomUUID();
     this.name= name;
     this.material= [];
     this.labor= [];
   }
-  id: string;
+  uuid: string;
   name: string;
-  material: CostOfMaterial[];
-  labor: CostOfLabor[];
+  material: Cost[];
+  labor: Cost[];
 
   get materialCost() {
     let toReturn = 0;

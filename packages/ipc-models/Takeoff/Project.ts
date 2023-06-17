@@ -1,9 +1,9 @@
 import type { LineItem } from "./LineItem";
 
 export type Project = {
-  id: string;
+  uuid: string;
   name: string;
-  projectClient: string;
+  client: string;
   lineItems: LineItem[];
 
 }
