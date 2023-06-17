@@ -3,6 +3,7 @@ import { HandleRightClick } from "#preload";
 import { ref } from "vue";
 import type { PropType } from "vue";
 import type { LineItem as LineItemModel} from "../../../../ipc-models/Takeoff/LineItem";
+import LineItemCostRow from "./LineItemCostRow.vue";
 import { useAppState } from "/@/states/App.state";
 const app$ = useAppState();
 const p$ = app$.Project$;
@@ -38,44 +39,27 @@ const handleRightClick = (li: LineItemModel): void => {
         <!-- To be control grip for rearranging order -->
       </div>
     </td>
+
     <td>
       <input
         v-model="li.name"
         :style="`width:${maxWidth}em;`"
       />
     </td>
+
     <td>
       <input
         v-model="li.quantity"
         style="width: 4em; text-align: end;"
       />
     </td>
-
-
-    <!-- <td>
-      <select
-        id="expense"
-        v-model="li.expense"
-      >
-        <option
-          v-for="key in UnitOfMeasurement"
-          :key="key"
-        >
-          {{ key }}
-        </option>
-      </select>
-    </td> -->
   </tr>
+
   <!-- ... -->
-  <table>
-    <div v-if="li.lineItems">
-      <takeoff-row
-        v-for="l in li.lineItems"
-        :key="l.uuid"
-        :li="l"
-        :level="props.level + 1"
-      />
-    </div>
+  <table v-if="li.cost">
+    <line-item-cost-row
+      :ci="li.cost!"
+    />
   </table>
 </template>
 <style lang="scss" scoped>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import TakeoffRow from "./TakeoffView/TakeoffRow.vue";
+import LineItemRow from "./TakeoffView/LineItemRow.vue";
 import { useAppState } from "../states/App.state";
 const app$ = useAppState();
 const p$ = app$.Project$;
@@ -26,7 +26,7 @@ const p$ = app$.Project$;
         style="padding-top: 0.25em;"
         class="line-item-row-div"
       >
-        <takeoff-row
+        <line-item-row
           :key="li.uuid"
           :li="li"
         />

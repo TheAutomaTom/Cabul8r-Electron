@@ -1,0 +1,32 @@
+{
+	"uuid": "aaa",
+	"name": "One 230615-0928",
+	"client": "Dochebag Co.",
+	"lineItems": [
+		{ 
+			"uuid": "aaa1",
+			"name": "Cabinets at wall",
+			"quantity": 5,
+			"cost" : {
+				"uuid": "cost-one",
+				"name": "Base Cabinets",
+				"material": [
+					{
+						"id": 1000001,
+						"uuid": "1000001",
+						"kind": "MAT",
+						"uom": "EA",
+						"name": "Cabients, standard",
+						"amount": 600
+					}
+				]
+			}
+		},
+		{ 
+			"uuid": "aaa2",
+			"name": "Another thing",
+			"quantity": 300
+		}
+		
+	]
+}
