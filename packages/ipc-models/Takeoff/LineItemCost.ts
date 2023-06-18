@@ -1,30 +1,49 @@
 import type { Cost } from "./LineItemCost/Cost";
+import { CostKind } from "./LineItemCost/CostKind";
+// import { CostKind } from "./LineItemCost/CostKind";
 export class LineItemCost {
   constructor(name = "...") {
     this.uuid= crypto.randomUUID();
     this.name= name;
-    this.material= [];
-    this.labor= [];
+    this.costs= [];
   }
   uuid: string;
   name: string;
-  material: Cost[];
-  labor: Cost[];
+  costs: Cost[];
 
-  get materialCost() {
+
+
+
+  // get materials() {
+  //   return this.costs?.filter(cost => cost.kind == CostKind.MAT);
+  // }
+  get materialCost(){
     let toReturn = 0;
-    for(const item of this.material) {
-      toReturn += item.amount;
+    if(this.costs != undefined){
+      for(const c of this.costs){
+        if (c.kind == CostKind.MAT){
+          toReturn += c.amount;
+        }
+      }
     }
+    console.log("materialCost()... ", toReturn);
     return toReturn;
   }
-  get laborCost() {
-    let toReturn = 0;
-    for(const item of this.labor) {
-      toReturn += item.amount;
-    }
-    return toReturn;
-  }
+  // get labors() {
+  //   return this.costs?.filter(cost => cost.kind == CostKind.LAB);
+  // }
+  // get laborCost(){
+  //   let toReturn = 0;
+  //   if(this.costs != undefined){
+  //     for(const c of this.costs){
+  //       if (c.kind == CostKind.LAB){
+  //         toReturn += c.amount;
+  //       }
+  //     }
+  //   }
+  //   console.log("laborCost()... ", toReturn);
+  //   return toReturn;
+  // }
 }
 
 

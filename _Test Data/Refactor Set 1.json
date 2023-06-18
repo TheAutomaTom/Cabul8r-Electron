@@ -1,0 +1,39 @@
+{
+  "uuid": "aaa",
+  "name": "One 230615-0928",
+  "client": "Douchebag Co.",
+  "lineItems": [
+    {
+      "uuid": "aaa1",
+      "name": "1 (Project.lineItems[0])",
+      "quantity": 5,
+      "cost": {
+        "uuid": "cost-one",
+        "name": "1.1 Project.lineItems[0].cost",
+        "costs": [
+          {
+            "id": 1000001,
+            "uuid": "1000001",
+            "kind": "MAT",
+            "uom": "EA",
+            "name": "1.1.1 ...cost.costs[0]",
+            "amount": 600
+          },
+          {
+            "id": 1000002,
+            "uuid": "1000002",
+            "kind": "MAT",
+            "uom": "LF",
+            "name": "1.1.2 ...cost.costs[1]",
+            "amount": 500
+          }
+        ]
+      }
+    },
+    {
+      "uuid": "aaa2",
+      "name": "2",
+      "quantity": 300
+    }
+  ]
+}

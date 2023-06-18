@@ -1,11 +1,9 @@
 <script setup lang="ts">
-// import { HandleRightClick } from "#preload";
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import type { PropType } from "vue";
 import type { LineItemCost as LineItemCostModel} from "../../../../ipc-models/Takeoff/LineItemCost";
-// import { useAppState } from "/@/states/App.state";
-// const app$ = useAppState();
-// const p$ = app$.Project$;
+import type { Cost as CostModel} from "../../../../ipc-models/Takeoff/LineItemCost/Cost";
+import { CostKind } from "../../../../ipc-models/Takeoff/LineItemCost/CostKind";
 
 const props = defineProps({
   ci: { type: Object as PropType<LineItemCostModel>, default: {} as LineItemCostModel },
@@ -14,11 +12,24 @@ const props = defineProps({
 const ci = ref(props.ci);
 const maxWidth = 20 - props.level;
 
-// const handleRightClick = (li: CostModel): void => {
-//   p$.HighlightedRow = li;
-//   p$.SetRightClickFocus(li);
-//   HandleRightClick(li.uuid);
-// };
+
+const materialCostSum = computed(() => {
+        console.log("ci.value.costs...");
+        console.dir(ci.value.costs as CostModel[]);
+    let toReturn = 0;
+    if(ci.value.costs != undefined){
+      for(const c of ci.value.costs as CostModel[]){
+        console.log("for(const c of...");
+        console.dir(c);
+        if (c.kind == CostKind.MAT){
+          toReturn += c.amount;
+        }
+      }
+    }
+    console.log("materialCostSum... ", toReturn);
+    return toReturn;
+  }
+);
 
 </script>
 <template>
@@ -41,6 +52,19 @@ const maxWidth = 20 - props.level;
         v-model="ci.name"
         :style="`width:${maxWidth}em;`"
       />
+      <span>{{ materialCostSum || "?" }}</span>
+      <span>Word</span>
+
+      <!-- Testing -->
+      <div
+        v-for="c in ci.costs"
+        :key="c.uuid"
+      >
+        <p>
+          {{ c.name }}, ${{ c.amount }}, {{ c.uuid }}
+        </p>
+      </div>
+      <!--  -->
     </td>
   </tr>
 </template>
@@ -48,7 +72,7 @@ const maxWidth = 20 - props.level;
 .line-item-row{
   width:100%;
   border-top: white 1px solid;
-  border-bottom: lightgray 1px solid;
+  border-bottom: red 10px solid;
 }
 .focussed{
   background-color: #ddff00;
