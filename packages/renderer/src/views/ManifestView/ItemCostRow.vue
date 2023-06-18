@@ -12,7 +12,6 @@ const props = defineProps({
 const ic = ref(props.ic);
 const maxWidth = 20 - props.level;
 
-
 const materialCostSum = computed(() => {
         console.log("ic.value.costs...");
         console.dir(ic.value.costs as CostModel[]);
@@ -60,9 +59,7 @@ const materialCostSum = computed(() => {
         v-for="c in ic.costs"
         :key="c.uuid"
       >
-        <p>
-          {{ c.name }}, ${{ c.amount }}, {{ c.uuid }}
-        </p>
+        <p> {{ c.name }}, ${{ c.amount }}, {{ c.uuid }} </p>
       </div>
       <!--  -->
     </td>

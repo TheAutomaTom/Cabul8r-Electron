@@ -7,13 +7,21 @@ const p$ = app$.Project$;
 </script>
 <template>
   <!-- Title -->
-  <p>
-    MANIFEST
-    <input
-      v-model="p$.Project.name"
-      style="font-size: 1.25em;"
-    />
-  </p>
+  <div>
+    <p>MANIFEST</p>
+    <p>
+      <input
+        v-model="p$.Project.name"
+        style="font-size: 1.25em;"
+      />
+    </p>
+    <p>
+      <input
+        v-model="p$.Project.client"
+        style="font-size: 1.25em;"
+      />
+    </p>
+  </div>
   <!-- Line Items -->
   <table>
     <div

@@ -39,14 +39,12 @@ const handleRightClick = (item: ItemModel): void => {
         <!-- To be control grip for rearranging order -->
       </div>
     </td>
-
     <td>
       <input
         v-model="item.name"
         :style="`width:${maxWidth}em;`"
       />
     </td>
-
     <td>
       <input
         v-model="item.quantity"
@@ -57,9 +55,7 @@ const handleRightClick = (item: ItemModel): void => {
 
   <!-- ... -->
   <table v-if="item.cost">
-    <item-cost-row
-      :ci="item.cost!"
-    />
+    <item-cost-row :ic="item.cost!" />
   </table>
 </template>
 <style lang="scss" scoped>
