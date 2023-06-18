@@ -4,7 +4,6 @@ export type Project = {
   uuid: string;
   name: string;
   client: string;
-  lineItems: ItemModel[];
-
+  manifest: ItemModel[];
 }
 

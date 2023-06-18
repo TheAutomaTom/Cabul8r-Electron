@@ -4,7 +4,7 @@ import { browserWindow } from "./../mainWindow";
 import Database from "better-sqlite3";
 import { UnitOfMeasurement } from "../../../ipc-models/Enums/UnitOfMeasurement";
 
-const dbName = "2306171018";
+const dbName = "2306181644";
 const testTableName = "Costs";
 
 export const db = new Database(`./${dbName}.db`);
@@ -15,7 +15,7 @@ export const TryCreateDefaultTable = () => {
   CREATE TABLE IF NOT EXISTS ${testTableName} (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     uuid TEXT,
-    kind TEXT,
+    category TEXT,
     uom TEXT,
     name TEXT,
     amount INTEGER
@@ -47,14 +47,14 @@ export const InsertCostRow = (cost: Cost) => {
   const query = db.prepare(`
     INSERT OR IGNORE INTO ${testTableName}(
       uuid,
-      kind,
+      category,
       uom,
       name,
       amount
     )
     VALUES (
       '${cost.uuid}',
-      '${cost.kind}',
+      '${cost.category}',
       '${cost.uom}',
       '${cost.name}',
       '${cost.amount *100}'

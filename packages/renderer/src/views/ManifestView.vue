@@ -17,11 +17,11 @@ const p$ = app$.Project$;
   <!-- Line Items -->
   <table>
     <div
-      v-if="p$.Project.lineItems"
+      v-if="p$.Project.manifest"
       style="width: 100%;"
     >
       <div
-        v-for="li in p$.Project.lineItems"
+        v-for="li in p$.Project.manifest"
         :key="li.uuid"
         style="padding-top: 0.25em;"
         class="manifest-row-div"

@@ -33,7 +33,7 @@ const li = ref(props.li);
     <td> <div style="width: 2em; background-color: dimgray;"></div> </td>
     <td>
       <input
-        v-model="li.kind"
+        v-model="li.category"
       />
     </td>
     <td>

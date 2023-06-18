@@ -21,7 +21,7 @@ const materialCostSum = computed(() => {
       for(const c of ic.value.costs as CostModel[]){
         console.log("for(const c of...");
         console.dir(c);
-        if (c.kind == CostCategory.MAT){
+        if (c.category == CostCategory.MAT){
           toReturn += c.amount;
         }
       }

@@ -5,24 +5,21 @@ export class Cost {
   public constructor(
     id: number,
     uuid = "",
-    kind = CostCategory.MAT,
+    category = CostCategory.MAT,
     uom = UnitOfMeasurement.EA,
     name = "...",
     amount = 0
   ) {
     this.id = id;
-    // this.uuid = uuid == ""
-    //   ? randomUUID()
-    //   : uuid;
     this.uuid = uuid;
-    this.kind = kind;
+    this.category = category;
     this.uom = uom;
     this.name = name;
     this.amount = amount;
   }
   id: number;
   uuid: string;
-  kind: string;
+  category: string;
   uom: UnitOfMeasurement;
   name: string;
   amount: number;

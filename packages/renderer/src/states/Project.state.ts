@@ -11,10 +11,10 @@ export const useProjectState = defineStore("ProjectState", () => {
     const li = JSON.parse(JSON.stringify(lineItem)) as ItemModel;
     li.uuid= crypto.randomUUID();
 
-    if( li.lineItems != null ){
-      li.lineItems.forEach((i) => {
+    if( li.subitems != null ){
+      li.subitems.forEach((i) => {
         i.uuid = crypto.randomUUID();
-        if( i.lineItems){
+        if( i.subitems){
           createLineItem(i);
         }
       });
@@ -22,12 +22,12 @@ export const useProjectState = defineStore("ProjectState", () => {
     return li;
   };
 
-  const reassignIds = ( lineItems: ItemModel[] = Project.value.lineItems ) => {
+  const reassignIds = ( subitems: ItemModel[] = Project.value.manifest ) => {
     Project.value.uuid = crypto.randomUUID();
-    for(const li of lineItems){
+    for(const li of subitems){
       li.uuid = crypto.randomUUID();
-      if(li.lineItems){
-        reassignIds(li.lineItems);
+      if(li.subitems){
+        reassignIds(li.subitems);
       }
     }
   };
@@ -35,11 +35,10 @@ export const useProjectState = defineStore("ProjectState", () => {
   //= Properties ==>
   const HighlightedRow = ref({} as ItemModel);
   const Project = ref({
-    name: "No project loaded",
-    client: "No client defined",
-    lineItems: [
-      createLineItem()
-    ] as ItemModel[]
+    uuid: "x",
+    name: "No project loaded...",
+    client: "No client loaded...",
+    manifest: [] as ItemModel[]
   } as Project);
   const focussedRow = ref({} as ItemModel);
   const clipboardRow = ref({} as ItemModel);
@@ -48,7 +47,7 @@ export const useProjectState = defineStore("ProjectState", () => {
 
   //= Public Methods ==>
   const LoadProjectFile = (project: Project) => {
-    reassignIds(project.lineItems);
+    reassignIds(project.manifest);
     Object.assign(Project.value, project);
   };
 
@@ -56,29 +55,29 @@ export const useProjectState = defineStore("ProjectState", () => {
     focussedRow.value = element;
   };
 
-  const OnAddRowSibling = ( lineItems: ItemModel[] = Project.value.lineItems ) => {
-    for(const item of lineItems){
+  const OnAddRowSibling = ( subitems: ItemModel[] = Project.value.manifest ) => {
+    for(const item of subitems){
       if(item.uuid == focussedRow.value.uuid){
         const newRow = createLineItem();
-        lineItems.push(newRow);
+        subitems.push(newRow);
         break;
-      } else if (item.lineItems != null){
-        OnAddRowSibling(item.lineItems);
+      } else if (item.subitems != null){
+        OnAddRowSibling(item.subitems);
       }
     }
   };
 
-  const OnAddRowChild = ( lineItems: ItemModel[] = Project.value.lineItems ) => {
-    for(const item of lineItems){
+  const OnAddRowChild = ( subitems: ItemModel[] = Project.value.manifest ) => {
+    for(const item of subitems){
       if(item.uuid == focussedRow.value.uuid){
-        if(item.lineItems == null){
-          item.lineItems = [];
+        if(item.subitems == null){
+          item.subitems = [];
         }
         const newRow = createLineItem();
-        item.lineItems.push(newRow);
+        item.subitems.push(newRow);
         break;
-      } else if (item.lineItems != null){
-        OnAddRowChild(item.lineItems);
+      } else if (item.subitems != null){
+        OnAddRowChild(item.subitems);
       }
     }
   };
@@ -86,60 +85,60 @@ export const useProjectState = defineStore("ProjectState", () => {
   const OnCopyRow = () => { clipboardRow.value = focussedRow.value; isCutMode.value = false; };
   const OnSelectCutRow = ()  => { clipboardRow.value = focussedRow.value; isCutMode.value = true; };
 
-  const OnDeleteRow = ( lineItems: ItemModel[] = Project.value.lineItems  ) => {
-    for(const item of lineItems){
+  const OnDeleteRow = ( subitems: ItemModel[] = Project.value.manifest  ) => {
+    for(const item of subitems){
       if(item.uuid == focussedRow.value.uuid){
-        const index = lineItems.indexOf(focussedRow.value);
+        const index = subitems.indexOf(focussedRow.value);
         if (index > -1) { // only splice array when item is found
-          lineItems.splice(index, 1); // 2nd parameter means remove one item only
+          subitems.splice(index, 1); // 2nd parameter means remove one item only
         }
         break;
-      } else if (item.lineItems != null){
-        OnDeleteRow(item.lineItems);
+      } else if (item.subitems != null){
+        OnDeleteRow(item.subitems);
       }
     }
   };
 
-  const OnDeleteCutRow = ( lineItems: ItemModel[] = Project.value.lineItems  ) => {
-    for(const item of lineItems){
+  const OnDeleteCutRow = ( subitems: ItemModel[] = Project.value.manifest  ) => {
+    for(const item of subitems){
 
       if(item.uuid == clipboardRow.value.uuid){
-        const index = lineItems.indexOf(clipboardRow.value);
+        const index = subitems.indexOf(clipboardRow.value);
         if (index > -1) { // only splice array when item is found
-          lineItems.splice(index, 1); // 2nd parameter means remove one item only
+          subitems.splice(index, 1); // 2nd parameter means remove one item only
         }
         break;
-      } else if (item.lineItems != null){
-        OnDeleteCutRow(item.lineItems);
+      } else if (item.subitems != null){
+        OnDeleteCutRow(item.subitems);
       }
     }
   };
 
-  const OnPasteRowSibling = ( lineItems: ItemModel[] = Project.value.lineItems ) => {
-    for(const item of lineItems){
+  const OnPasteRowSibling = ( subitems: ItemModel[] = Project.value.manifest ) => {
+    for(const item of subitems){
       if(item.uuid == focussedRow.value.uuid){
         const newRow = createLineItem(clipboardRow.value);
-        lineItems.push(newRow);
+        subitems.push(newRow);
         if(isCutMode.value == true) OnDeleteCutRow();
         break;
-      } else if (item.lineItems != null){
-        OnPasteRowSibling(item.lineItems);
+      } else if (item.subitems != null){
+        OnPasteRowSibling(item.subitems);
       }
     }
   };
 
-  const OnPasteRowChild = ( lineItems: ItemModel[] = Project.value.lineItems ) => {
-    for(const item of lineItems){
+  const OnPasteRowChild = ( subitems: ItemModel[] = Project.value.manifest ) => {
+    for(const item of subitems){
       if(item.uuid == focussedRow.value.uuid){
-        if(item.lineItems == null){
-          item.lineItems = [];
+        if(item.subitems == null){
+          item.subitems = [];
         }
         const newRow = createLineItem(clipboardRow.value);
-        item.lineItems.push(newRow);
+        item.subitems.push(newRow);
         if(isCutMode.value == true)OnDeleteCutRow();
         break;
-      } else if (item.lineItems != null){
-        OnPasteRowChild(item.lineItems);
+      } else if (item.subitems != null){
+        OnPasteRowChild(item.subitems);
       }
     }
   };
