@@ -1,6 +1,6 @@
-import type { LineItemCost } from "./LineItemCost";
+import type { ItemCostModel } from "./ItemCostModel";
 
-export class LineItem {
+export class ItemModel {
   constructor(name = "...", qty = 1 ) {
     this.uuid = crypto.randomUUID();
     this.name = name;
@@ -10,6 +10,6 @@ export class LineItem {
   uuid: string;
   name: string;
   quantity: number;
-  cost?: LineItemCost;
-  lineItems?: LineItem[];
+  cost?: ItemCostModel;
+  lineItems?: ItemModel[];
 }

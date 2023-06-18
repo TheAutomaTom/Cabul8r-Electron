@@ -1,14 +1,14 @@
 import { ref } from "vue";
 import { defineStore } from "pinia";
 import type { Project } from "../../../ipc-models/Project";
-import { LineItem } from "../../../ipc-models/Manifest/LineItem";
+import { ItemModel } from "../../../ipc-models/Manifest/ItemModel";
 
 export const useProjectState = defineStore("ProjectState", () => {
 
   //= Private Methods ==>
 
-  const createLineItem = (lineItem= new LineItem("...") ): LineItem => {
-    const li = JSON.parse(JSON.stringify(lineItem)) as LineItem;
+  const createLineItem = (lineItem= new ItemModel("...") ): ItemModel => {
+    const li = JSON.parse(JSON.stringify(lineItem)) as ItemModel;
     li.uuid= crypto.randomUUID();
 
     if( li.lineItems != null ){
@@ -22,7 +22,7 @@ export const useProjectState = defineStore("ProjectState", () => {
     return li;
   };
 
-  const reassignIds = ( lineItems: LineItem[] = Project.value.lineItems ) => {
+  const reassignIds = ( lineItems: ItemModel[] = Project.value.lineItems ) => {
     Project.value.uuid = crypto.randomUUID();
     for(const li of lineItems){
       li.uuid = crypto.randomUUID();
@@ -33,16 +33,16 @@ export const useProjectState = defineStore("ProjectState", () => {
   };
 
   //= Properties ==>
-  const HighlightedRow = ref({} as LineItem);
+  const HighlightedRow = ref({} as ItemModel);
   const Project = ref({
     name: "No project loaded",
     client: "No client defined",
     lineItems: [
       createLineItem()
-    ] as LineItem[]
+    ] as ItemModel[]
   } as Project);
-  const focussedRow = ref({} as LineItem);
-  const clipboardRow = ref({} as LineItem);
+  const focussedRow = ref({} as ItemModel);
+  const clipboardRow = ref({} as ItemModel);
   const isCutMode = ref(false);
 
 
@@ -52,11 +52,11 @@ export const useProjectState = defineStore("ProjectState", () => {
     Object.assign(Project.value, project);
   };
 
-  const SetRightClickFocus = (element: LineItem) => {
+  const SetRightClickFocus = (element: ItemModel) => {
     focussedRow.value = element;
   };
 
-  const OnAddRowSibling = ( lineItems: LineItem[] = Project.value.lineItems ) => {
+  const OnAddRowSibling = ( lineItems: ItemModel[] = Project.value.lineItems ) => {
     for(const item of lineItems){
       if(item.uuid == focussedRow.value.uuid){
         const newRow = createLineItem();
@@ -68,7 +68,7 @@ export const useProjectState = defineStore("ProjectState", () => {
     }
   };
 
-  const OnAddRowChild = ( lineItems: LineItem[] = Project.value.lineItems ) => {
+  const OnAddRowChild = ( lineItems: ItemModel[] = Project.value.lineItems ) => {
     for(const item of lineItems){
       if(item.uuid == focussedRow.value.uuid){
         if(item.lineItems == null){
@@ -86,7 +86,7 @@ export const useProjectState = defineStore("ProjectState", () => {
   const OnCopyRow = () => { clipboardRow.value = focussedRow.value; isCutMode.value = false; };
   const OnSelectCutRow = ()  => { clipboardRow.value = focussedRow.value; isCutMode.value = true; };
 
-  const OnDeleteRow = ( lineItems: LineItem[] = Project.value.lineItems  ) => {
+  const OnDeleteRow = ( lineItems: ItemModel[] = Project.value.lineItems  ) => {
     for(const item of lineItems){
       if(item.uuid == focussedRow.value.uuid){
         const index = lineItems.indexOf(focussedRow.value);
@@ -100,7 +100,7 @@ export const useProjectState = defineStore("ProjectState", () => {
     }
   };
 
-  const OnDeleteCutRow = ( lineItems: LineItem[] = Project.value.lineItems  ) => {
+  const OnDeleteCutRow = ( lineItems: ItemModel[] = Project.value.lineItems  ) => {
     for(const item of lineItems){
 
       if(item.uuid == clipboardRow.value.uuid){
@@ -115,7 +115,7 @@ export const useProjectState = defineStore("ProjectState", () => {
     }
   };
 
-  const OnPasteRowSibling = ( lineItems: LineItem[] = Project.value.lineItems ) => {
+  const OnPasteRowSibling = ( lineItems: ItemModel[] = Project.value.lineItems ) => {
     for(const item of lineItems){
       if(item.uuid == focussedRow.value.uuid){
         const newRow = createLineItem(clipboardRow.value);
@@ -128,7 +128,7 @@ export const useProjectState = defineStore("ProjectState", () => {
     }
   };
 
-  const OnPasteRowChild = ( lineItems: LineItem[] = Project.value.lineItems ) => {
+  const OnPasteRowChild = ( lineItems: ItemModel[] = Project.value.lineItems ) => {
     for(const item of lineItems){
       if(item.uuid == focussedRow.value.uuid){
         if(item.lineItems == null){

@@ -28,7 +28,7 @@ const li = ref(props.li);
     :name="props.li.name"
 
 
-    class="line-item-row"
+    class="manifest-row"
   >
     <td> <div style="width: 2em; background-color: dimgray;"></div> </td>
     <td>
@@ -62,7 +62,7 @@ const li = ref(props.li);
   </tr>
 </template>
 <style lang="scss" scoped>
-.line-item-row{
+.manifest-row{
   width:100%;
   border-top: white 1px solid;
   border-bottom: lightgray 1px solid;

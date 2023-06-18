@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import LineItemRow from "./ManifestView/LineItemRow.vue";
+import ItemRow from "./ManifestView/ItemRow.vue";
 import { useAppState } from "../states/App.state";
 const app$ = useAppState();
 const p$ = app$.Project$;
@@ -24,11 +24,11 @@ const p$ = app$.Project$;
         v-for="li in p$.Project.lineItems"
         :key="li.uuid"
         style="padding-top: 0.25em;"
-        class="line-item-row-div"
+        class="manifest-row-div"
       >
-        <line-item-row
+        <item-row
           :key="li.uuid"
-          :li="li"
+          :item="li"
         />
       </div>
     </div>
@@ -39,9 +39,9 @@ table {
   width: 100%;
 }
 /* https://stackoverflow.com/questions/9867471/zebra-striping-nested-lists-with-css
-  line-item-row-div:nth-child(odd) {background:blue}
-  line-item-row-div:nth-child(odd) line-item-row-div:nth-child(even) {background:blue}
-  line-item-row-div:nth-child(even) line-item-row-div:nth-child(odd) {background:blue}
+  manifest-row-div:nth-child(odd) {background:blue}
+  manifest-row-div:nth-child(odd) manifest-row-div:nth-child(even) {background:blue}
+  manifest-row-div:nth-child(even) manifest-row-div:nth-child(odd) {background:blue}
 */
 
 /* tr:nth-child(even),

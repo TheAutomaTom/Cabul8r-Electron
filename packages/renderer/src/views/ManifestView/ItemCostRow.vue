@@ -1,24 +1,24 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
 import type { PropType } from "vue";
-import type { LineItemCost as LineItemCostModel} from "../../../../ipc-models/Manifest/LineItemCost";
+import type { ItemCostModel } from "../../../../ipc-models/Manifest/ItemCostModel";
 import type { Cost as CostModel} from "../../../../ipc-models/Manifest/Cost";
 import { CostCategory } from "../../../../ipc-models/Enums/CostCategory";
 
 const props = defineProps({
-  ci: { type: Object as PropType<LineItemCostModel>, default: {} as LineItemCostModel },
+  ic: { type: Object as PropType<ItemCostModel>, default: {} as ItemCostModel },
   level: { type: Number, default: 0 }
 });
-const ci = ref(props.ci);
+const ic = ref(props.ic);
 const maxWidth = 20 - props.level;
 
 
 const materialCostSum = computed(() => {
-        console.log("ci.value.costs...");
-        console.dir(ci.value.costs as CostModel[]);
+        console.log("ic.value.costs...");
+        console.dir(ic.value.costs as CostModel[]);
     let toReturn = 0;
-    if(ci.value.costs != undefined){
-      for(const c of ci.value.costs as CostModel[]){
+    if(ic.value.costs != undefined){
+      for(const c of ic.value.costs as CostModel[]){
         console.log("for(const c of...");
         console.dir(c);
         if (c.kind == CostCategory.MAT){
@@ -34,9 +34,9 @@ const materialCostSum = computed(() => {
 </script>
 <template>
   <tr
-    :id="`${props.ci.uuid}`"
-    :name="props.ci.name"
-    class="line-item-row"
+    :id="`${props.ic.uuid}`"
+    :name="props.ic.name"
+    class="manifest-row"
   >
     <td>
       <div
@@ -49,7 +49,7 @@ const materialCostSum = computed(() => {
 
     <td>
       <input
-        v-model="ci.name"
+        v-model="ic.name"
         :style="`width:${maxWidth}em;`"
       />
       <span>{{ materialCostSum || "?" }}</span>
@@ -57,7 +57,7 @@ const materialCostSum = computed(() => {
 
       <!-- Testing -->
       <div
-        v-for="c in ci.costs"
+        v-for="c in ic.costs"
         :key="c.uuid"
       >
         <p>
@@ -69,7 +69,7 @@ const materialCostSum = computed(() => {
   </tr>
 </template>
 <style lang="scss" scoped>
-.line-item-row{
+.manifest-row{
   width:100%;
   border-top: white 1px solid;
   border-bottom: red 10px solid;

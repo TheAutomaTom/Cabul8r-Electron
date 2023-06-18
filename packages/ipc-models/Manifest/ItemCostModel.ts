@@ -1,7 +1,7 @@
 import type { Cost } from "./Cost";
 import { CostCategory } from "../Enums/CostCategory";
 // import { CostCategory } from "./LineItemCost/CostCategory";
-export class LineItemCost {
+export class ItemCostModel {
   constructor(name = "...") {
     this.uuid= crypto.randomUUID();
     this.name= name;
@@ -10,9 +10,6 @@ export class LineItemCost {
   uuid: string;
   name: string;
   costs: Cost[];
-
-
-
 
   // get materials() {
   //   return this.costs?.filter(cost => cost.kind == CostCategory.MAT);
