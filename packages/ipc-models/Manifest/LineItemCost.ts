@@ -1,6 +1,6 @@
-import type { Cost } from "./LineItemCost/Cost";
-import { CostKind } from "./LineItemCost/CostKind";
-// import { CostKind } from "./LineItemCost/CostKind";
+import type { Cost } from "./Cost";
+import { CostCategory } from "../Enums/CostCategory";
+// import { CostCategory } from "./LineItemCost/CostCategory";
 export class LineItemCost {
   constructor(name = "...") {
     this.uuid= crypto.randomUUID();
@@ -15,13 +15,13 @@ export class LineItemCost {
 
 
   // get materials() {
-  //   return this.costs?.filter(cost => cost.kind == CostKind.MAT);
+  //   return this.costs?.filter(cost => cost.kind == CostCategory.MAT);
   // }
   get materialCost(){
     let toReturn = 0;
     if(this.costs != undefined){
       for(const c of this.costs){
-        if (c.kind == CostKind.MAT){
+        if (c.kind == CostCategory.MAT){
           toReturn += c.amount;
         }
       }
@@ -30,13 +30,13 @@ export class LineItemCost {
     return toReturn;
   }
   // get labors() {
-  //   return this.costs?.filter(cost => cost.kind == CostKind.LAB);
+  //   return this.costs?.filter(cost => cost.kind == CostCategory.LAB);
   // }
   // get laborCost(){
   //   let toReturn = 0;
   //   if(this.costs != undefined){
   //     for(const c of this.costs){
-  //       if (c.kind == CostKind.LAB){
+  //       if (c.kind == CostCategory.LAB){
   //         toReturn += c.amount;
   //       }
   //     }

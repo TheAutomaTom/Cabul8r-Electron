@@ -16,9 +16,9 @@ export const routes = [
     component: HomeView
   },
   {
-    path: "/takeoff",
-    name: "TakeoffView",
-    component: () => import("../views/TakeoffView.vue")
+    path: "/manifest",
+    name: "ManifestView",
+    component: () => import("../views/ManifestView.vue")
   },
   {
     path: "/price-book",

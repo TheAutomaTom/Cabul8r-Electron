@@ -2,8 +2,8 @@
 // import { HandleRightClick } from "#preload";
 import { ref } from "vue";
 import type { PropType } from "vue";
-import type { Cost as CostModel} from "../../../../ipc-models/Takeoff/LineItemCost/Cost";
-import { UnitOfMeasurement} from "../../../../ipc-models/Takeoff/UnitOfMeasurement";
+import type { Cost as CostModel} from "../../../../ipc-models/Manifest/Cost";
+import { UnitOfMeasurement} from "../../../../ipc-models/Enums/UnitOfMeasurement";
 // import { useAppState } from "/@/states/App.state";
 // const app$ = useAppState();
 // const p$ = app$.Project$;

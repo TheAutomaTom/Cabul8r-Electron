@@ -1,11 +1,11 @@
-import { UnitOfMeasurement } from "./../UnitOfMeasurement";
-import { CostKind } from "./CostKind";
+import { UnitOfMeasurement } from "../Enums/UnitOfMeasurement";
+import { CostCategory } from "../Enums/CostCategory";
 
 export class Cost {
   public constructor(
     id: number,
     uuid = "",
-    kind = CostKind.MAT,
+    kind = CostCategory.MAT,
     uom = UnitOfMeasurement.EA,
     name = "...",
     amount = 0

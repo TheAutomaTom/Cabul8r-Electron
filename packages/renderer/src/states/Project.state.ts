@@ -1,7 +1,7 @@
 import { ref } from "vue";
 import { defineStore } from "pinia";
-import type { Project } from "../../../ipc-models/Takeoff/Project";
-import { LineItem } from "../../../ipc-models/Takeoff/LineItem";
+import type { Project } from "../../../ipc-models/Project";
+import { LineItem } from "../../../ipc-models/Manifest/LineItem";
 
 export const useProjectState = defineStore("ProjectState", () => {
 

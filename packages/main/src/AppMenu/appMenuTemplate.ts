@@ -1,5 +1,5 @@
 import { browserWindow } from "./../mainWindow";
-import type { Project } from "./../../../ipc-models/Takeoff/Project";
+import type { Project } from "./../../../ipc-models/Project";
 import { pickDirectory, pickFile } from "./appMenuFunctions";
 import { readFile } from "node:fs/promises";
 import { SetSavePath } from "../mainState";
@@ -58,9 +58,9 @@ const appMenuTemplate = [
       }
     },
     {
-      label: "Takeoff",
+      label: "Manifest",
       click: async function() {
-        browserWindow?.webContents.send("on-navigate-to", "takeoff");
+        browserWindow?.webContents.send("on-navigate-to", "manifest");
       }
     },
     {

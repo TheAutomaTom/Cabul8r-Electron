@@ -1,4 +1,4 @@
-export enum CostKind
+export enum CostCategory
 {
   MAT = "Material",
   LAB = "Labor"

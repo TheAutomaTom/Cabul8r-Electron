@@ -2,7 +2,7 @@
 import { HandleRightClick } from "#preload";
 import { ref } from "vue";
 import type { PropType } from "vue";
-import type { LineItem as LineItemModel} from "../../../../ipc-models/Takeoff/LineItem";
+import type { LineItem as LineItemModel} from "../../../../ipc-models/Manifest/LineItem";
 import LineItemCostRow from "./LineItemCostRow.vue";
 import { useAppState } from "/@/states/App.state";
 const app$ = useAppState();

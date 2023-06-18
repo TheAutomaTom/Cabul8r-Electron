@@ -8,8 +8,8 @@ import {
 } from "#preload";
 import router from "./infra/router";
 import { defaults } from "./infra/defaultPaths";
-import type { Project } from "../../ipc-models/Takeoff/Project";
-import type { Cost } from "../../ipc-models/Takeoff/LineItemCost/Cost";
+import type { Project } from "../../ipc-models/Project";
+import type { Cost } from "../../ipc-models/Manifest/Cost";
 
 const app$ = useAppState();
 

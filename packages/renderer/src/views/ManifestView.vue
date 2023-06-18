@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import LineItemRow from "./TakeoffView/LineItemRow.vue";
+import LineItemRow from "./ManifestView/LineItemRow.vue";
 import { useAppState } from "../states/App.state";
 const app$ = useAppState();
 const p$ = app$.Project$;
@@ -8,7 +8,7 @@ const p$ = app$.Project$;
 <template>
   <!-- Title -->
   <p>
-    TAKEOFF
+    MANIFEST
     <input
       v-model="p$.Project.name"
       style="font-size: 1.25em;"

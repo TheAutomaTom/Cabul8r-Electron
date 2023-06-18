@@ -1,8 +1,8 @@
-import { CostKind } from "./../../../ipc-models/Takeoff/LineItemCost/CostKind";
-import { Cost } from "../../../ipc-models/Takeoff/LineItemCost/Cost";
+import { CostCategory } from "./../../../ipc-models/Enums/CostCategory";
+import { Cost } from "../../../ipc-models/Manifest/Cost";
 import { browserWindow } from "./../mainWindow";
 import Database from "better-sqlite3";
-import { UnitOfMeasurement } from "../../../ipc-models/Takeoff/UnitOfMeasurement";
+import { UnitOfMeasurement } from "../../../ipc-models/Enums/UnitOfMeasurement";
 
 const dbName = "2306171018";
 const testTableName = "Costs";
@@ -37,10 +37,10 @@ export const TryCreateDefaultTable = () => {
 };
 
 const seedCostTable=()=>{
-  InsertCostRow(new Cost(-1, "", CostKind.MAT, UnitOfMeasurement.EA, "Pull, wire, 3-inch",  5.99   ));
-  InsertCostRow(new Cost(-1, "", CostKind.LAB, UnitOfMeasurement.EA, "Pull installation" ,  15.50  ));
-  InsertCostRow(new Cost(-1, "", CostKind.MAT, UnitOfMeasurement.LF, "Cabinets per LF"   ,  650.00 ));
-  InsertCostRow(new Cost(-1, "", CostKind.LAB, UnitOfMeasurement.EA, "Field per Day"     ,  800.00 ));
+  InsertCostRow(new Cost(-1, "", CostCategory.MAT, UnitOfMeasurement.EA, "Pull, wire, 3-inch",  5.99   ));
+  InsertCostRow(new Cost(-1, "", CostCategory.LAB, UnitOfMeasurement.EA, "Pull installation" ,  15.50  ));
+  InsertCostRow(new Cost(-1, "", CostCategory.MAT, UnitOfMeasurement.LF, "Cabinets per LF"   ,  650.00 ));
+  InsertCostRow(new Cost(-1, "", CostCategory.LAB, UnitOfMeasurement.EA, "Field per Day"     ,  800.00 ));
 };
 
 export const InsertCostRow = (cost: Cost) => {

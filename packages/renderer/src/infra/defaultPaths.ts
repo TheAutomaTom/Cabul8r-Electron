@@ -1,3 +1,3 @@
 export const defaults = {
-  routeOnProjectLoad: "/takeoff"
+  routeOnProjectLoad: "/manifest"
 };

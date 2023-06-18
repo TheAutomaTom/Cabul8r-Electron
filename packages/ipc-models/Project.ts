@@ -1,4 +1,4 @@
-import type { LineItem } from "./LineItem";
+import type { LineItem } from "./Manifest/LineItem";
 
 export type Project = {
   uuid: string;

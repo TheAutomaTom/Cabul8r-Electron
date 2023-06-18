@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
 import type { PropType } from "vue";
-import type { LineItemCost as LineItemCostModel} from "../../../../ipc-models/Takeoff/LineItemCost";
-import type { Cost as CostModel} from "../../../../ipc-models/Takeoff/LineItemCost/Cost";
-import { CostKind } from "../../../../ipc-models/Takeoff/LineItemCost/CostKind";
+import type { LineItemCost as LineItemCostModel} from "../../../../ipc-models/Manifest/LineItemCost";
+import type { Cost as CostModel} from "../../../../ipc-models/Manifest/Cost";
+import { CostCategory } from "../../../../ipc-models/Enums/CostCategory";
 
 const props = defineProps({
   ci: { type: Object as PropType<LineItemCostModel>, default: {} as LineItemCostModel },
@@ -21,7 +21,7 @@ const materialCostSum = computed(() => {
       for(const c of ci.value.costs as CostModel[]){
         console.log("for(const c of...");
         console.dir(c);
-        if (c.kind == CostKind.MAT){
+        if (c.kind == CostCategory.MAT){
           toReturn += c.amount;
         }
       }

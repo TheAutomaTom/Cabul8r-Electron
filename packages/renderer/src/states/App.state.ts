@@ -4,7 +4,7 @@ import { usePriceBookState } from "./PriceBook.state";
 
 import { ref } from "vue";
 
-import type { Cost } from "../../../ipc-models/Takeoff/LineItemCost/Cost";
+import type { Cost } from "../../../ipc-models/Manifest/Cost";
 
 export const useAppState = defineStore("AppState", () => {
 
