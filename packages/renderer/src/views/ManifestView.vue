@@ -9,18 +9,8 @@ const p$ = app$.Project$;
   <!-- Title -->
   <div>
     <p>MANIFEST</p>
-    <p>
-      <input
-        v-model="p$.Project.name"
-        style="font-size: 1.25em;"
-      />
-    </p>
-    <p>
-      <input
-        v-model="p$.Project.client"
-        style="font-size: 1.25em;"
-      />
-    </p>
+    <p><input v-model="p$.Project.client" /></p>
+    <p><input v-model="p$.Project.name" /></p>
   </div>
   <!-- Line Items -->
   <table>

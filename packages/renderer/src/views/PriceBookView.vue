@@ -6,13 +6,11 @@ const app$ = useAppState();
 </script>
 <template>
   <!-- Title -->
-  <p>
-    PRICE BOOK
-    <input
-      v-model="app$.Project$.Project.name"
-      style="font-size: 1.25em;"
-    />
-  </p>
+  <div>
+    <p>PRICE BOOK</p>
+    <p><input v-model="app$.Project$.Project.client" /></p>
+    <p><input v-model="app$.Project$.Project.name" /></p>
+  </div>
   <!-- Line Items -->
 
   <table>
