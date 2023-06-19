@@ -22,7 +22,6 @@ const app$ = useAppState();
         v-for="li in app$.PriceBook$.PriceBook"
         :key="li.id"
         style="padding-top: 0.25em;"
-        class="manifest-row-div"
       >
         <price-book-row
           :key="li.id"

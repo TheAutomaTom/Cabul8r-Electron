@@ -5,6 +5,7 @@ import type { PropType } from "vue";
 import type { ItemModel} from "../../../../ipc-models/Manifest/ItemModel";
 import ItemCostRow from "./ItemCostRow.vue";
 import { useAppState } from "/@/states/App.state";
+
 const app$ = useAppState();
 const p$ = app$.Project$;
 
@@ -28,7 +29,8 @@ const handleRightClick = (item: ItemModel): void => {
     :name="props.item.name"
     :quantity="props.item.quantity"
     :class="p$.HighlightedRow == item ? 'focussed' : ''"
-    class="manifest-row"
+
+    style="border-bottom: red 5px solid;"
     @contextmenu="handleRightClick(item)"
   >
     <td>
@@ -55,26 +57,9 @@ const handleRightClick = (item: ItemModel): void => {
 
   <!-- ... -->
   <table v-if="item.cost">
-    <item-cost-row :ic="item.cost!" />
+    <item-cost-row
+      :ic="item.cost!"
+      style="border-bottom: blue 5px solid;"
+    />
   </table>
 </template>
-<style lang="scss" scoped>
-.manifest-row{
-  width:100%;
-  border-top: white 1px solid;
-  border-bottom: lightgray 1px solid;
-}
-.focussed{
-  background-color: #ddff00;
-}
-select {
-  appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  text-overflow: '';
-  border: none;
-}
-input {
-  border: none;
-}
-</style>

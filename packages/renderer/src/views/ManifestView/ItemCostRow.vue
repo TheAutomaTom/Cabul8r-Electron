@@ -35,7 +35,6 @@ const materialCostSum = computed(() => {
   <tr
     :id="`${props.ic.uuid}`"
     :name="props.ic.name"
-    class="manifest-row"
   >
     <td>
       <div
@@ -46,42 +45,29 @@ const materialCostSum = computed(() => {
       </div>
     </td>
 
-    <td>
-      <input
-        v-model="ic.name"
-        :style="`width:${maxWidth}em;`"
-      />
-      <span>{{ materialCostSum || "?" }}</span>
-      <span>Word</span>
-
-      <!-- Testing -->
-      <div
+    <td class="cost-row">
+      <span
+        style="border-bottom: green 5px solid;"
+      >
+        <input
+          v-model="ic.name"
+          :style="`width:${maxWidth}em;`"
+        />
+        <span>{{ materialCostSum || "MAT?" }}</span>
+        <span>{{ materialCostSum || "LAB?" }}</span>
+      </span>
+      <!-- Costs breakout -->
+      <tr
         v-for="c in ic.costs"
         :key="c.uuid"
       >
-        <p> {{ c.name }}, ${{ c.amount }}, {{ c.uuid }} </p>
-      </div>
+        <p
+          style="border-bottom: purple 5px solid;"
+        >
+          {{ c.name }}, ${{ c.amount }}, {{ c.uuid }}
+        </p>
+      </tr>
       <!--  -->
     </td>
   </tr>
 </template>
-<style lang="scss" scoped>
-.manifest-row{
-  width:100%;
-  border-top: white 1px solid;
-  border-bottom: red 10px solid;
-}
-.focussed{
-  background-color: #ddff00;
-}
-select {
-  appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  text-overflow: '';
-  border: none;
-}
-input {
-  border: none;
-}
-</style>
