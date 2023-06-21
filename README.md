@@ -18,25 +18,19 @@ https://github.com/cawa-93/vite-electron-builder
 
 
 #### Notes on models (w.i.p.)
-- Project
-  - id: string;
+- <strong>Project</strong>   
+    <em>represents a package of items to be fabricated and installed.</em>
+  - uuid: string;
   - name: string;
   - client: string;
-  - lineItems: LineItem[];
-      - id: string;
-      - name: string;
-      - quantity: number;
-      - lineItems?: LineItem[];
-      - cost: LineItemCost;
-         - id: string;
-         - name: string;
-         - material: Cost[];
-             -  id: number;
-             -  uuid: string;
-             -  kind: string;
-             -  uom: UnitOfMeasurement;
-             -  name: string;
-             -  amount: number;
-         - labor: Cost[];
-             -  ...
-             
+  - manifest: <strong>ItemModel[];</strong>   
+    <em>a list of complex things to be built.</em>
+    - uuid: string;
+    - name: string;
+    - quantity: number;
+    - costs?: <strong>CostModel[];</strong>   
+    <em>A list simple things to buy or do required per each ItemModel's unit of measurement.</em>
+        - uuid: string;
+        - category: string;
+        - uom: UnitOfMeasurement;
+        - name: string;
