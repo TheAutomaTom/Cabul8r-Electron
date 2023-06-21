@@ -23,14 +23,13 @@ https://github.com/cawa-93/vite-electron-builder
   - uuid: string;
   - name: string;
   - client: string;
-  - manifest: <strong>ItemModel[];</strong>   
+  - molecules: <strong>Molecule[];</strong>   
     <em>a list of complex things to be built.</em>
     - uuid: string;
     - name: string;
     - quantity: number;
-    - costs?: <strong>CostModel[];</strong>   
-    <em>A list simple things to buy or do required per each ItemModel's unit of measurement.</em>
+    - atoms?: <strong>Atom[];</strong>   
+    <em>A list simple things required to build a structure.</em>
         - uuid: string;
-        - category: string;
-        - uom: UnitOfMeasurement;
-        - name: string;
+        - description: string;
+        - quarks: Quark[];
