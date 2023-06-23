@@ -18,7 +18,7 @@ import {
 } from "./ipc-functions/contextFunctions";
 
 import {
-  OnRefreshPriceBook
+  OnRefreshQuarkBook
 } from "./ipc-functions/sqlFunctions";
 
 const OnNavigateTo = (callback: any) =>
@@ -38,5 +38,5 @@ export {
     OnCopyRow, OnCutRow, OnDeleteRow,
     OnPasteRowSibling, OnPasteRowChild,
     OnAddRowSibling, OnAddRowChild,
-  OnRefreshPriceBook
+  OnRefreshQuarkBook
 };

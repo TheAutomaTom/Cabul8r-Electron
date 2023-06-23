@@ -2,7 +2,7 @@ import { app, BrowserWindow, ipcMain, Menu } from "electron";
 import { join } from "node:path";
 import { URL } from "node:url";
 import { contextMenuItems } from "./ContextMenu/contextMenuTemplate";
-import { RefreshPriceBook, TryCreateDefaultTable } from "./SqlLite3/connection";
+import { RefreshQuarkBook, TryCreateDefaultTable } from "./SqlLite3/connection";
 
 let browserWindow: BrowserWindow | undefined;
 async function createWindow() {
@@ -60,7 +60,7 @@ export async function restoreOrCreateWindow() {
   if (window === undefined) { window = await createWindow(); }
 
   // Events sent by #Renderer...
-  ipcMain.on("handle-refresh-price-book", RefreshPriceBook);
+  ipcMain.on("handle-refresh-price-book", RefreshQuarkBook);
   ipcMain.on("handle-set-context", handleSetContext);
 
   // ContextMenu...
@@ -68,7 +68,7 @@ export async function restoreOrCreateWindow() {
 
   // Prepare Sql...
   TryCreateDefaultTable();
-  RefreshPriceBook();
+  RefreshQuarkBook();
 
   if (window.isMinimized()) { window.restore(); }
   window.focus();

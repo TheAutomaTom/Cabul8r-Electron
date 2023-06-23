@@ -1,9 +1,10 @@
-import { CostKind } from "./../../../ipc-models/Takeoff/LineItemCost/CostKind";
-import { Cost } from "../../../ipc-models/Takeoff/LineItemCost/Cost";
+import { CostCategory } from "./../../../ipc-models/Enums/CostCategory";
+import { Quark } from "../../../ipc-models/Quark";
 import { browserWindow } from "./../mainWindow";
 import Database from "better-sqlite3";
+import { UnitOfMeasurement } from "../../../ipc-models/Enums/UnitOfMeasurement";
 
-const dbName = "2306112133";
+const dbName = "2306181644";
 const testTableName = "Costs";
 
 export const db = new Database(`./${dbName}.db`);
@@ -12,69 +13,82 @@ db.pragma("journal_mode = WAL");
 export const TryCreateDefaultTable = () => {
   const createTableQuery = db.prepare(`
   CREATE TABLE IF NOT EXISTS ${testTableName} (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    kind CHAR(3),
-    amount INTEGER,
-    name TEXT
+    uuid TEXT PRIMARY KEY,
+    category TEXT,
+    uom TEXT,
+    name TEXT,
+    value INTEGER
     );`
   );
   const response = createTableQuery.run();
 
   // Seed table as required...
-  let existingRows = getAllCosts();
+  let existingRows = getAllQuarks();
   if (existingRows?.length == 0) {
-    seedCostTable();
-    existingRows = getAllCosts();
-    console.log("[Sql] Checking db.Cost table is seeded...");
+    seedQuarkTable();
+    existingRows = getAllQuarks();
+    console.log("[Sql] Checking db.Quark table is seeded...");
     console.dir(existingRows);
-    if(existingRows?.length == 0) throw("[Sql] Cost table not prepared.");
+    if(existingRows?.length == 0) throw("[Sql] Quark table not prepared.");
 
   }
   return response;
 };
 
-const seedCostTable=()=>{
-  InsertCostRow(new Cost(-1, CostKind.MAT.toString(), 5.99, "Pull, wire, 3-inch"));
-  InsertCostRow(new Cost(-1, CostKind.LAB.toString(), 15.50, "Pull installation"));
-  InsertCostRow(new Cost(-1, CostKind.MAT.toString(), 650, "Cabinets per LF"));
-  InsertCostRow(new Cost(-1, CostKind.LAB.toString(), 800, "Field per Day"));
+const seedQuarkTable=()=>{
+  InsertQuark(new Quark("aaa", CostCategory.MAT, UnitOfMeasurement.EA, "Pull, wire, 3-inch" ));
+  InsertQuark(new Quark("bbb", CostCategory.LAB, UnitOfMeasurement.EA, "Pull installation"  ));
+  InsertQuark(new Quark("ccc", CostCategory.MAT, UnitOfMeasurement.LF, "Cabinets per LF"    ));
+  InsertQuark(new Quark("ddd", CostCategory.LAB, UnitOfMeasurement.EA, "Field per Day"      ));
 };
 
-export const InsertCostRow = (cost: Cost) => {
+export const InsertQuark = (quark: Quark) => {
   const query = db.prepare(`
-    INSERT OR IGNORE INTO ${testTableName}(Kind, Amount, Name)
-    VALUES ('${cost.kind}', '${cost.amount *100}', '${cost.name}');
+    INSERT OR IGNORE INTO ${testTableName}(
+      uuid,
+      category,
+      uom,
+      name,
+      value
+    )
+    VALUES (
+      '${quark.uuid}',
+      '${quark.category}',
+      '${quark.uom}',
+      '${quark.name}',
+      '${quark.value *100}'
+    );
   `);
   return query.run();
 };
 
-const getAllCosts = (): Cost[] | undefined => {
+const getAllQuarks = (): Quark[] | undefined => {
   const query = db.prepare(`SELECT * FROM ${testTableName}`);
   try{
     const rows= query.all();
-    const costs = [] as Cost[];
-    for(const row of rows as Cost[]){
-      const cost = row;
-      costs.push( cost );
+    const quarks = [] as Quark[];
+    for(const row of rows as Quark[]){
+      const quark = row;
+      quarks.push( quark );
     }
-    console.log("[Sql] getAllCosts()...");
-    console.dir(costs);
-    return costs;
+    console.log("[Sql] getAllQuarks()...");
+    console.dir(quarks);
+    return quarks;
   } catch {
     return undefined;
   }
 
 };
 
-export const RefreshPriceBook = () => {
-  console.log("[Sql] connection.RefreshPriceBook()...");
+export const RefreshQuarkBook = () => {
+  console.log("[Sql] connection.RefreshQuarkBook()...");
   const query = db.prepare(`SELECT * FROM ${testTableName}`);
   try{
-    const rows= query.all() as Cost[];
+    const rows= query.all() as Quark[];
     console.dir(rows);
-    browserWindow?.webContents.send("on-refresh-price-book", rows);
+    browserWindow?.webContents.send("on-refresh-quark-book", rows);
   } catch {
-    throw("[Sql] connection.GetAllCostsString() error.");
+    throw("[Sql] connection.RefreshQuarkBook() error.");
   }
 };
 
