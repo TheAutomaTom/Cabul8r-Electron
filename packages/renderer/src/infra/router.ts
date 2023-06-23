@@ -21,34 +21,14 @@ export const routes = [
     component: () => import("../views/ManifestView.vue")
   },
   {
-    path: "/price-book",
-    name: "PriceBookView",
-    component: () => import("../views/PriceBookView.vue")
+    path: "/quark-book",
+    name: "QuarkBookView",
+    component: () => import("../views/QuarkBookView.vue")
   },
-  // {
-  //   path: "/proto-two",
-  //   name: "proto-two",
-  //   component: AGGrid
-  // },
-  // {
-  //   path: "/proto-three",
-  //   name: "proto-three",
-  //   component: HandsontableView
-  // },
-  // {
-  //   path: "/FilePickers",
-  //   name: "FilePickers",
-  //   component: () => import("../infra/components/dynamic/FilePickers.vue"),
-  // },
-  // {
-  //   path: "/VehicleAssetDataTables",
-  //   name: "VehicleAssetDataTables",
-  //   component: () => import("./components/dynamic/VehicleAssetDataTable.vue"),
-  // },
   {
     path: "/:pathMatch(.*)*",
     name: "404",
-    component: () => import("../views/NotFound.vue")
+    component: () => import("../views/NotFoundView.vue")
   }
 ];
 

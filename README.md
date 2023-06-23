@@ -36,7 +36,7 @@ https://github.com/cawa-93/vite-electron-builder
       - quarks: <strong>Quark[];</strong>   
       <em>A list of items or tasks required for a part. Examples: `Model #1234` or `Pull Installation`</em>
         - uuid: string;
+        - name: string;
         - category: string; // MAT, LAB
         - uom: UnitOfMeasurement; // EA, LF, SF
-         - name: string;
-         - value: number; //cost per unit
+        - value: number; //cost per unit

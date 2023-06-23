@@ -7,24 +7,24 @@ const app$ = useAppState();
 <template>
   <!-- Title -->
   <div>
-    <p>PRICE BOOK</p>
-    <p><input v-model="app$.Project$.Project.client" /></p>
-    <p><input v-model="app$.Project$.Project.name" /></p>
+    <p>QUARK BOOK</p>
+    <p><input v-model="app$.Prj$.Project.client" /></p>
+    <p><input v-model="app$.Prj$.Project.name" /></p>
   </div>
   <!-- Line Items -->
 
   <table>
     <div
-      v-if="app$.PriceBook$.PriceBook"
+      v-if="app$.PB$.QuarkBook"
       style="width: 100%;"
     >
       <div
-        v-for="li in app$.PriceBook$.PriceBook"
-        :key="li.id"
+        v-for="li in app$.PB$.QuarkBook"
+        :key="li.uuid"
         style="padding-top: 0.25em;"
       >
         <price-book-row
-          :key="li.id"
+          :key="li.uuid"
           :li="li"
         />
       </div>
@@ -32,7 +32,5 @@ const app$ = useAppState();
   </table>
 </template>
 <style>
-table {
-  width: 100%;
-}
+
 </style>

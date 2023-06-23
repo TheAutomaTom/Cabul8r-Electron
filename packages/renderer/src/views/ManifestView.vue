@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import ItemRow from "./ManifestView/ItemRow.vue";
 import { useAppState } from "../states/App.state";
-const app$ = useAppState();
-const p$ = app$.Project$;
+import MoleculeRow from "./ManifestView/MoleculeRow.vue";
 
+const app$ = useAppState();
+const p$ = app$.Prj$;
+const maxWidth = app$.CssDefaults.maxTdWidth;
 </script>
 <template>
   <!-- Title -->
@@ -12,23 +13,41 @@ const p$ = app$.Project$;
     <p><input v-model="p$.Project.client" /></p>
     <p><input v-model="p$.Project.name" /></p>
   </div>
-  <!-- Line Items -->
   <table>
-    <div
-      v-if="p$.Project.manifest"
+    <!--Headers -->
+    <tr>
+      <td>
+        <div
+          style="width: 2em; background-color: dimgray;"
+          :style="`margin-left: ${0}em;`"
+        >
+          <!-- To be control grip for rearranging order -->8
+        </div>
+      </td>
+      <td>
+        <h5 :style="`width:${maxWidth}em;`">
+          Description
+        </h5>
+      </td>
+      <td>
+        <h5 style="width: 4em; text-align: end;">
+          QTY
+        </h5>
+      </td>
+    </tr>
+    <!-- Molecules -->
+    <!-- <div
+      v-if="p$.Project.molecules"
+    > -->
+    <template
+      v-for="m in p$.Project.molecules"
+      :key="m.uuid"
     >
-      <div
-        v-for="li in p$.Project.manifest"
-        :key="li.uuid"
+      <molecule-row
+        :molecule="m"
         style="padding-top: 0.8em;"
-      >
-        <item-row
-          :key="li.uuid"
-          :item="li"
-        />
-      </div>
-    </div>
+      />
+    </template>
+    <!-- </div> -->
   </table>
 </template>
-<style>
-</style>

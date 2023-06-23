@@ -1,83 +1,83 @@
 import { ref } from "vue";
 import { defineStore } from "pinia";
+import { Molecule } from "../../../ipc-models/Molecule";
 import type { Project } from "../../../ipc-models/Project";
-import { ItemModel } from "../../../ipc-models/Manifest/ItemModel";
 
 export const useProjectState = defineStore("ProjectState", () => {
 
   //= Private Methods ==>
 
-  const createLineItem = (lineItem= new ItemModel("...") ): ItemModel => {
-    const li = JSON.parse(JSON.stringify(lineItem)) as ItemModel;
-    li.uuid= crypto.randomUUID();
+  const createMolecule = (input= new Molecule("...") ): Molecule => {
+    const molecule = JSON.parse(JSON.stringify(input)) as Molecule;
+    molecule.uuid= crypto.randomUUID();
 
-    if( li.subitems != null ){
-      li.subitems.forEach((i) => {
-        i.uuid = crypto.randomUUID();
-        if( i.subitems){
-          createLineItem(i);
+    if( molecule.molecules != null ){
+      molecule.molecules.forEach((m) => {
+        m.uuid = crypto.randomUUID();
+        if(m.molecules){
+          createMolecule(m);
         }
       });
     }
-    return li;
+    return molecule;
   };
 
-  const reassignIds = ( subitems: ItemModel[] = Project.value.manifest ) => {
+  const reassignIds = ( molecules: Molecule[] = Project.value.molecules ) => {
     Project.value.uuid = crypto.randomUUID();
-    for(const li of subitems){
-      li.uuid = crypto.randomUUID();
-      if(li.subitems){
-        reassignIds(li.subitems);
+    for(const m of molecules){
+      m.uuid = crypto.randomUUID();
+      if(m.molecules){
+        reassignIds(m.molecules);
       }
     }
   };
 
   //= Properties ==>
-  const HighlightedRow = ref({} as ItemModel);
+  const HighlightedRow = ref({} as Molecule);
   const Project = ref({
     uuid: "x",
     name: "No project loaded...",
     client: "No client loaded...",
-    manifest: [] as ItemModel[]
+    molecules: [] as Molecule[]
   } as Project);
-  const focussedRow = ref({} as ItemModel);
-  const clipboardRow = ref({} as ItemModel);
+  const focussedRow = ref({} as Molecule);
+  const clipboardRow = ref({} as Molecule);
   const isCutMode = ref(false);
 
 
   //= Public Methods ==>
   const LoadProjectFile = (project: Project) => {
-    reassignIds(project.manifest);
+    reassignIds(project.molecules);
     Object.assign(Project.value, project);
   };
 
-  const SetRightClickFocus = (element: ItemModel) => {
+  const SetRightClickFocus = (element: Molecule) => {
     focussedRow.value = element;
   };
 
-  const OnAddRowSibling = ( subitems: ItemModel[] = Project.value.manifest ) => {
-    for(const item of subitems){
-      if(item.uuid == focussedRow.value.uuid){
-        const newRow = createLineItem();
-        subitems.push(newRow);
+  const OnAddRowSibling = ( molecules: Molecule[] = Project.value.molecules ) => {
+    for(const molecule of molecules){
+      if(molecule.uuid == focussedRow.value.uuid){
+        const newRow = createMolecule();
+        molecules.push(newRow);
         break;
-      } else if (item.subitems != null){
-        OnAddRowSibling(item.subitems);
+      } else if (molecule.molecules != null){
+        OnAddRowSibling(molecule.molecules);
       }
     }
   };
 
-  const OnAddRowChild = ( subitems: ItemModel[] = Project.value.manifest ) => {
-    for(const item of subitems){
-      if(item.uuid == focussedRow.value.uuid){
-        if(item.subitems == null){
-          item.subitems = [];
+  const OnAddRowChild = ( molecules: Molecule[] = Project.value.molecules ) => {
+    for(const molecule of molecules){
+      if(molecule.uuid == focussedRow.value.uuid){
+        if(molecule.molecules == null){
+          molecule.molecules = [];
         }
-        const newRow = createLineItem();
-        item.subitems.push(newRow);
+        const newRow = createMolecule();
+        molecule.molecules.push(newRow);
         break;
-      } else if (item.subitems != null){
-        OnAddRowChild(item.subitems);
+      } else if (molecule.molecules != null){
+        OnAddRowChild(molecule.molecules);
       }
     }
   };
@@ -85,60 +85,61 @@ export const useProjectState = defineStore("ProjectState", () => {
   const OnCopyRow = () => { clipboardRow.value = focussedRow.value; isCutMode.value = false; };
   const OnSelectCutRow = ()  => { clipboardRow.value = focussedRow.value; isCutMode.value = true; };
 
-  const OnDeleteRow = ( subitems: ItemModel[] = Project.value.manifest  ) => {
-    for(const item of subitems){
-      if(item.uuid == focussedRow.value.uuid){
-        const index = subitems.indexOf(focussedRow.value);
+  const OnDeleteRow = ( molecules: Molecule[] = Project.value.molecules  ) => {
+    for(const molecule of molecules){
+      if(molecule.uuid == focussedRow.value.uuid){
+        const index = molecules.indexOf(focussedRow.value);
         if (index > -1) { // only splice array when item is found
-          subitems.splice(index, 1); // 2nd parameter means remove one item only
+          molecules.splice(index, 1); // 2nd parameter means remove one item only
         }
         break;
-      } else if (item.subitems != null){
-        OnDeleteRow(item.subitems);
+      } else if (molecule.molecules != null){
+        OnDeleteRow(molecule.molecules);
       }
     }
   };
 
-  const OnDeleteCutRow = ( subitems: ItemModel[] = Project.value.manifest  ) => {
-    for(const item of subitems){
+  const OnDeleteCutRow = ( molecules: Molecule[] = Project.value.molecules  ) => {
+    for(const molecule of molecules){
 
-      if(item.uuid == clipboardRow.value.uuid){
-        const index = subitems.indexOf(clipboardRow.value);
+      if(molecule.uuid == clipboardRow.value.uuid){
+        const index = molecules.indexOf(clipboardRow.value);
         if (index > -1) { // only splice array when item is found
-          subitems.splice(index, 1); // 2nd parameter means remove one item only
+          molecules.splice(index, 1); // 2nd parameter means remove one item only
         }
         break;
-      } else if (item.subitems != null){
-        OnDeleteCutRow(item.subitems);
+      } else if (molecule.molecules != null){
+        OnDeleteCutRow(molecule.molecules);
       }
     }
   };
 
-  const OnPasteRowSibling = ( subitems: ItemModel[] = Project.value.manifest ) => {
-    for(const item of subitems){
-      if(item.uuid == focussedRow.value.uuid){
-        const newRow = createLineItem(clipboardRow.value);
-        subitems.push(newRow);
+  const OnPasteRowSibling = ( molecules: Molecule[] = Project.value.molecules ) => {
+    for(const molecule of molecules){
+      if(molecule.uuid == focussedRow.value.uuid){
+        const newRow = createMolecule(clipboardRow.value);
+        molecules.push(newRow);
         if(isCutMode.value == true) OnDeleteCutRow();
         break;
-      } else if (item.subitems != null){
-        OnPasteRowSibling(item.subitems);
+      } else if (molecule.molecules != null){
+        OnPasteRowSibling(molecule.molecules);
       }
     }
   };
 
-  const OnPasteRowChild = ( subitems: ItemModel[] = Project.value.manifest ) => {
-    for(const item of subitems){
-      if(item.uuid == focussedRow.value.uuid){
-        if(item.subitems == null){
-          item.subitems = [];
+  const OnPasteRowChild = ( molecules: Molecule[] = Project.value.molecules ) => {
+    for(const molecule of molecules){
+      if(molecule.uuid == focussedRow.value.uuid){
+        if(molecule.atoms == null){
+          molecule.atoms = [];
         }
-        const newRow = createLineItem(clipboardRow.value);
-        item.subitems.push(newRow);
+        const newRow = createMolecule(clipboardRow.value);
+        if(molecule.molecules == undefined) molecule.molecules = [];
+        molecule.molecules.push(newRow);
         if(isCutMode.value == true)OnDeleteCutRow();
         break;
-      } else if (item.subitems != null){
-        OnPasteRowChild(item.subitems);
+      } else if (molecule.molecules != null){
+        OnPasteRowChild(molecule.molecules);
       }
     }
   };

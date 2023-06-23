@@ -2,17 +2,17 @@
 // import { HandleRightClick } from "#preload";
 import { ref } from "vue";
 import type { PropType } from "vue";
-import type { Cost as CostModel} from "../../../../ipc-models/Manifest/Cost";
+import type { Quark} from "../../../../ipc-models/Quark";
 import { UnitOfMeasurement} from "../../../../ipc-models/Enums/UnitOfMeasurement";
 // import { useAppState } from "/@/states/App.state";
 // const app$ = useAppState();
-// const p$ = app$.Project$;
+// const p$ = app$.Prj$;
 
 const props = defineProps({
-  li: { type: Object as PropType<CostModel>, default: {} as CostModel }
+  quark: { type: Object as PropType<Quark>, default: {} as Quark }
   // level: { type: Number, default: 0 }
 });
-const li = ref(props.li);
+const quark = ref(props.quark);
 // const maxWidth = 20 - props.level;
 
 // const handleRightClick = (li: CostModel): void => {
@@ -24,8 +24,8 @@ const li = ref(props.li);
 </script>
 <template>
   <tr
-    :id="`${props.li.id}_${props.li.name}`"
-    :name="props.li.name"
+    :id="`${props.quark.uuid}_${props.quark.name}`"
+    :name="props.quark.name"
 
 
     class="manifest-row"
@@ -33,18 +33,18 @@ const li = ref(props.li);
     <td> <div style="width: 2em; background-color: dimgray;"></div> </td>
     <td>
       <input
-        v-model="li.category"
+        v-model="quark.category"
       />
     </td>
     <td>
       <input
-        v-model="li.name"
+        v-model="quark.name"
       />
     </td>
     <td>
       <select
         id="uoms"
-        v-model="li.uom"
+        v-model="quark.uom"
       >
         <option
           v-for="key in UnitOfMeasurement"
@@ -56,7 +56,7 @@ const li = ref(props.li);
     </td>
     <td>
       <input
-        v-model="li.amount"
+        v-model="quark.value"
       />
     </td>
   </tr>

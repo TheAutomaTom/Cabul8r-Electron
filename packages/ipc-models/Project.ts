@@ -1,9 +1,9 @@
-import type { ItemModel } from "./Manifest/ItemModel";
+import type { Molecule } from "./Molecule";
 
 export type Project = {
   uuid: string;
   name: string;
   client: string;
-  manifest: ItemModel[];
+  molecules: Molecule[];
 }
 

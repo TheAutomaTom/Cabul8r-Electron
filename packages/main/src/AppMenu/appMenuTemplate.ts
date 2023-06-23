@@ -64,7 +64,7 @@ const appMenuTemplate = [
       }
     },
     {
-      label: "Price Book",
+      label: "Quark Book",
       click: async function() {
         browserWindow?.webContents.send("on-navigate-to", "price-book");
       }

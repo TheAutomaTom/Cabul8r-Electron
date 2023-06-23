@@ -1,15 +1,16 @@
 import { defineStore } from "pinia";
 import { useProjectState } from "./Project.state";
-import { usePriceBookState } from "./PriceBook.state";
+import { usePriceBookState as useQuarkBookState } from "./QuarkBook.state";
+import { css as CssDefaults } from "../infra/defaultValues";
 
 import { ref } from "vue";
 
-import type { Cost } from "../../../ipc-models/Manifest/Cost";
+import type { Quark } from "../../../ipc-models/Quark";
 
 export const useAppState = defineStore("AppState", () => {
 
   const Project$= useProjectState();
-  const PriceBook$= usePriceBookState();
+  const QuarkBook$= useQuarkBookState();
 
   //= Private Methods ==>
   //...
@@ -19,18 +20,19 @@ export const useAppState = defineStore("AppState", () => {
   const IsScrolled = ref(false);
 
   //= Public Methods ==>
-  const OnRefreshPriceBook = (costs: Cost[]) =>{
-    console.log("[PriceBook$] OnRefreshPriceBook...");
-    console.dir(costs);
-    PriceBook$.PriceBook= costs;
+  const OnRefreshQuarkBook = (quarks: Quark[]) =>{
+    console.log("[QuarkBook$] OnRefreshQuarkBook...");
+    console.dir(quarks);
+    QuarkBook$.QuarkBook= quarks;
   };
 
   return {
-    Project$,
-    PriceBook$,
+    Prj$: Project$,
+    PB$: QuarkBook$,
     IsLoading,
     IsScrolled,
-    OnRefreshPriceBook
+    OnRefreshQuarkBook: OnRefreshQuarkBook,
+    CssDefaults
   };
 });
 

@@ -3,13 +3,15 @@ import { useAppState } from "./states/App.state";
 import { onMounted } from "vue";
 import {
   OnLoadProjectFile, OnSaveProjectFile, HandleSaveProjectFile,
-  OnCopyRow, OnCutRow, OnDeleteRow, OnPasteRowSibling, OnPasteRowChild, OnNavigateTo, OnAddRowChild, OnAddRowSibling,
-  OnRefreshPriceBook
+  OnNavigateTo,
+  OnDeleteRow, OnCopyRow, OnCutRow, OnPasteRowSibling, OnPasteRowChild,
+  OnAddRowChild, OnAddRowSibling,
+  OnRefreshQuarkBook
 } from "#preload";
 import router from "./infra/router";
-import { defaults } from "./infra/defaultPaths";
+import { paths } from "./infra/defaultValues";
 import type { Project } from "../../ipc-models/Project";
-import type { Cost } from "../../ipc-models/Manifest/Cost";
+import type { Quark } from "../../ipc-models/Quark";
 
 const app$ = useAppState();
 
@@ -20,25 +22,29 @@ onMounted( async () => {
   window.addEventListener("scroll", handleScroll);
 
   // Inbound App Menu commands...
-  window.addEventListener("DOMContentLoaded", () => { OnLoadProjectFile((_: unknown, value: Project) => { app$.Project$.LoadProjectFile(value); router.push(defaults.routeOnProjectLoad); }); });
-  window.addEventListener("DOMContentLoaded", async () => { OnSaveProjectFile((_: unknown, filePath: string) => { HandleSaveProjectFile(filePath, JSON.stringify(app$.Project$.Project, null, 2)); }); });
+  window.addEventListener("DOMContentLoaded", () => { OnLoadProjectFile((_: unknown, value: Project) =>
+    { app$.Prj$.LoadProjectFile(value); router.push(paths.routeOnProjectLoad); }); });
+  window.addEventListener("DOMContentLoaded", async () =>
+  { OnSaveProjectFile((_: unknown, filePath: string) =>
+    { HandleSaveProjectFile(filePath, JSON.stringify(app$.Prj$.Project, null, 2)); }); });
 
   // Inbound Context commands...
-  window.addEventListener("DOMContentLoaded", () => { OnCopyRow((_: unknown, _any: unknown)         => { app$.Project$.OnCopyRow();         }); });
-  window.addEventListener("DOMContentLoaded", () => { OnCutRow((_: unknown, _any: unknown)          => { app$.Project$.OnCutRow();          }); });
-  window.addEventListener("DOMContentLoaded", () => { OnPasteRowSibling((_: unknown, _any: unknown) => { app$.Project$.OnPasteRowSibling(); }); });
-  window.addEventListener("DOMContentLoaded", () => { OnPasteRowChild((_: unknown, _any: unknown)   => { app$.Project$.OnPasteRowChild  (); }); });
-  window.addEventListener("DOMContentLoaded", () => { OnAddRowSibling((_: unknown, _any: unknown)   => { app$.Project$.OnAddRowSibling();   }); });
-  window.addEventListener("DOMContentLoaded", () => { OnAddRowChild((_: unknown, _any: unknown)     => { app$.Project$.OnAddRowChild();     }); });
-  window.addEventListener("DOMContentLoaded", () => { OnNavigateTo((_: unknown, route: string)      => { router.push(`/${route}`);          }); });
-  window.addEventListener("DOMContentLoaded", () => { OnDeleteRow((_: unknown, _any: unknown)       => { app$.Project$.OnDeleteRow();       }); });
+  window.addEventListener("DOMContentLoaded", () => { OnCopyRow((_: unknown, _any: unknown)         => { app$.Prj$.OnCopyRow();         }); });
+  window.addEventListener("DOMContentLoaded", () => { OnCutRow((_: unknown, _any: unknown)          => { app$.Prj$.OnCutRow();          }); });
+  window.addEventListener("DOMContentLoaded", () => { OnPasteRowSibling((_: unknown, _any: unknown) => { app$.Prj$.OnPasteRowSibling(); }); });
+  window.addEventListener("DOMContentLoaded", () => { OnPasteRowChild((_: unknown, _any: unknown)   => { app$.Prj$.OnPasteRowChild  (); }); });
+  window.addEventListener("DOMContentLoaded", () => { OnAddRowSibling((_: unknown, _any: unknown)   => { app$.Prj$.OnAddRowSibling();   }); });
+  window.addEventListener("DOMContentLoaded", () => { OnAddRowChild((_: unknown, _any: unknown)     => { app$.Prj$.OnAddRowChild();     }); });
+  window.addEventListener("DOMContentLoaded", () => { OnNavigateTo((_: unknown, route: string)      =>
+    { router.push(`/${route}`); }); });
+  window.addEventListener("DOMContentLoaded", () => { OnDeleteRow((_: unknown, _any: unknown)       => { app$.Prj$.OnDeleteRow();       }); });
 
   // Inbound Sql commands...
   window.addEventListener("DOMContentLoaded", () => {
-    OnRefreshPriceBook((_: unknown, value: Cost[])    => {
-      console.log("[App.vue] OnRefreshPriceBook()...");
+    OnRefreshQuarkBook((_: unknown, value: Quark[])    => {
+      console.log("[App.vue] OnRefreshQuarkBook()...");
       console.dir(value);
-      app$.OnRefreshPriceBook(value);
+      app$.OnRefreshQuarkBook(value);
     });
   });
 
