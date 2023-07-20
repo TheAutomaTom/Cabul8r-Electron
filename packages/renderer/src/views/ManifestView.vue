@@ -4,37 +4,32 @@ import MoleculeRow from "./ManifestView/MoleculeRow.vue";
 
 const app$ = useAppState();
 const p$ = app$.Prj$;
-const maxWidth = app$.CssDefaults.maxTdWidth;
+const maxWidth = app$.CssDefaults.maxTdWidth -1;
 </script>
 <template>
   <!-- Title -->
   <div>
-    <p>MANIFEST</p>
-    <p><input v-model="p$.Project.client" /></p>
-    <p><input v-model="p$.Project.name" /></p>
+    <h1>MANIFEST</h1>
+    <h2><input v-model="p$.Project.client" /> / <input v-model="p$.Project.name" /></h2>
   </div>
-  <table>
+  <div class="manifest-table">
+    <!--        -->
     <!--Headers -->
-    <tr>
-      <td>
-        <div
-          style="width: 2em; background-color: dimgray;"
-          :style="`margin-left: ${0}em;`"
-        >
-          <!-- To be control grip for rearranging order -->8
-        </div>
-      </td>
-      <td>
-        <h5 :style="`width:${maxWidth}em;`">
-          Description
-        </h5>
-      </td>
-      <td>
-        <h5 style="width: 4em; text-align: end;">
-          QTY
-        </h5>
-      </td>
-    </tr>
+    <div class="manifest-molecule">
+      <div
+        style="background-color: gray;"
+        :style="`width: ${1}em;`"
+      >
+&nbsp;<!-- To be control grip for rearranging order -->
+      </div>
+      <h4 :style="`width:${maxWidth}em;`">
+        DESCRIPTION
+      </h4>
+      <h4 style="width: 4em; text-align: end;">
+        QTY
+      </h4>
+    </div>
+    <!--           -->
     <!-- Molecules -->
     <!-- <div
       v-if="p$.Project.molecules"
@@ -45,9 +40,41 @@ const maxWidth = app$.CssDefaults.maxTdWidth;
     >
       <molecule-row
         :molecule="m"
-        style="padding-top: 0.8em;"
+        :indent-level="1"
+        class="manifest-molecule"
       />
     </template>
     <!-- </div> -->
-  </table>
+  </div>
 </template>
+<style lang="scss">
+.manifest-table {
+  width: 100%;
+  height:auto;
+
+}
+.manifest-molecule {
+  width: 100%;
+  display: flex;
+  flex-wrap: nowrap;
+  // justify-content: space-between;
+  align-content: center;
+  align-items: baseline;
+}
+.manifest-desc {
+  flex-basis: 15em;
+}
+// select {
+//   appearance: none;
+//   -webkit-appearance: none;
+//   -moz-appearance: none;
+//   text-overflow: '';
+//   border: none;
+// }
+// input {
+//   border: none;
+// }
+.focussed{
+  background-color: #ddff00;
+}
+</style>

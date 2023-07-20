@@ -1,8 +1,8 @@
-export const paths = {
+export const Paths = {
   routeOnProjectLoad: "/manifest"
 };
 
-export const css = {
-  maxTdWidth: 10,
+export const Css = {
+  maxTdWidth: 16,
   typicalIndent: 10
 };

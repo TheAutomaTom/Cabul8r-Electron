@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 import { useProjectState } from "./Project.state";
 import { usePriceBookState as useQuarkBookState } from "./QuarkBook.state";
-import { css as CssDefaults } from "../infra/defaultValues";
+import { Css as CssDefaults } from "../infra/defaultValues";
 
 import { ref } from "vue";
 

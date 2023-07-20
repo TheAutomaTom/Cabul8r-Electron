@@ -1,0 +1,74 @@
+{
+  "uuid": "ProjectUUID",
+  "name": "A Great Project Name",
+  "client": "Some Client",
+  "molecules": [
+    {
+      "uuid": "M1 UUID",
+      "description": "M1 Name",
+      "quantity": 10,
+      "molecules": [
+        {
+          "uuid": "M1.M1 UUID",
+          "description": "M1.M1 Name",
+          "quantity": 111
+        },
+        {
+          "uuid": "M1.M2 UUID",
+          "description": "M1.M2 Name",
+          "quantity": 112
+        }
+      ],
+      "atoms": [
+        {
+          "uuid": "M1.M1 A1 UUID",
+          "description": "M1.M1 A1 Desc",
+          "quarks": [
+            {
+              "uuid": "M1.M1 A1 Q1 UUID",
+              "name": "M1.M1 A1 Q1 Name",
+              "category": "MAT",
+              "uom": "EA",
+              "value": 101
+            },
+            {
+              "uuid": "M1.M1 A1 Q2 UUID",
+              "name": "M1.M1 A1 Q2 Name",
+              "category": "LAB",
+              "uom": "EA",
+              "value": 202
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "uuid": "M2 UUID",
+      "description": "M2 Name",
+      "quantity": 12,
+      "molecules": [],
+      "atoms": [
+        {
+          "uuid": "M2 A1 UUID",
+          "description": "M2 A1 Desc",
+          "quarks": [
+            {
+              "uuid": "M2 A1 Q1 UUID",
+              "name": "M2 A1 Q1 Name",
+              "category": "MAT",
+              "uom": "EA",
+              "value": 101
+            },
+            {
+              "uuid": "M2 A1 Q2 UUID",
+              "name": "M2 A1 Q2 Name",
+              "category": "LAB",
+              "uom": "EA",
+              "value": 202
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

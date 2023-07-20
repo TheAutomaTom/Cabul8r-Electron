@@ -9,7 +9,7 @@ import {
   OnRefreshQuarkBook
 } from "#preload";
 import router from "./infra/router";
-import { paths } from "./infra/defaultValues";
+import { Paths } from "./infra/defaultValues";
 import type { Project } from "../../ipc-models/Project";
 import type { Quark } from "../../ipc-models/Quark";
 
@@ -23,7 +23,7 @@ onMounted( async () => {
 
   // Inbound App Menu commands...
   window.addEventListener("DOMContentLoaded", () => { OnLoadProjectFile((_: unknown, value: Project) =>
-    { app$.Prj$.LoadProjectFile(value); router.push(paths.routeOnProjectLoad); }); });
+    { app$.Prj$.LoadProjectFile(value); router.push(Paths.routeOnProjectLoad); }); });
   window.addEventListener("DOMContentLoaded", async () =>
   { OnSaveProjectFile((_: unknown, filePath: string) =>
     { HandleSaveProjectFile(filePath, JSON.stringify(app$.Prj$.Project, null, 2)); }); });

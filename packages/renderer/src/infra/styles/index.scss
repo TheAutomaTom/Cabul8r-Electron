@@ -1,7 +1,6 @@
 // This file is the ONLY style-sheet imported by the app.
 // It is best to define styles for standard elements here.
 @use "./reset.scss";
-@use "./classes.scss";
 :root {
   font-family: "Poppins", sans-serif;
   width: 100vw;
@@ -39,4 +38,29 @@ input {
 }
 table {
   width: 100%;
+}
+
+h1 { //text-2xl
+  font-size: 1.5rem; /* 24px */
+  line-height: 2rem; /* 32px */
+}
+h2 { //text-xl
+  font-size: 1.25rem; /* 20px */
+  line-height: 1.75rem; /* 28px */
+}
+h3 { //text-lg
+  font-size: 1.125rem; /* 18px */
+  line-height: 1.75rem; /* 28px */
+}
+h4 { //text-base
+  font-size: 1rem; /* 16px */
+  line-height: 1.5rem; /* 24px */
+}
+h5 { //text-sm
+  font-size: 0.875rem; /* 14px */
+  line-height: 1.25rem; /* 20px */
+}
+h6 { //text-xs
+  font-size: 0.75rem; /* 12px */
+  line-height: 1rem; /* 16px */
 }
